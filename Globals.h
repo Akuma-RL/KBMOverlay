@@ -1,6 +1,8 @@
 #pragma once
 #include "bakkesmod/plugin/bakkesmodplugin.h"
 
+namespace fs = std::filesystem;
+
 extern std::shared_ptr<bool> enableOverlay;
 
 extern std::shared_ptr<Vector2> ScreenSize;

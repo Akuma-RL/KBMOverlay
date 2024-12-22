@@ -5,7 +5,6 @@
 #include "bakkesmod/plugin/pluginwindow.h"
 #include "bakkesmod/plugin/PluginSettingsWindow.h"
 
-#include "Utils.h"
 #include "Keys.h"
 
 #include "version.h"
@@ -31,19 +30,13 @@ public:
 	std::map<std::string, Rect> keyRegions;
 	std::map<std::string, std::shared_ptr<Rect>> actionRegions;
 
+	std::string cfgFile = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbmbinds.cfg").string();
+
 	void onLoad() override;
 	void onUnload() override;
 	void RenderSettings() override;
 
-
-private:
-
 	void onTick(std::string eventName);
 
-	void SetupConfigFile();
-	void exportBindsToFile();
-	void reloadBindsFromFile();
-
-	std::string cfgFile = (gameWrapper->GetDataFolder() / ".." / "cfg" / "kbmbinds.cfg").string();
-
+private:
 };

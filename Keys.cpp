@@ -4,7 +4,7 @@
 #include "Globals.h"
 
 void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
-	actionPositions[Action::ThrottleForward] = ImVec2(500, 500);
+	actionPositions[Action::ThrottleForward] = ImVec2(100, 500);
 	actionPositions[Action::ThrottleReverse] = ImVec2(10, 10);
 	actionPositions[Action::SteerRight] = ImVec2(1, 1);
 	actionPositions[Action::SteerLeft] = ImVec2(1, 1);

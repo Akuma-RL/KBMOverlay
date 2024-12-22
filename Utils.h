@@ -1,7 +1,11 @@
 #pragma once
 #include <unordered_set>
-#include <set>=
+#include <set>
 #include "Keys.h"
+#include "Globals.h"
+#include <fstream>
+#include <filesystem>
+
 
 // Forward declaration of KeyState
 struct KeyState;
@@ -19,7 +23,8 @@ namespace Utils
 	extern const std::map<std::string, std::string> conflictingActions;
 	void FilterActionKeyMap(std::map<std::string, std::string>& actionKeyMap);
 
-	static void CleanupKeyStates(std::map<std::string, bool>& keyStates);
+
+	void CleanupKeyStates(std::map<std::string, KeyState>& keyStates);
 	static void LogKeyStates(const std::map<std::string, KeyState>& keyStates);
 };
 

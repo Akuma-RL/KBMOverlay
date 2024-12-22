@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "bakkesmod/plugin/bakkesmodplugin.h"
 #include <chrono>
 #include "Utils.h"
 #include <algorithm>
@@ -65,32 +66,6 @@ void Utils::FilterActionKeyMap(std::map<std::string, std::string>& actionKeyMap)
     // Remove unbound and conflicting actions from actionKeyMap
     for (const auto& action : toRemove) {
         actionKeyMap.erase(action);
-    }
-}
-
-std::chrono::steady_clock::time_point lastLogTime;
-
-void Utils::CleanupKeyStates(std::map<std::string, bool>& keyStates) {
-    for (auto it = keyStates.begin(); it != keyStates.end();) {
-        if (!it->second) { // Key is not pressed
-            it = keyStates.erase(it); // Remove from map
-        }
-        else {
-            ++it; // Move to next
-        }
-    }
-}
-
-void Utils::LogKeyStates(const std::map<std::string, KeyState>& keyStates) {
-    auto now = std::chrono::steady_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - lastLogTime).count();
-
-    if (duration >= 2) { // Log every 2 seconds
-        LOG("[KBMOverlay] Current key states:");
-        for (const auto& [key, state] : keyStates) { // Use state to access KeyState
-            //LOG("[KBMOverlay] Key '{}' is {}", key, state.pressed ? "pressed" : "released");
-        }
-        lastLogTime = now;
     }
 }
 

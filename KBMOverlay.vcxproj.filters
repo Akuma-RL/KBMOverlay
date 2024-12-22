@@ -96,6 +96,9 @@
     <ClCompile Include="Render.cpp">
       <Filter>Plugin\src</Filter>
     </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Plugin\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imgui_rangeslider.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="Render.h">
       <Filter>Plugin\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Plugin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

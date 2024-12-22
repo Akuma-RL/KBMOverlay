@@ -89,6 +89,11 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
 
 		ImVec2 pos = plugin->actionPositions[action]; // Screen position for the action
 
+		//if (pos.x != 0 || pos.y != 0) {
+		//	// Use `pos` for rendering
+		//	LOG("[KBMOverlay] Rendering action '{}' at position ({}, {}).", action, pos.x, pos.y);
+		//}
+		// 
 		// Check if the key is pressed and adjust the Y-position
 		if (plugin->keyStates[key].pressed) {
 			region.y += 131; // Shift Y by 131 pixels for the pressed texture
