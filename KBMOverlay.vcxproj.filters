@@ -174,7 +174,7 @@
       <Filter>Plugin\header</Filter>
     </ClInclude>
     <ClInclude Include="Config.h">
-      <Filter>Plugin</Filter>
+      <Filter>Plugin\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,9 +17,13 @@ BAKKESMOD_PLUGIN(KBMOverlay, "Keyboard & Mouse Overlay", plugin_version, PLUGINT
 void KBMOverlay::onLoad() {
 	_globalCvarManager = cvarManager;
 
+	// Get screen size and initialize screen variables
 	Vector2 screenSize = gameWrapper->GetScreenSize();
+	float screenX = screenSize.X;
+	float screenY = screenSize.Y;
 
-	*ScreenSize = screenSize;
+	Vector2F screenFloat(screenX, screenY);
+	*ScreenSize = screenFloat;
 
 	Init::ActionPositions(actionPositions);
 
@@ -42,7 +46,7 @@ void KBMOverlay::onLoad() {
 	Assign::ActionRegions(actionKeyMap, keyRegions, actionRegions);
 
 	// Load keyboard image
-	std::string imagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "keyboard.png").string();
+	std::string imagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Keyboard" / "keyboard_red.png").string();
 	LOG("[KBMOverlay] Attempting to load keyboard image from: {}", imagePath);
 	keyboardImage = std::make_shared<ImageWrapper>(imagePath, true, false);
 	keyboardImage->LoadForCanvas();

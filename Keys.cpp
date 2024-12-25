@@ -4,43 +4,91 @@
 #include "Globals.h"
 
 void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
-	actionPositions[Action::ThrottleForward] = ImVec2(100, 500);
-	actionPositions[Action::ThrottleReverse] = ImVec2(10, 10);
-	actionPositions[Action::SteerRight] = ImVec2(1, 1);
-	actionPositions[Action::SteerLeft] = ImVec2(1, 1);
-	actionPositions[Action::YawRight] = ImVec2(1, 1);
-	actionPositions[Action::YawLeft] = ImVec2(1, 1);
-	actionPositions[Action::PitchDown] = ImVec2(1, 1);
-	actionPositions[Action::PitchUp] = ImVec2(1, 1);
-	actionPositions[Action::RollRight] = ImVec2(1, 1);
-	actionPositions[Action::RollLeft] = ImVec2(1, 1);
-	actionPositions[Action::Boost] = ImVec2(20, 20);
-	actionPositions[Action::Jump] = ImVec2(30, 30);
-	actionPositions[Action::Handbreak] = ImVec2(1, 1);
-	actionPositions[Action::SecondaryCamera] = ImVec2(1, 1);
-	actionPositions[Action::ToggleRoll] = ImVec2(1, 1);
-	actionPositions[Action::RearCamera] = ImVec2(1, 1);
-	actionPositions[Action::ToggleScoreboard] = ImVec2(1, 1);
+	actionPositions[Action::ThrottleForward] = ImVec2(510, 835);
+	actionPositions[Action::ThrottleReverse] = ImVec2(500, 900);
+
+	actionPositions[Action::SteerRight] = ImVec2(310, 835);
+	actionPositions[Action::SteerLeft] = ImVec2(180, 835);
+
+	actionPositions[Action::YawRight] = ImVec2(310, 835);
+	actionPositions[Action::YawLeft] = ImVec2(180, 830);
+
+	actionPositions[Action::PitchDown] = ImVec2(245, 770);
+	actionPositions[Action::PitchUp] = ImVec2(245, 835);
+
+	actionPositions[Action::RollRight] = ImVec2(310, 770);
+	actionPositions[Action::RollLeft] = ImVec2(180, 770);
+
+	actionPositions[Action::Boost] = ImVec2(565, 900);
+
+	actionPositions[Action::Jump] = ImVec2(435, 900);
+
+	actionPositions[Action::Handbreak] = ImVec2(300, 900);
+
+	actionPositions[Action::SecondaryCamera] = ImVec2(100, 900);
+
+	actionPositions[Action::ToggleRoll] = ImVec2(35, 835);
+
+	actionPositions[Action::RearCamera] = ImVec2(35, 900);
+
+	actionPositions[Action::ToggleScoreboard] = ImVec2(35, 770);
 }
 
 void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
 	actionKeyMap[Action::ThrottleForward] = *ForwardKey;
 	actionKeyMap[Action::ThrottleReverse] = *ReverseKey;
+
 	actionKeyMap[Action::SteerRight] = *SteerRKey;
 	actionKeyMap[Action::SteerLeft] = *SteerLKey;
+
+	actionKeyMap[Action::LookUp] = *LookUpKey;
+	actionKeyMap[Action::LookDown] = *LookDownKey;
+	actionKeyMap[Action::LookRight] = *LookRightKey;
+	actionKeyMap[Action::LookLeft] = *LookLeftKey;
+
 	actionKeyMap[Action::YawRight] = *YawRKey;
 	actionKeyMap[Action::YawLeft] = *YawLKey;
+
 	actionKeyMap[Action::PitchDown] = *PitchDownKey;
 	actionKeyMap[Action::PitchUp] = *PitchUpKey;
+
 	actionKeyMap[Action::RollRight] = *ARRKey;
 	actionKeyMap[Action::RollLeft] = *ARLKey;
+
 	actionKeyMap[Action::Boost] = *BoostKey;
+
 	actionKeyMap[Action::Jump] = *JumpKey;
+
 	actionKeyMap[Action::Handbreak] = *HandbreakKey;
+
 	actionKeyMap[Action::SecondaryCamera] = *BallCamKey;
+
 	actionKeyMap[Action::ToggleRoll] = *FreeRollKey;
+
 	actionKeyMap[Action::RearCamera] = *RearCamKey;
+
+	actionKeyMap[Action::UsePickup] = *UsePickupKey;
+
+	actionKeyMap[Action::NextPickup] = *NextPickupKey;
+
+	actionKeyMap[Action::Grab] = *GrabKey;
+
+	actionKeyMap[Action::ToggleMidGameMenu] = *MenuKey;
+
 	actionKeyMap[Action::ToggleScoreboard] = *ScoreboardKey;
+
+	actionKeyMap[Action::Chat] = *ChatKey;
+	actionKeyMap[Action::TeamChat] = *TeamChatKey;
+	actionKeyMap[Action::PartyChat] = *PartyChatKey;
+
+	actionKeyMap[Action::ChatPreset1] = *ChatPreset1Key;
+	actionKeyMap[Action::ChatPreset2] = *ChatPreset2Key;
+	actionKeyMap[Action::ChatPreset3] = *ChatPreset3Key;
+	actionKeyMap[Action::ChatPreset4] = *ChatPreset4Key;
+
+	actionKeyMap[Action::PushToTalk] = *PushToTalkKey;
+
+	actionKeyMap[Action::ResetTraining] = *ResetTrainingKey;
 }
 
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {

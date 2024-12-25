@@ -71,21 +71,76 @@ void Utils::FilterActionKeyMap(std::map<std::string, std::string>& actionKeyMap)
 
 // Define the relevant actions
 const std::unordered_set<std::string> relevantActions = {
-    Action::ThrottleForward,
+   Action::ThrottleForward,
     Action::ThrottleReverse,
+
     Action::SteerRight,
     Action::SteerLeft,
+
+    Action::LookUp,
+    Action::LookDown,
+    Action::LookRight,
+    Action::LookLeft,
+
     Action::YawRight,
     Action::YawLeft,
+
     Action::PitchUp,
     Action::PitchDown,
+
     Action::RollRight,
     Action::RollLeft,
+
     Action::Boost,
+
     Action::Jump,
+
     Action::Handbreak,
+
     Action::SecondaryCamera,
+
     Action::ToggleRoll,
+
     Action::RearCamera,
-    Action::ToggleScoreboard
+
+    Action::ToggleScoreboard,
+
+    Action::UsePickup,
+
+    Action::NextPickup,
+
+    Action::Grab,
+
+    Action::ToggleMidGameMenu,
+
+    Action::ToggleScoreboard,
+
+    Action::Chat,
+
+    Action::TeamChat,
+
+    Action::PartyChat,
+
+    Action::ChatPreset1,
+    Action::ChatPreset2,
+    Action::ChatPreset3,
+    Action::ChatPreset4,
+
+    Action::PushToTalk,
+
+    Action::ResetTraining,
+
+    MB::LeftMouseButton,
+    MB::RightMouseButton,
+
+    MB::MouseScrollDown,
+    MB::MouseScrollUp,
+
+    MB::MouseX,
+    MB::MouseY,
+
+    MB::ThumbMouse,		// Mouse back button
+    MB::ThumbMouse2,	// Mouse fw button
+
+    MB::MouseScrollDown
 };

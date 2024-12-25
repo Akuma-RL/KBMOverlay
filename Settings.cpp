@@ -17,19 +17,46 @@ void Settings::RenderSettings() {
 		ImGui::SetTooltip("On/Off to Enable or Disable the Overlay");
 	}
 
-    //if (ImGui::TreeNode("Basic"))
-    //{
-    //    if (ImGui::Begin("table1", 3))
-    //    {
-    //        for (int row = 0; row < 4; row++)
-    //        {
-    //            ImGui::TableNextRow();
-    //            for (int column = 0; column < 3; column++)
-    //            {
-    //                ImGui::TableSetColumnIndex(column);
-    //                ImGui::Text("Row %d Column %d", row, column);
-    //            }
-    //        }
-    //        ImGui::EndTable();
-    //    }
+
+	// Size Slider for image
+	ImGui::TextUnformatted("Overall Size Slider");
+
+	static float staticScale = *overallScaleFactor;
+	float scale = *overallScaleFactor;
+	if (ImGui::SliderFloat("Text Size", &scale, .501f, 2.0f)) {
+		*overallScaleFactor = scale;
+	}
+	if (ImGui::IsItemHovered()) {
+		std::string hoverTextSize = "Overlay scale is " + std::to_string(scale);
+		ImGui::SetTooltip(hoverTextSize.c_str());
+	}
+
+	// image X position
+	ImGui::TextUnformatted("Speed Text Position");
+
+	Vector2F screen = *ScreenSize;
+
+	static Vector2F staticCanvas = *canvasPosition;
+	Vector2F canvas = *canvasPosition;
+	if (ImGui::SliderFloat("Horizontal Position", &canvas.X, 0.0f, screen.X)) {
+		*canvasPosition = Vector2F(canvas.X, canvas.Y);
+	}
+	if (ImGui::IsItemHovered()) {
+		std::string hoverXText = "Overlay X position is " + std::to_string(canvas.X);
+		ImGui::SetTooltip(hoverXText.c_str());
+	}
+	// image Y position
+	if (ImGui::SliderFloat("Vertical Position", &canvas.Y, 0.0f, screen.Y)) {
+		*canvasPosition = Vector2F(canvas.X, canvas.Y);
+	}
+	if (ImGui::IsItemHovered()) {
+		std::string hoverYText = "Overlay Y position is " + std::to_string(canvas.Y);
+		ImGui::SetTooltip(hoverYText.c_str());
+	}
+
+	// reset sliders to default
+	if (ImGui::Button("Reset Defaults")) {
+		canvas = staticCanvas;
+		scale = staticScale;
+	}
 }

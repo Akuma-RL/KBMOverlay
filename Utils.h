@@ -22,10 +22,6 @@ namespace Utils
 
 	extern const std::map<std::string, std::string> conflictingActions;
 	void FilterActionKeyMap(std::map<std::string, std::string>& actionKeyMap);
-
-
-	void CleanupKeyStates(std::map<std::string, KeyState>& keyStates);
-	static void LogKeyStates(const std::map<std::string, KeyState>& keyStates);
 };
 
 // Make relevant actions globally accessible
@@ -34,21 +30,78 @@ extern const std::unordered_set<std::string> relevantActions;
 namespace Action {
 	constexpr auto ThrottleForward = "ThrottleForward";
 	constexpr auto ThrottleReverse = "ThrottleReverse";
+
 	constexpr auto SteerRight = "SteerRight";
 	constexpr auto SteerLeft = "SteerLeft";
+
+	constexpr auto LookUp = "LookUp";
+	constexpr auto LookDown = "LookDown";
+	constexpr auto LookRight = "LookRight";
+	constexpr auto LookLeft = "LookLeft";
+
 	constexpr auto YawRight = "YawRight";
 	constexpr auto YawLeft = "YawLeft";
+
 	constexpr auto PitchUp = "PitchUp";
 	constexpr auto PitchDown = "PitchDown";
+
 	constexpr auto RollRight = "RollRight";
 	constexpr auto RollLeft = "RollLeft";
+
 	constexpr auto Boost = "Boost";
+
 	constexpr auto Jump = "Jump";
+
 	constexpr auto Handbreak = "Handbrake";
+
 	constexpr auto SecondaryCamera = "SecondaryCamera";
+
 	constexpr auto ToggleRoll = "ToggleRoll";
+
 	constexpr auto RearCamera = "RearCamera";
+
+	constexpr auto UsePickup = "UsePickup";
+
+	constexpr auto NextPickup = "NextPickup";
+
+	constexpr auto Grab = "Grab";
+
+	constexpr auto ToggleMidGameMenu = "ToggleMidGameMenu";
+
 	constexpr auto ToggleScoreboard = "ToggleScoreboard";
+
+	constexpr auto Chat = "Chat";
+
+	constexpr auto TeamChat = "TeamChat";
+
+	constexpr auto PartyChat = "PartyChat";
+
+	constexpr auto ChatPreset1 = "ChatPreset1";
+	constexpr auto ChatPreset2 = "ChatPreset2";
+	constexpr auto ChatPreset3 = "ChatPreset3";
+	constexpr auto ChatPreset4 = "ChatPreset4";
+
+	constexpr auto PushToTalk = "PushToTalk";
+
+	constexpr auto ResetTraining = "ResetTraining";
+}
+
+namespace MB
+{
+	// Mouse binds
+	constexpr auto MouseX = "mousex";
+	constexpr auto MouseY = "mousey";
+
+	constexpr auto ThumbMouse = "thumbmouse";
+	constexpr auto ThumbMouse2 = "thumbmouse2";
+
+	constexpr auto LeftMouseButton = "leftmousebutton";
+	constexpr auto RightMouseButton = "rightmousebutton";
+
+	constexpr auto MouseScrollUp = "mousescrollup";
+	constexpr auto MouseScrollDown = "mousescrolldown";
+
+	constexpr auto MiddleMouseButton = "middlemousebutton";
 }
 
 namespace Key {
@@ -71,18 +124,18 @@ namespace Key {
 	constexpr auto Delete = "delete";
 
 	// ~ row
-	constexpr auto Tilde = "";
-	constexpr auto One = "1";
-	constexpr auto Two = "2";
-	constexpr auto Three = "3";
-	constexpr auto Four = "4";
-	constexpr auto Five = "5";
-	constexpr auto Six = "6";
-	constexpr auto Seven = "7";
-	constexpr auto Eight = "8";
-	constexpr auto Nine = "9";
-	constexpr auto Zero = "0";
-	constexpr auto Minus = "minus";
+	constexpr auto Tilde = "tilde";
+	constexpr auto One = "one";
+	constexpr auto Two = "two";
+	constexpr auto Three = "three";
+	constexpr auto Four = "four";
+	constexpr auto Five = "five";
+	constexpr auto Six = "six";
+	constexpr auto Seven = "seven";
+	constexpr auto Eight = "eight";
+	constexpr auto Nine = "nine";
+	constexpr auto Zero = "zero";
+	constexpr auto Minus = "underscore";
 	constexpr auto Equals = "equals";
 	constexpr auto Backspace = "backspace";
 	constexpr auto Home = "home";
@@ -99,9 +152,9 @@ namespace Key {
 	constexpr auto I = "i";
 	constexpr auto O = "o";
 	constexpr auto P = "p";
-	constexpr auto LBracket = "[";
-	constexpr auto RBracket = "]";
-	constexpr auto Backslash = "";
+	constexpr auto LBracket = "leftbracket";
+	constexpr auto RBracket = "rightbracket";
+	constexpr auto Backslash = "backslash";
 	constexpr auto PageUp = "pageup";
 
 	// Caps Lock row
@@ -116,7 +169,7 @@ namespace Key {
 	constexpr auto K = "k";
 	constexpr auto L = "l";
 	constexpr auto Semicolon = "semicolon";
-	constexpr auto Quote = "'";
+	constexpr auto Quote = "quote";
 	constexpr auto Enter = "enter";
 	constexpr auto PageDown = "pagedown";
 
@@ -129,9 +182,9 @@ namespace Key {
 	constexpr auto B = "b";
 	constexpr auto N = "n";
 	constexpr auto M = "m";
-	constexpr auto Comma = "";
-	constexpr auto Period = "";
-	constexpr auto Forwardslash = "/";
+	constexpr auto Comma = "comma";
+	constexpr auto Period = "period";
+	constexpr auto Forwardslash = "slash";
 	constexpr auto RShift = "rightshift";
 	constexpr auto Up = "up";
 	constexpr auto End = "end";

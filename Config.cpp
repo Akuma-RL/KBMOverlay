@@ -37,6 +37,7 @@ void Config::SetupConfigFile() {
 }
 
 void Config::exportBindsToFile() {
+	// Get the current keybinds from the game
 	SettingsWrapper settings = kbm.gameWrapper->GetSettings();
 
 	std::ofstream file(kbm.cfgFile);
@@ -45,9 +46,11 @@ void Config::exportBindsToFile() {
 			const std::string& action = bind.second;
 			const std::string& key = bind.first;
 
-			// Check if the action is relevant
+			// Check if the action is in the relevant set
 			if (relevantActions.find(action) != relevantActions.end()) {
-				ImVec2 pos = kbm.actionPositions[action]; // Fetch position for the action
+				ImVec2 pos = kbm.actionPositions[action]; // Fetch the position for the action
+
+				// Write action, key, and position to the file
 				file << "Action: " << action
 					<< " | Key: " << key
 					<< " | Position: " << pos.x << "," << pos.y << "\n";
@@ -82,17 +85,23 @@ void Config::reloadBindsFromFile() {
 			// Extract parts of the line
 			std::string action = line.substr(8, keyDelimiter - 8);
 			std::string key = line.substr(keyDelimiter + 8, posDelimiter - (keyDelimiter + 8));
-			std::string posStr = line.substr(posDelimiter + 13);
 
-			// Parse position
-			float posX = 0.0f, posY = 0.0f;
-			if (sscanf(posStr.c_str(), "%f,%f", &posX, &posY) != 2) {
-				LOG("[KBMOverlay] Failed to parse position for action '{}': '{}'", action, posStr);
-				continue;
+			// Suggested addition: Parse position
+			auto actionPosDelimiter = line.find(" | Position: ");
+			if (actionPosDelimiter != std::string::npos) {
+				std::string position = line.substr(actionPosDelimiter + 12);
+				try {
+					int x = std::stoi(position.substr(0, position.find(',')));
+					int y = std::stoi(position.substr(position.find(',') + 1));
+					kbm.actionPositions[action] = ImVec2(x, y);
+				}
+				catch (const std::exception& e) {
+					LOG("[KBMOverlay] Failed to parse position for action '{}': '{}'. Error: {}", action, position, e.what());
+					continue;
+				}
 			}
 
-			// Update positions and key mappings
-			kbm.actionPositions[action] = ImVec2(posX, posY);
+			// Update key mappings
 			kbm.actionKeyMap[action] = key;
 
 			// Normalize the key
@@ -101,25 +110,66 @@ void Config::reloadBindsFromFile() {
 
 			// Map normalized key to shared pointers for specific actions
 			if (relevantActions.find(action) != relevantActions.end()) {
+
 				if (action == Action::ThrottleForward) *ForwardKey = normalizedKey;
 				else if (action == Action::ThrottleReverse) *ReverseKey = normalizedKey;
+
 				else if (action == Action::SteerRight) *SteerRKey = normalizedKey;
 				else if (action == Action::SteerLeft) *SteerLKey = normalizedKey;
+
+				else if (action == Action::LookUp) *LookUpKey = normalizedKey;
+				else if (action == Action::LookDown) *LookDownKey = normalizedKey;
+				else if (action == Action::LookRight) *LookRightKey = normalizedKey;
+				else if (action == Action::LookLeft) *LookLeftKey = normalizedKey;
+
+
 				else if (action == Action::YawRight) *YawRKey = normalizedKey;
 				else if (action == Action::YawLeft) *YawLKey = normalizedKey;
+
 				else if (action == Action::PitchDown) *PitchDownKey = normalizedKey;
 				else if (action == Action::PitchUp) *PitchUpKey = normalizedKey;
+
 				else if (action == Action::RollRight) *ARRKey = normalizedKey;
 				else if (action == Action::RollLeft) *ARLKey = normalizedKey;
+
 				else if (action == Action::Boost) *BoostKey = normalizedKey;
+
 				else if (action == Action::Jump) *JumpKey = normalizedKey;
+
 				else if (action == Action::Handbreak) *HandbreakKey = normalizedKey;
+
 				else if (action == Action::SecondaryCamera) *BallCamKey = normalizedKey;
+
 				else if (action == Action::ToggleRoll) *FreeRollKey = normalizedKey;
+
 				else if (action == Action::RearCamera) *RearCamKey = normalizedKey;
+
+				else if (action == Action::UsePickup) *UsePickupKey = normalizedKey;
+
+				else if (action == Action::NextPickup) *NextPickupKey = normalizedKey;
+
+				else if (action == Action::Grab) *GrabKey = normalizedKey;
+
+				else if (action == Action::ToggleMidGameMenu) *MenuKey = normalizedKey;
+
 				else if (action == Action::ToggleScoreboard) *ScoreboardKey = normalizedKey;
 
-				LOG("[KBMOverlay] Mapped Action '{}' to Key '{}' at Position ({}, {}).", action, normalizedKey, posX, posY);
+				else if (action == Action::Chat) *ChatKey = normalizedKey;
+
+				else if (action == Action::TeamChat) *TeamChatKey = normalizedKey;
+
+				else if (action == Action::PartyChat) *PartyChatKey = normalizedKey;
+
+				else if (action == Action::ChatPreset1) *ChatPreset1Key = normalizedKey;
+				else if (action == Action::ChatPreset2) *ChatPreset2Key = normalizedKey;
+				else if (action == Action::ChatPreset3) *ChatPreset3Key = normalizedKey;
+				else if (action == Action::ChatPreset4) *ChatPreset4Key = normalizedKey;
+
+				else if (action == Action::PushToTalk) *PushToTalkKey = normalizedKey;
+
+				else if (action == Action::ResetTraining) *ResetTrainingKey = normalizedKey;
+
+				LOG("[KBMOverlay] Mapped Action '{}' to Key '{}' at Position ({}, {}).", action, normalizedKey, kbm.actionPositions[action].x, kbm.actionPositions[action].y);
 			}
 		}
 		else {
