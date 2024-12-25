@@ -19,6 +19,8 @@ class KBMOverlay : public BakkesMod::Plugin::BakkesModPlugin
 {
 public:
 
+	std::mutex imageMutex; // Mutex to synchronize image loading
+
 	float scaleFactor = 2.0f; // Scale down the image by half
 
 	std::map<std::string, KeyState> keyStates;
@@ -38,5 +40,14 @@ public:
 
 	void onTick(std::string eventName);
 
+	void PreloadImages(const std::string& basePath);
+
+
+	void SetKeyboardImage(const std::string& imageName);
+
+	std::map<std::string, std::shared_ptr<ImageWrapper>> preloadedImages;
+
 private:
+	void LoadImageAsync(const std::string& imageFile, const std::string& imagePath, std::mutex& imageMutex);
+
 };

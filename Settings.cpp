@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "Settings.h"
 #include "Globals.h"
+#include "KBMOverlay.h"
 
 Settings settings;
+KBMOverlay kbml;
 
 void Settings::RenderSettings() {
 	ImGui::TextUnformatted("Overlay for full KBM players, or keyboard only players!");
@@ -59,4 +61,40 @@ void Settings::RenderSettings() {
 		canvas = staticCanvas;
 		scale = staticScale;
 	}
+
+	//ImGui::TextUnformatted("Keyboard Overlay Settings");
+
+	//// Dropdown to select keyboard image
+	//static int selectedIndex = 0; // Track the currently selected index
+	//std::vector<std::string> imageNames = {
+	//	"keyboard_red.png",
+	//	"keyboard_orange.png",
+	//	"keyboard_yellow.png",
+	//	"keyboard_green.png",
+	//	"keyboard_teal.png",
+	//	"keyboard_cyan.png",
+	//	"keyboard_blue.png",
+	//	"keyboard_purple.png",
+	//	"keyboard_pink.png",
+	//	"keyboard_bubblegum.png",
+	//	"keyboard_custom.png"
+	//};
+
+	//// Show the dropdown
+	//if (ImGui::BeginCombo("Select Keyboard Image", imageNames[selectedIndex].c_str())) {
+	//	for (int i = 0; i < imageNames.size(); ++i) {
+	//		bool isSelected = (selectedIndex == i);
+	//		if (ImGui::Selectable(imageNames[i].c_str(), isSelected)) {
+	//			selectedIndex = i;
+
+	//			// Load the selected image when picked
+	//			kbml.SetKeyboardImage(imageNames[selectedIndex]);
+	//		}
+
+	//		if (isSelected) {
+	//			ImGui::SetItemDefaultFocus();
+	//		}
+	//	}
+	//	ImGui::EndCombo();
+	//}
 }

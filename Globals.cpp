@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Globals.h"
 
+
 std::shared_ptr<bool> enableOverlay = std::make_shared<bool>(false);
 
 std::shared_ptr<Vector2F> ScreenSize = std::make_shared<Vector2F>();

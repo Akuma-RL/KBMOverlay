@@ -17,13 +17,9 @@ BAKKESMOD_PLUGIN(KBMOverlay, "Keyboard & Mouse Overlay", plugin_version, PLUGINT
 void KBMOverlay::onLoad() {
 	_globalCvarManager = cvarManager;
 
-	// Get screen size and initialize screen variables
+	// Screen size initialization
 	Vector2 screenSize = gameWrapper->GetScreenSize();
-	float screenX = screenSize.X;
-	float screenY = screenSize.Y;
-
-	Vector2F screenFloat(screenX, screenY);
-	*ScreenSize = screenFloat;
+	*ScreenSize = Vector2F(screenSize.X, screenSize.Y);
 
 	Init::ActionPositions(actionPositions);
 
