@@ -59,7 +59,26 @@ void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 
 }
 
+void Init::MouseActionPositions(std::map<std::string, ImVec2>& mouseActionPositions) {
+	mouseActionPositions[MB::Body] = ImVec2(326, 0);
+
+	mouseActionPositions[MB::MouseX] = ImVec2(326, 0);
+	mouseActionPositions[MB::MouseY] = ImVec2(326, 0);
+
+	mouseActionPositions[MB::ThumbMouse] = ImVec2(326, 0);
+	mouseActionPositions[MB::ThumbMouse2] = ImVec2(326, 0);
+
+	mouseActionPositions[MB::LeftMouseButton] = ImVec2(1040, 300);
+	mouseActionPositions[MB::RightMouseButton] = ImVec2(1216, 0);
+
+	mouseActionPositions[MB::MouseScrollDown] = ImVec2(326, 0);
+	mouseActionPositions[MB::MouseScrollUp] = ImVec2(326, 0);
+
+	mouseActionPositions[MB::MiddleMouseButton] = ImVec2(326, 0);
+}
+
 void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
+
 	actionKeyMap[Action::ThrottleForward] = *ForwardKey;
 	actionKeyMap[Action::ThrottleReverse] = *ReverseKey;
 
@@ -111,6 +130,25 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
 	actionKeyMap[Action::PushToTalk] = *PushToTalkKey;
 
 	actionKeyMap[Action::ResetTraining] = *ResetTrainingKey;
+}
+
+// Initialize mouse key regions
+void Init::MouseKeyRegions(std::map<std::string, Rect>& mouseKeyRegions) {
+	mouseKeyRegions[MB::Body] = { 326, 0, 287, 245 };
+
+	mouseKeyRegions[MB::MouseX] = { 612, 205, 24, 24 };
+	mouseKeyRegions[MB::MouseY] = { 612, 205, 24, 24 };
+
+	mouseKeyRegions[MB::ThumbMouse] = { 283, 0, 44, 65 };
+	mouseKeyRegions[MB::ThumbMouse2] = { 283, 0, 44, 65 };
+
+	mouseKeyRegions[MB::LeftMouseButton] = { 0, 0, 142, 177 };
+	mouseKeyRegions[MB::RightMouseButton] = { 141, 0, 142, 177 };
+
+	mouseKeyRegions[MB::MouseScrollDown] = { 283, 244, 52, 99 };
+	mouseKeyRegions[MB::MouseScrollUp] = { 283, 244, 52, 99 };
+
+	mouseKeyRegions[MB::MiddleMouseButton] = { 283, 244, 52, 99 };
 }
 
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
@@ -217,7 +255,21 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 	for (const auto& action : relevantActions) { // Iterate through relevantActions
 		int keyIndex = gameWrapper->GetFNameIndexByString(action); // Use action name directly
 		keyStates[action] = { keyIndex, false }; // Initialize with key index and not pressed
-		//LOG("[KBMOverlay] Initialized Key '{}' with index {}", action, keyIndex);
+
+		// Mouse
+		keyStates[MB::MouseX] = { gameWrapper->GetFNameIndexByString("MouseX"), false };
+		keyStates[MB::MouseY] = { gameWrapper->GetFNameIndexByString("MouseY"), false };
+
+		keyStates[MB::ThumbMouse] = { gameWrapper->GetFNameIndexByString("ThumbMouse"), false };
+		keyStates[MB::ThumbMouse2] = { gameWrapper->GetFNameIndexByString("ThumbMouse2"), false };
+
+		keyStates[MB::LeftMouseButton] = { gameWrapper->GetFNameIndexByString("LeftMouseButton"), false };
+		keyStates[MB::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMousebutton"), false };
+
+		keyStates[MB::MouseScrollDown] = { gameWrapper->GetFNameIndexByString("MouseScrollDown"), false };
+		keyStates[MB::MouseScrollUp] = { gameWrapper->GetFNameIndexByString("MouseScrollUp"), false };
+
+		keyStates[MB::MiddleMouseButton] = { gameWrapper->GetFNameIndexByString("MiddleMouseButton"), false };
 
 		// Escape row
 		keyStates[Key::Escape] = { gameWrapper->GetFNameIndexByString("Escape"), false };
@@ -318,30 +370,51 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 }
 
 
-// Function to dynamically assign key regions to actions 
-void Assign::ActionRegions(
-	const std::map<std::string, std::string>& actionKeyMap,
-	const std::map<std::string, Rect>& keyRegions,
-	std::map<std::string, std::shared_ptr<Rect>>& actionRegions
+void Assign::KeyboardActionRegions(
+    const std::map<std::string, std::string>& actionKeyMap,
+    const std::map<std::string, Rect>& keyRegions,
+    std::map<std::string, std::shared_ptr<Rect>>& actionRegions
 ) {
-	LOG("[KBMOverlay] AssignActionRegions called.");
+    for (const auto& [action, key] : actionKeyMap) {
+        if (key.empty()) {
+            LOG("[KBMOverlay] Skipping keyboard action '{}': Key is empty.", action);
+            actionRegions[action] = nullptr;
+            continue;
+        }
 
-	for (const auto& [action, key] : actionKeyMap) {
-		if (key.empty()) {
-			LOG("[KBMOverlay] Skipping action '{}': Key is empty.", action);
-			actionRegions[action] = nullptr;
-			continue;
-		}
-
-		auto it = keyRegions.find(key);
-		if (it != keyRegions.end()) {
-			actionRegions[action] = std::make_shared<Rect>(it->second);
-			//LOG("[KBMOverlay] Mapped action '{}' to key '{}' with Region: x={}, y={}, width={}, height={}",
-			//	action, key, it->second.x, it->second.y, it->second.width, it->second.height);
-		}
-		else {
-			LOG("[KBMOverlay] No region found for action '{}' with key '{}'", action, key);
-			actionRegions[action] = nullptr;
-		}
-	}
+        auto it = keyRegions.find(key);
+        if (it != keyRegions.end()) {
+            actionRegions[action] = std::make_shared<Rect>(it->second);
+            LOG("[KBMOverlay] Assigned keyboard region for action '{}': (x: {}, y: {}, width: {}, height: {})",
+                action, it->second.x, it->second.y, it->second.width, it->second.height);
+        } else {
+            LOG("[KBMOverlay] No keyboard region found for action '{}' with key '{}'", action, key);
+            actionRegions[action] = nullptr;
+        }
+    }
 }
+
+void Assign::MouseActionRegions(
+    const std::map<std::string, std::string>& actionKeyMap,
+    const std::map<std::string, Rect>& mouseKeyRegions,
+    std::map<std::string, std::shared_ptr<Rect>>& mouseActionRegions
+) {
+    for (const auto& [action, key] : actionKeyMap) {
+        if (key.empty()) {
+            LOG("[KBMOverlay] Skipping mouse action '{}': Key is empty.", action);
+            mouseActionRegions[action] = nullptr;
+            continue;
+        }
+
+        auto it = mouseKeyRegions.find(key);
+        if (it != mouseKeyRegions.end()) {
+            mouseActionRegions[action] = std::make_shared<Rect>(it->second);
+            LOG("[KBMOverlay] Assigned mouse region for action '{}': (x: {}, y: {}, width: {}, height: {})",
+                action, it->second.x, it->second.y, it->second.width, it->second.height);
+        } else {
+            LOG("[KBMOverlay] No mouse region found for action '{}' with key '{}'", action, key);
+            mouseActionRegions[action] = nullptr;
+        }
+    }
+}
+

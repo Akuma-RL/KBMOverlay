@@ -128,19 +128,5 @@ const std::unordered_set<std::string> relevantActions = {
 
     Action::PushToTalk,
 
-    Action::ResetTraining,
-
-    MB::LeftMouseButton,
-    MB::RightMouseButton,
-
-    MB::MouseScrollDown,
-    MB::MouseScrollUp,
-
-    MB::MouseX,
-    MB::MouseY,
-
-    MB::ThumbMouse,		// Mouse back button
-    MB::ThumbMouse2,	// Mouse fw button
-
-    MB::MouseScrollDown
+    Action::ResetTraining
 };

@@ -28,9 +28,20 @@ public:
 	std::shared_ptr<ImageWrapper> keyboardImage;
 
 	std::map<std::string, ImVec2> actionPositions;
+
 	std::map<std::string, std::string> actionKeyMap;
+
 	std::map<std::string, Rect> keyRegions;
+
 	std::map<std::string, std::shared_ptr<Rect>> actionRegions;
+
+	// Mouse overlay related members
+	std::shared_ptr<ImageWrapper> mouseImage;
+	std::map<std::string, Rect> mouseKeyRegions;
+	std::map<std::string, ImVec2> mouseActionPositions;
+	std::map<std::string, std::shared_ptr<Rect>> mouseActionRegions;
+
+
 
 	std::string cfgFile = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbmbinds.cfg").string();
 
@@ -38,16 +49,11 @@ public:
 	void onUnload() override;
 	void RenderSettings() override;
 
+	void SetKeyboardAndMouseImage(const std::string& color);
+
 	void onTick(std::string eventName);
-
-	void PreloadImages(const std::string& basePath);
-
-
-	void SetKeyboardImage(const std::string& imageName);
 
 	std::map<std::string, std::shared_ptr<ImageWrapper>> preloadedImages;
 
 private:
-	void LoadImageAsync(const std::string& imageFile, const std::string& imagePath, std::mutex& imageMutex);
-
 };

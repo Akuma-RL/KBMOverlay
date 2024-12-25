@@ -4,6 +4,8 @@
 
 std::shared_ptr<bool> enableOverlay = std::make_shared<bool>(false);
 
+std::shared_ptr<bool> gUseMouseOverlay = std::make_shared<bool>(false);
+
 std::shared_ptr<Vector2F> ScreenSize = std::make_shared<Vector2F>();
 
 std::shared_ptr<float>overallScaleFactor = std::make_shared<float>(.666f);

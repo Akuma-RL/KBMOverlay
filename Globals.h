@@ -6,6 +6,8 @@ namespace fs = std::filesystem;
 
 extern std::shared_ptr<bool> enableOverlay;
 
+extern std::shared_ptr<bool> gUseMouseOverlay;
+
 extern std::shared_ptr<Vector2F> ScreenSize;
 
 extern std::shared_ptr<float>overallScaleFactor;

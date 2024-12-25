@@ -7,7 +7,8 @@ Settings settings;
 KBMOverlay kbml;
 
 void Settings::RenderSettings() {
-	ImGui::TextUnformatted("Overlay for full KBM players, or keyboard only players!");
+
+	ImGui::TextUnformatted("Overlay for KBM players, or Keyboard only players!");
 
 	static bool overlayEnabled = *enableOverlay;
 
@@ -34,7 +35,7 @@ void Settings::RenderSettings() {
 	}
 
 	// image X position
-	ImGui::TextUnformatted("Speed Text Position");
+	ImGui::TextUnformatted("Overlay Position");
 
 	Vector2F screen = *ScreenSize;
 
@@ -62,39 +63,26 @@ void Settings::RenderSettings() {
 		scale = staticScale;
 	}
 
-	//ImGui::TextUnformatted("Keyboard Overlay Settings");
+	ImGui::TextUnformatted("Overlay Color Settings");
 
-	//// Dropdown to select keyboard image
-	//static int selectedIndex = 0; // Track the currently selected index
-	//std::vector<std::string> imageNames = {
-	//	"keyboard_red.png",
-	//	"keyboard_orange.png",
-	//	"keyboard_yellow.png",
-	//	"keyboard_green.png",
-	//	"keyboard_teal.png",
-	//	"keyboard_cyan.png",
-	//	"keyboard_blue.png",
-	//	"keyboard_purple.png",
-	//	"keyboard_pink.png",
-	//	"keyboard_bubblegum.png",
-	//	"keyboard_custom.png"
-	//};
+	// Dropdown for selecting color
+	static int selectedIndex = 0; // Track the selected index
+	std::vector<std::string> colorOptions = { "Red", "Orange", "Yellow", "Green", "Teal", "Cyan", "Blue", "Purple", "Pink", "Bubblegum", "Custom" };
 
-	//// Show the dropdown
-	//if (ImGui::BeginCombo("Select Keyboard Image", imageNames[selectedIndex].c_str())) {
-	//	for (int i = 0; i < imageNames.size(); ++i) {
-	//		bool isSelected = (selectedIndex == i);
-	//		if (ImGui::Selectable(imageNames[i].c_str(), isSelected)) {
-	//			selectedIndex = i;
+	if (ImGui::BeginCombo("Select Color", colorOptions[selectedIndex].c_str())) {
+		for (int i = 0; i < colorOptions.size(); ++i) {
+			bool isSelected = (selectedIndex == i);
+			if (ImGui::Selectable(colorOptions[i].c_str(), isSelected)) {
+				selectedIndex = i;
 
-	//			// Load the selected image when picked
-	//			kbml.SetKeyboardImage(imageNames[selectedIndex]);
-	//		}
+				// Update keyboard and mouse images
+				kbml.SetKeyboardAndMouseImage(colorOptions[selectedIndex]);
+			}
 
-	//		if (isSelected) {
-	//			ImGui::SetItemDefaultFocus();
-	//		}
-	//	}
-	//	ImGui::EndCombo();
-	//}
+			if (isSelected) {
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
 }
