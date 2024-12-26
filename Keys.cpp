@@ -4,58 +4,76 @@
 #include "Globals.h"
 
 void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
-	actionPositions[Action::ThrottleForward] = ImVec2(925, 260);
-	actionPositions[Action::ThrottleReverse] = ImVec2(925, 325);
+	//actionPositions[Action::ThrottleForward] = ImVec2(925, 260);
+	//actionPositions[Action::ThrottleReverse] = ImVec2(925, 325);
 
-	actionPositions[Action::SteerRight] = ImVec2(275, 195);
-	actionPositions[Action::SteerLeft] = ImVec2(145, 195);
+	//actionPositions[Action::SteerRight] = ImVec2(275, 195);
+	//actionPositions[Action::SteerLeft] = ImVec2(145, 195);
 
-	actionPositions[Action::LookUp] = ImVec2(535, 260);
-	actionPositions[Action::LookDown] = ImVec2(535, 325);
-	actionPositions[Action::LookRight] = ImVec2(600, 325);
-	actionPositions[Action::LookLeft] = ImVec2(470, 325);
+	//actionPositions[Action::LookUp] = ImVec2(535, 260);
+	//actionPositions[Action::LookDown] = ImVec2(535, 325);
+	//actionPositions[Action::LookRight] = ImVec2(600, 325);
+	//actionPositions[Action::LookLeft] = ImVec2(470, 325);
 
-	actionPositions[Action::YawRight] = ImVec2(275, 195);
-	actionPositions[Action::YawLeft] = ImVec2(145, 195);
+	//actionPositions[Action::YawRight] = ImVec2(275, 195);
+	//actionPositions[Action::YawLeft] = ImVec2(145, 195);
 
-	actionPositions[Action::PitchDown] = ImVec2(210, 130);
-	actionPositions[Action::PitchUp] = ImVec2(210, 195);
+	//actionPositions[Action::PitchDown] = ImVec2(210, 130);
+	//actionPositions[Action::PitchUp] = ImVec2(210, 195);
 
-	actionPositions[Action::RollRight] = ImVec2(275, 130);
-	actionPositions[Action::RollLeft] = ImVec2(145, 130);
+	//actionPositions[Action::RollRight] = ImVec2(275, 130);
+	//actionPositions[Action::RollLeft] = ImVec2(145, 130);
 
-	actionPositions[Action::Boost] = ImVec2(990, 325);
+	//actionPositions[Action::Boost] = ImVec2(990, 325);
 
-	actionPositions[Action::Jump] = ImVec2(860, 325);
+	//actionPositions[Action::Jump] = ImVec2(860, 325);
 
-	actionPositions[Action::Handbreak] = ImVec2(795, 325);
+	//actionPositions[Action::Handbreak] = ImVec2(795, 325);
 
-	actionPositions[Action::SecondaryCamera] = ImVec2(210, 325);
+	//actionPositions[Action::SecondaryCamera] = ImVec2(210, 325);
 
-	actionPositions[Action::ToggleRoll] = ImVec2(0, 260);
+	//actionPositions[Action::ToggleRoll] = ImVec2(0, 260);
 
-	actionPositions[Action::RearCamera] = ImVec2(0, 325);
+	//actionPositions[Action::RearCamera] = ImVec2(0, 325);
 
-	actionPositions[Action::UsePickup] = ImVec2(340, 130);
-	actionPositions[Action::NextPickup] = ImVec2(275, 260);
-	actionPositions[Action::Grab] = ImVec2(0, 260);
+	//actionPositions[Action::UsePickup] = ImVec2(340, 130);
+	//actionPositions[Action::NextPickup] = ImVec2(275, 260);
+	//actionPositions[Action::Grab] = ImVec2(0, 260);
 
-	actionPositions[Action::ToggleMidGameMenu] = ImVec2(0, 0);
-	actionPositions[Action::ToggleScoreboard] = ImVec2(0, 130);
+	//actionPositions[Action::ToggleMidGameMenu] = ImVec2(0, 0);
+	//actionPositions[Action::ToggleScoreboard] = ImVec2(0, 130);
 
-	actionPositions[Action::Chat] = ImVec2(405, 130);
-	actionPositions[Action::TeamChat] = ImVec2(470, 130);
-	actionPositions[Action::PartyChat] = ImVec2(535, 130);
+	//actionPositions[Action::Chat] = ImVec2(405, 130);
+	//actionPositions[Action::TeamChat] = ImVec2(470, 130);
+	//actionPositions[Action::PartyChat] = ImVec2(535, 130);
 
 
-	actionPositions[Action::ChatPreset1] = ImVec2(145, 65);
-	actionPositions[Action::ChatPreset2] = ImVec2(210, 65);
-	actionPositions[Action::ChatPreset3] = ImVec2(275, 65);
-	actionPositions[Action::ChatPreset4] = ImVec2(340, 65);
+	//actionPositions[Action::ChatPreset1] = ImVec2(145, 65);
+	//actionPositions[Action::ChatPreset2] = ImVec2(210, 65);
+	//actionPositions[Action::ChatPreset3] = ImVec2(275, 65);
+	//actionPositions[Action::ChatPreset4] = ImVec2(340, 65);
 
-	actionPositions[Action::PushToTalk] = ImVec2(340, 195);
+	//actionPositions[Action::PushToTalk] = ImVec2(340, 195);
 
-	actionPositions[Action::ResetTraining] = ImVec2(795, 65);
+	//actionPositions[Action::ResetTraining] = ImVec2(795, 65);
+
+	actionPositions[Action::ThrottleForward] = ImVec2(470, 65);
+	actionPositions[Action::ThrottleReverse] = ImVec2(470, 130);
+	actionPositions[Action::SteerRight] = ImVec2(275, 65);
+	actionPositions[Action::SteerLeft] = ImVec2(145, 65);
+	actionPositions[Action::YawRight] = ImVec2(275, 65);
+	actionPositions[Action::YawLeft] = ImVec2(145, 65);
+	actionPositions[Action::PitchDown] = ImVec2(210, 0);
+	actionPositions[Action::PitchUp] = ImVec2(210, 65);
+	actionPositions[Action::RollRight] = ImVec2(275, 0);
+	actionPositions[Action::RollLeft] = ImVec2(145, 0);
+	actionPositions[Action::Boost] = ImVec2(535, 130);
+	actionPositions[Action::Jump] = ImVec2(405, 130);
+	actionPositions[Action::Handbreak] = ImVec2(275, 130);
+	actionPositions[Action::SecondaryCamera] = ImVec2(65, 130);
+	actionPositions[Action::ToggleRoll] = ImVec2(0, 130);
+	actionPositions[Action::RearCamera] = ImVec2(0, 130);
+	actionPositions[Action::ToggleScoreboard] = ImVec2(0, 0);
 
 }
 
