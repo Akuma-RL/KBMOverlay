@@ -8,7 +8,7 @@ std::shared_ptr<bool> gUseMouseOverlay = std::make_shared<bool>(false);
 
 std::shared_ptr<Vector2F> ScreenSize = std::make_shared<Vector2F>();
 
-std::shared_ptr<float>overallScaleFactor = std::make_shared<float>(.666f);
+std::shared_ptr<float>overallScaleFactor = std::make_shared<float>(.6f);
 
 std::shared_ptr<Vector2F>canvasPosition = std::make_shared<Vector2F>(1.f, 1.f);
 

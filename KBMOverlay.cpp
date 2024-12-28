@@ -23,6 +23,9 @@ void KBMOverlay::onLoad() {
     Vector2 screenSize = gameWrapper->GetScreenSize();
     *ScreenSize = Vector2F(screenSize.X, screenSize.Y);
 
+    Init::Profiles();
+    activeProfileType = ProfileType::Recommended; // Set default profile
+
     // Initialize positions and regions
     Init::ActionPositions(actionPositions);
     Init::MouseActionPositions(mouseActionPositions);
@@ -37,7 +40,6 @@ void KBMOverlay::onLoad() {
 
     Init::KeyRegions(keyRegions);
     Init::ActionKeyMap(actionKeyMap);
-    Init::KeyStates(keyStates, gameWrapper.get());
 
     // Detect bindings for mouse overlay
     if (actionKeyMap[Action::Jump] == MB::LeftMouseButton &&
@@ -61,17 +63,8 @@ void KBMOverlay::onLoad() {
     // Always assign keyboard regions
     Assign::KeyboardActionRegions(actionKeyMap, keyRegions, actionRegions);
 
-    // Load default keyboard and mouse images
-    std::string keyboardPath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Keyboard" / "keyboard_custom.png").string();
-    std::string mousePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Mouse" / "mouse_custom.png").string();
-
-    keyboardImage = std::make_shared<ImageWrapper>(keyboardPath, true, false);
-    keyboardImage->LoadForCanvas();
-
-    if (useMouseOverlay) {
-        mouseImage = std::make_shared<ImageWrapper>(mousePath, true, false);
-        mouseImage->LoadForCanvas();
-    }
+    // Initialize default image using SetImage
+    SetImage("Custom"); // Replace "default" with the actual default color name
 
     // Register canvas rendering
     gameWrapper->RegisterDrawable([this](CanvasWrapper canvas) {
@@ -81,37 +74,47 @@ void KBMOverlay::onLoad() {
     LOG("[KBMOverlay] Plugin loaded.");
 }
 
+void KBMOverlay::SetImage(const std::string& color) {
+    Utils::Normalize(color); // Normalize color name
+    LOG("[KBMOverlay] SetImage called with color: {}", color);
 
-void KBMOverlay::SetKeyboardAndMouseImage(const std::string& color) {
-    // Load keyboard image
-    std::string keyboardImagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Keyboard" / ("keyboard_" + color + ".png")).string();
-    auto newKeyboardImage = std::make_shared<ImageWrapper>(keyboardImagePath, true, false);
-    newKeyboardImage->LoadForCanvas();
+    // Construct the image path
+    std::string imagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Image" / ("kbm_" + color + ".png")).string();
+    LOG("[KBMOverlay] Constructed image path: {}", imagePath);
 
-    if (newKeyboardImage->IsLoadedForCanvas()) {
-        keyboardImage = newKeyboardImage;
-        LOG("[KBMOverlay] Switched to keyboard image: keyboard_{}.png", color);
+    // Check if the image file exists
+    if (!std::filesystem::exists(imagePath)) {
+        LOG("[KBMOverlay] Image path does not exist: {}", imagePath);
+        return;
     }
-    else {
-        LOG("[KBMOverlay] Failed to load keyboard image: keyboard_{}.png", color);
-    }
 
-    // Load mouse image if overlay is enabled
-    if (*gUseMouseOverlay) {
-        std::string mouseImagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Mouse" / ("mouse_" + color + ".png")).string();
-        auto newMouseImage = std::make_shared<ImageWrapper>(mouseImagePath, true, false);
-        newMouseImage->LoadForCanvas();
+    // Schedule the image loading and updating on the game thread
+    gameWrapper->Execute([this, imagePath, color](GameWrapper* gw) {
+        try {
+            // Create and load the image
+            auto newImage = std::make_shared<ImageWrapper>(imagePath, true, false);
+            LOG("[KBMOverlay] Created new ImageWrapper instance on game thread");
 
-        if (newMouseImage->IsLoadedForCanvas()) {
-            mouseImage = newMouseImage;
-            LOG("[KBMOverlay] Switched to mouse image: mouse_{}.png", color);
+            newImage->LoadForCanvas();
+            LOG("[KBMOverlay] Called LoadForCanvas on game thread");
+
+            if (newImage->IsLoadedForCanvas()) {
+                std::lock_guard<std::mutex> guard(imageMutex); // Lock mutex for thread safety
+                keyboardImage = newImage;
+                LOG("[KBMOverlay] Successfully switched to new image: kbm_{}.png", color);
+            }
+            else {
+                LOG("[KBMOverlay] Failed to load new image for canvas: kbm_{}.png", color);
+            }
         }
-        else {
-            LOG("[KBMOverlay] Failed to load mouse image: mouse_{}.png", color);
+        catch (const std::exception& e) {
+            LOG("[KBMOverlay] Exception during SetImage on game thread: {}", e.what());
         }
-    }
+        catch (...) {
+            LOG("[KBMOverlay] Unknown exception during SetImage on game thread");
+        }
+        });
 }
-
 
 void KBMOverlay::onTick(std::string eventName) {
     if (!gameWrapper->IsInCustomTraining() &&
@@ -129,6 +132,11 @@ void KBMOverlay::onTick(std::string eventName) {
     }
 }
 
+void KBMOverlay::SetProfile(ProfileType profileType) {
+    activeProfileType = profileType;
+    LOG("[KBMOverlay] Active profile switched to: {}",
+        profileType == ProfileType::FullKeyboard ? "Full Keyboard" : "Recommended");
+}
 
 void KBMOverlay::RenderSettings() {
 	settings.RenderSettings();

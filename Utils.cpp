@@ -17,7 +17,7 @@ std::string Utils::Trim(const std::string& str) {
     size_t end = str.find_last_not_of(" \t\n\r");
     return (start == std::string::npos) ? "" : str.substr(start, end - start + 1);
 }
-std::string Utils::NormalizeKey(const std::string& key) {
+std::string Utils::Normalize(const std::string& key) {
     std::string normalizedKey = key;
     normalizedKey = Trim(normalizedKey); // Remove leading/trailing whitespace
     std::transform(normalizedKey.begin(), normalizedKey.end(), normalizedKey.begin(), ::tolower); // Convert to lowercase

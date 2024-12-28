@@ -9,6 +9,17 @@
 // Forward declaration of Rect
 struct Rect;
 
+enum class ProfileType {
+    FullKeyboard,
+    Recommended
+};
+
+struct Profile {
+    ProfileType type;
+    std::map<std::string, ImVec2> actionPositions; // Positions for actions (layout-specific)
+};
+
+
 struct KeyState {
 	int index;      // Virtual key index/code
 	bool pressed;   // Is the key pressed
@@ -22,6 +33,7 @@ namespace Init {
 	void MouseKeyRegions(std::map<std::string, Rect>& mouseKeyRegions);
 	void KeyRegions(std::map<std::string, Rect>& keyRegions);
 	void KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper);
+    void Profiles();
 }
 
 namespace Assign {

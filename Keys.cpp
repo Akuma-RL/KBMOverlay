@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "bakkesmod/plugin/bakkesmodplugin.h"
+#include "KBMOverlay.h"
 #include "Keys.h"
 #include "Globals.h"
+
+KBMOverlay kbmo;
 
 void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 	//actionPositions[Action::ThrottleForward] = ImVec2(925, 260);
@@ -57,7 +60,7 @@ void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 
 	//actionPositions[Action::ResetTraining] = ImVec2(795, 65);
 
-	actionPositions[Action::ThrottleForward] = ImVec2(470, 65);
+	actionPositions[Action::ThrottleForward] = ImVec2(480, 65);
 	actionPositions[Action::ThrottleReverse] = ImVec2(470, 130);
 	actionPositions[Action::SteerRight] = ImVec2(275, 65);
 	actionPositions[Action::SteerLeft] = ImVec2(145, 65);
@@ -69,12 +72,46 @@ void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 	actionPositions[Action::RollLeft] = ImVec2(145, 0);
 	actionPositions[Action::Boost] = ImVec2(535, 130);
 	actionPositions[Action::Jump] = ImVec2(405, 130);
-	actionPositions[Action::Handbreak] = ImVec2(275, 130);
+	actionPositions[Action::Handbreak] = ImVec2(265, 130);
 	actionPositions[Action::SecondaryCamera] = ImVec2(65, 130);
 	actionPositions[Action::ToggleRoll] = ImVec2(0, 130);
 	actionPositions[Action::RearCamera] = ImVec2(0, 130);
 	actionPositions[Action::ToggleScoreboard] = ImVec2(0, 0);
 
+}
+
+void Init::Profiles() {
+	// Full Keyboard Profile: Use all key regions
+	for (const auto& [key, _] : kbmo.keyRegions) {
+		kbmo.fullKeyboardPositions[key] = ImVec2(0, 0); // Default all keys to (0,0)
+	}
+
+	// Recommended Profile: Use selected keys
+	kbmo.recommendedPositions = {
+		// top row
+		{"tab", ImVec2(0, 0)},
+		{"q", ImVec2(145, 0)},
+		{"w", ImVec2(210, 0)},
+		{"e", ImVec2(275, 0)},
+
+		// second row
+		{"leftshift", ImVec2(0, 65)},
+		{"a", ImVec2(145, 65)},
+		{"s", ImVec2(210, 200)},
+		{"d", ImVec2(275, 200)},
+		
+		// third row
+		{"leftcontrol", ImVec2(0, 130)},
+		{"spacebar", ImVec2(65, 130)},
+		{"rightcontrol", ImVec2(265, 130)},
+
+		{"up", ImVec2(480, 65)},
+		{"down", ImVec2(470, 130)},
+		{"left", ImVec2(405, 130)},
+		{"right", ImVec2(535, 130)},
+	};
+
+	LOG("[KBMOverlay] Profiles initialized.");
 }
 
 void Init::MouseActionPositions(std::map<std::string, ImVec2>& mouseActionPositions) {

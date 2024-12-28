@@ -18,7 +18,7 @@ struct Rect {
 namespace Utils
 {
 	std::string Trim(const std::string& str);
-	std::string NormalizeKey(const std::string& key);
+	std::string Normalize(const std::string& key);
 
 	extern const std::map<std::string, std::string> conflictingActions;
 	void FilterActionKeyMap(std::map<std::string, std::string>& actionKeyMap);
