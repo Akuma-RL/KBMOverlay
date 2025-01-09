@@ -23,6 +23,8 @@ public:
 
 	float scaleFactor = 2.0f; // Scale down the image by half
 
+	std::set<std::string> pressedKeys;              // Keys currently pressed
+
 	std::map<std::string, KeyState> keyStates;
 	std::chrono::steady_clock::time_point lastLogTime;
 	std::shared_ptr<ImageWrapper> keyboardImage;
@@ -48,6 +50,8 @@ public:
 
 	std::string cfgFile = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbmbinds.cfg").string();
 
+	std::string settingsFile = (gameWrapper->GetDataFolder() / "KBMOverlay" / "settings.cfg").string();
+
 	void onLoad() override;
 	void onUnload() override;
 	void RenderSettings() override;
@@ -56,7 +60,8 @@ public:
 
 	void onTick(std::string eventName);
 
-	void SetProfile(ProfileType profileType);
+	void UpdatePressedKeys();
+	void RegisterCVAR();
 
 	std::map<std::string, std::shared_ptr<ImageWrapper>> preloadedImages;
 

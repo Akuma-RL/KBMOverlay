@@ -6,6 +6,8 @@
 
 KBMOverlay kbmo;
 
+std::map<std::string, ImVec2> keyPositions;
+
 void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 	//actionPositions[Action::ThrottleForward] = ImVec2(925, 260);
 	//actionPositions[Action::ThrottleReverse] = ImVec2(925, 325);
@@ -77,7 +79,207 @@ void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 	actionPositions[Action::ToggleRoll] = ImVec2(0, 130);
 	actionPositions[Action::RearCamera] = ImVec2(0, 130);
 	actionPositions[Action::ToggleScoreboard] = ImVec2(0, 0);
+}
 
+void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
+	if (*gLayoutIndex == 0) {
+		Init::ActionPositions(kbmo.actionPositions);
+	}
+	if (*gLayoutIndex == 1) {
+		// Escape row
+		keyPositions[Key::Escape] = ImVec2(0, 0);
+		keyPositions[Key::F1] = ImVec2(65, 0);
+		keyPositions[Key::F2] = ImVec2(130, 0);
+		keyPositions[Key::F3] = ImVec2(195, 0);
+		keyPositions[Key::F4] = ImVec2(260, 0);
+		keyPositions[Key::F5] = ImVec2(320, 0);
+		keyPositions[Key::F6] = ImVec2(385, 0);
+		keyPositions[Key::F7] = ImVec2(450, 0);
+		keyPositions[Key::F8] = ImVec2(515, 0);
+		keyPositions[Key::F9] = ImVec2(580, 0);
+		keyPositions[Key::F10] = ImVec2(645, 0);
+		keyPositions[Key::F11] = ImVec2(710, 0);
+		keyPositions[Key::F12] = ImVec2(775, 0);
+		keyPositions[Key::PrintScreen] = ImVec2(840, 0);
+		keyPositions[Key::Pause] = ImVec2(905, 0);
+		keyPositions[Key::Delete] = ImVec2(970, 0);
+
+		// ~ row
+		keyPositions[Key::Tilde] = ImVec2(0, 65);
+		keyPositions[Key::One] = ImVec2(65, 65);
+		keyPositions[Key::Two] = ImVec2(130, 65);
+		keyPositions[Key::Three] = ImVec2(195, 65);
+		keyPositions[Key::Four] = ImVec2(260, 65);
+		keyPositions[Key::Five] = ImVec2(325, 65);
+		keyPositions[Key::Six] = ImVec2(390, 65);
+		keyPositions[Key::Seven] = ImVec2(455, 65);
+		keyPositions[Key::Eight] = ImVec2(520, 65);
+		keyPositions[Key::Nine] = ImVec2(585, 65);
+		keyPositions[Key::Zero] = ImVec2(650, 65);
+		keyPositions[Key::Minus] = ImVec2(715, 65);
+		keyPositions[Key::Equals] = ImVec2(780, 65);
+		keyPositions[Key::Backspace] = ImVec2(845, 65);;
+		keyPositions[Key::Home] = ImVec2(990, 65);
+
+		// Tab row
+		keyPositions[Key::Tab] = ImVec2(0, 130);
+		keyPositions[Key::Q] = ImVec2(145, 130);
+		keyPositions[Key::W] = ImVec2(210, 130);
+		keyPositions[Key::E] = ImVec2(275, 130);
+		keyPositions[Key::R] = ImVec2(340, 130);
+		keyPositions[Key::T] = ImVec2(405, 130);
+		keyPositions[Key::Y] = ImVec2(470, 130);
+		keyPositions[Key::U] = ImVec2(535, 130);
+		keyPositions[Key::I] = ImVec2(600, 130);
+		keyPositions[Key::O] = ImVec2(665, 130);
+		keyPositions[Key::P] = ImVec2(730, 130);
+		keyPositions[Key::LBracket] = ImVec2(795, 130);
+		keyPositions[Key::RBracket] = ImVec2(860, 130);
+		keyPositions[Key::Backslash] = ImVec2(925, 130);
+		keyPositions[Key::PageUp] = ImVec2(990, 130);
+
+		//Caps Lock row
+		keyPositions[Key::CapsLock] = ImVec2(0, 195);
+		keyPositions[Key::A] = ImVec2(145, 195);
+		keyPositions[Key::S] = ImVec2(210, 195);
+		keyPositions[Key::D] = ImVec2(275, 195);
+		keyPositions[Key::F] = ImVec2(340, 195);
+		keyPositions[Key::G] = ImVec2(405, 195);
+		keyPositions[Key::H] = ImVec2(470, 195);
+		keyPositions[Key::J] = ImVec2(535, 195);
+		keyPositions[Key::K] = ImVec2(600, 195);
+		keyPositions[Key::L] = ImVec2(665, 195);
+		keyPositions[Key::Semicolon] = ImVec2(730, 195);
+		keyPositions[Key::Quote] = ImVec2(795, 195);
+		keyPositions[Key::Enter] = ImVec2(860, 195);
+		keyPositions[Key::PageDown] = ImVec2(1005, 195);
+
+		// Shift row
+		keyPositions[Key::LShift] = ImVec2(0, 260);
+		keyPositions[Key::Z] = ImVec2(145, 260);
+		keyPositions[Key::X] = ImVec2(210, 260);
+		keyPositions[Key::C] = ImVec2(275, 260);
+		keyPositions[Key::V] = ImVec2(340, 260);
+		keyPositions[Key::B] = ImVec2(405, 260);
+		keyPositions[Key::N] = ImVec2(470, 260);
+		keyPositions[Key::M] = ImVec2(535, 260);
+		keyPositions[Key::Comma] = ImVec2(600, 260);
+		keyPositions[Key::Period] = ImVec2(665, 260);
+		keyPositions[Key::Forwardslash] = ImVec2(730, 260);
+		keyPositions[Key::RShift] = ImVec2(795, 260);
+		keyPositions[Key::Up] = ImVec2(940, 260);
+		keyPositions[Key::End] = ImVec2(1005, 260);
+
+		// Control row
+		keyPositions[Key::LControl] = ImVec2(0, 325);
+		keyPositions[Key::Windows] = ImVec2(65, 325);
+		keyPositions[Key::LAlt] = ImVec2(145, 325);
+		keyPositions[Key::Spacebar] = ImVec2(210, 325);
+		keyPositions[Key::RAlt] = ImVec2(405, 325);
+		keyPositions[Key::Function] = ImVec2(470, 325);
+		keyPositions[Key::RControl] = ImVec2(535, 325);
+		keyPositions[Key::Left] = ImVec2(860, 325);
+		keyPositions[Key::Down] = ImVec2(925, 325);
+		keyPositions[Key::Right] = ImVec2(990, 325);
+	}
+
+	if (*gLayoutIndex == 2) {
+		// Escape row
+		keyPositions[Key::Escape] = ImVec2(0, 0);
+		keyPositions[Key::F1] = ImVec2(65, 0);
+		keyPositions[Key::F2] = ImVec2(130, 0);
+		keyPositions[Key::F3] = ImVec2(195, 0);
+		keyPositions[Key::F4] = ImVec2(260, 0);
+		keyPositions[Key::F5] = ImVec2(320, 0);
+		keyPositions[Key::F6] = ImVec2(385, 0);
+		keyPositions[Key::F7] = ImVec2(450, 0);
+		keyPositions[Key::F8] = ImVec2(515, 0);
+		keyPositions[Key::F9] = ImVec2(580, 0);
+		keyPositions[Key::F10] = ImVec2(645, 0);
+		keyPositions[Key::F11] = ImVec2(710, 0);
+		keyPositions[Key::F12] = ImVec2(775, 0);
+		keyPositions[Key::PrintScreen] = ImVec2(840, 0);
+		keyPositions[Key::Pause] = ImVec2(905, 0);
+		keyPositions[Key::Delete] = ImVec2(970, 0);
+
+		// ~ row
+		keyPositions[Key::Tilde] = ImVec2(0, 65);
+		keyPositions[Key::One] = ImVec2(65, 65);
+		keyPositions[Key::Two] = ImVec2(130, 65);
+		keyPositions[Key::Three] = ImVec2(195, 65);
+		keyPositions[Key::Four] = ImVec2(260, 65);
+		keyPositions[Key::Five] = ImVec2(325, 65);
+		keyPositions[Key::Six] = ImVec2(390, 65);
+		keyPositions[Key::Seven] = ImVec2(455, 65);
+		keyPositions[Key::Eight] = ImVec2(520, 65);
+		keyPositions[Key::Nine] = ImVec2(585, 65);
+		keyPositions[Key::Zero] = ImVec2(650, 65);
+		keyPositions[Key::Minus] = ImVec2(715, 65);
+		keyPositions[Key::Equals] = ImVec2(780, 65);
+		keyPositions[Key::Backspace] = ImVec2(845, 65);;
+		keyPositions[Key::Home] = ImVec2(990, 65);
+
+		// Tab row
+		keyPositions[Key::Tab] = ImVec2(0, 130);
+		keyPositions[Key::Q] = ImVec2(145, 130);
+		keyPositions[Key::W] = ImVec2(210, 130);
+		keyPositions[Key::E] = ImVec2(275, 130);
+		keyPositions[Key::R] = ImVec2(340, 130);
+		keyPositions[Key::T] = ImVec2(405, 130);
+		keyPositions[Key::Y] = ImVec2(470, 130);
+		keyPositions[Key::U] = ImVec2(535, 130);
+		keyPositions[Key::I] = ImVec2(600, 130);
+		keyPositions[Key::O] = ImVec2(665, 130);
+		keyPositions[Key::P] = ImVec2(730, 130);
+		keyPositions[Key::LBracket] = ImVec2(795, 130);
+		keyPositions[Key::RBracket] = ImVec2(860, 130);
+		keyPositions[Key::Backslash] = ImVec2(925, 130);
+		keyPositions[Key::PageUp] = ImVec2(990, 130);
+
+		//Caps Lock row
+		keyPositions[Key::CapsLock] = ImVec2(0, 195);
+		keyPositions[Key::A] = ImVec2(145, 195);
+		keyPositions[Key::S] = ImVec2(210, 195);
+		keyPositions[Key::D] = ImVec2(275, 195);
+		keyPositions[Key::F] = ImVec2(340, 195);
+		keyPositions[Key::G] = ImVec2(405, 195);
+		keyPositions[Key::H] = ImVec2(470, 195);
+		keyPositions[Key::J] = ImVec2(535, 195);
+		keyPositions[Key::K] = ImVec2(600, 195);
+		keyPositions[Key::L] = ImVec2(665, 195);
+		keyPositions[Key::Semicolon] = ImVec2(730, 195);
+		keyPositions[Key::Quote] = ImVec2(795, 195);
+		keyPositions[Key::Enter] = ImVec2(860, 195);
+		keyPositions[Key::PageDown] = ImVec2(1005, 195);
+
+		// Shift row
+		keyPositions[Key::LShift] = ImVec2(0, 260);
+		keyPositions[Key::Z] = ImVec2(145, 260);
+		keyPositions[Key::X] = ImVec2(210, 260);
+		keyPositions[Key::C] = ImVec2(275, 260);
+		keyPositions[Key::V] = ImVec2(340, 260);
+		keyPositions[Key::B] = ImVec2(405, 260);
+		keyPositions[Key::N] = ImVec2(470, 260);
+		keyPositions[Key::M] = ImVec2(535, 260);
+		keyPositions[Key::Comma] = ImVec2(600, 260);
+		keyPositions[Key::Period] = ImVec2(665, 260);
+		keyPositions[Key::Forwardslash] = ImVec2(730, 260);
+		keyPositions[Key::RShift] = ImVec2(795, 260);
+		keyPositions[Key::Up] = ImVec2(940, 260);
+		keyPositions[Key::End] = ImVec2(1005, 260);
+
+		// Control row
+		keyPositions[Key::LControl] = ImVec2(0, 325);
+		keyPositions[Key::Windows] = ImVec2(65, 325);
+		keyPositions[Key::LAlt] = ImVec2(145, 325);
+		keyPositions[Key::Spacebar] = ImVec2(210, 325);
+		keyPositions[Key::RAlt] = ImVec2(405, 325);
+		keyPositions[Key::Function] = ImVec2(470, 325);
+		keyPositions[Key::RControl] = ImVec2(535, 325);
+		keyPositions[Key::Left] = ImVec2(860, 325);
+		keyPositions[Key::Down] = ImVec2(925, 325);
+		keyPositions[Key::Right] = ImVec2(990, 325);
+	}
 }
 
 void Init::Profiles() {
@@ -99,7 +301,7 @@ void Init::Profiles() {
 		{"a", ImVec2(145, 65)},
 		{"s", ImVec2(210, 200)},
 		{"d", ImVec2(275, 200)},
-		
+
 		// third row
 		{"leftcontrol", ImVec2(0, 130)},
 		{"spacebar", ImVec2(65, 130)},
@@ -189,120 +391,122 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
 
 // Initialize mouse key regions
 void Init::MouseKeyRegions(std::map<std::string, Rect>& mouseKeyRegions) {
-	mouseKeyRegions[MB::Body] = { 326, 0, 287, 245 };
+	mouseKeyRegions[MB::Body] = { 2204, 8515, 285, 244 };
 
-	mouseKeyRegions[MB::MouseX] = { 612, 205, 24, 24 };
-	mouseKeyRegions[MB::MouseY] = { 612, 205, 24, 24 };
+	mouseKeyRegions[MB::MouseX] = { 2450, 8736, 22, 22 };
+	mouseKeyRegions[MB::MouseY] = { 2450, 8736, 22, 22 };
 
-	mouseKeyRegions[MB::ThumbMouse] = { 283, 0, 44, 65 };
-	mouseKeyRegions[MB::ThumbMouse2] = { 283, 0, 44, 65 };
+	mouseKeyRegions[MB::ThumbMouse] = { 2408, 8760, 42, 64 };
+	mouseKeyRegions[MB::ThumbMouse2] = { 2408, 8760, 42, 64 };
 
-	mouseKeyRegions[MB::LeftMouseButton] = { 0, 0, 142, 177 };
-	mouseKeyRegions[MB::RightMouseButton] = { 141, 0, 142, 177 };
+	mouseKeyRegions[MB::LeftMouseButton] = { 1920, 8515, 141, 176 };
+	mouseKeyRegions[MB::RightMouseButton] = { 2062, 8515, 141, 176 };
 
-	mouseKeyRegions[MB::MouseScrollDown] = { 283, 244, 52, 99 };
-	mouseKeyRegions[MB::MouseScrollUp] = { 283, 244, 52, 99 };
+	mouseKeyRegions[MB::MouseScrollDown] = { 2356, 8760, 50, 97 };
+	mouseKeyRegions[MB::MouseScrollUp] = { 2306, 8760, 50, 97 };
 
-	mouseKeyRegions[MB::MiddleMouseButton] = { 283, 244, 52, 99 };
+	mouseKeyRegions[MB::MiddleMouseButton] = { 2250, 8760, 50, 97 };
+
+	mouseKeyRegions[MB::ScrollWheel] = { 2204, 8760, 50, 97 };
 }
 
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 
 	// Escape row
-	keyRegions[Key::Escape] = { 0, 0, 160, 130 };
-	keyRegions[Key::F1] = { 159, 0, 161, 130 };
-	keyRegions[Key::F2] = { 319, 0, 161, 130 };
-	keyRegions[Key::F3] = { 479, 0, 161, 130 };
-	keyRegions[Key::F4] = { 649, 0, 161, 130 };
-	keyRegions[Key::F5] = { 799, 0, 161, 130 };
-	keyRegions[Key::F6] = { 959, 0, 161, 130 };
-	keyRegions[Key::F7] = { 1119, 0, 161, 130 };
-	keyRegions[Key::F8] = { 1279, 0, 161, 130 };
-	keyRegions[Key::F9] = { 1439, 0, 161, 130 };
-	keyRegions[Key::F10] = { 1559, 0, 161, 130 };
-	keyRegions[Key::F11] = { 1759, 0, 161, 130 };
-	keyRegions[Key::F12] = { 1919, 0, 161, 130 };
-	keyRegions[Key::PrintScreen] = { 2079, 0, 161, 130 };
-	keyRegions[Key::Pause] = { 2239, 0, 161, 130 };
-	keyRegions[Key::Delete] = { 2399, 0, 160, 130 };
+	keyRegions[Key::Escape] = { 0, 0, 159, 130 };
+	keyRegions[Key::F1] = { 160, 0, 159, 130 };
+	keyRegions[Key::F2] = { 320, 0, 159, 130 };
+	keyRegions[Key::F3] = { 480, 0, 159, 130 };
+	keyRegions[Key::F4] = { 650, 0, 159, 130 };
+	keyRegions[Key::F5] = { 800, 0, 159, 130 };
+	keyRegions[Key::F6] = { 960, 0, 159, 130 };
+	keyRegions[Key::F7] = { 1120, 0, 159, 130 };
+	keyRegions[Key::F8] = { 1280, 0, 159, 130 };
+	keyRegions[Key::F9] = { 1440, 0, 159, 130 };
+	keyRegions[Key::F10] = { 1600, 0, 159, 130 };
+	keyRegions[Key::F11] = { 1760, 0, 159, 130 };
+	keyRegions[Key::F12] = { 1920, 0, 159, 130 };
+	keyRegions[Key::PrintScreen] = { 2080, 0, 159, 130 };
+	keyRegions[Key::Pause] = { 2240, 0, 159, 130 };
+	keyRegions[Key::Delete] = { 2400, 0, 159, 130 };
 
 	// ~ row
-	keyRegions[Key::Tilde] = { 0, 261, 160, 130 };
-	keyRegions[Key::One] = { 159, 261, 161, 130 };
-	keyRegions[Key::Two] = { 319, 261, 161, 130 };
-	keyRegions[Key::Three] = { 479, 261, 161, 130 };
-	keyRegions[Key::Four] = { 639, 261, 161, 130 };
-	keyRegions[Key::Five] = { 799, 261, 161, 130 };
-	keyRegions[Key::Six] = { 959, 0, 161, 130 };
-	keyRegions[Key::Seven] = { 1119, 261, 161, 130 };
-	keyRegions[Key::Eight] = { 1279, 261, 161, 130 };
-	keyRegions[Key::Nine] = { 1439, 261, 161, 130 };
-	keyRegions[Key::Zero] = { 1599, 261, 161, 130 };
-	keyRegions[Key::Minus] = { 1759, 261, 161, 130 };
-	keyRegions[Key::Equals] = { 1919, 261, 161, 130 };
-	keyRegions[Key::Backspace] = { 2079, 261, 322, 130 };
-	keyRegions[Key::Home] = { 2399, 261, 160, 130 };
+	keyRegions[Key::Tilde] = { 0, 1703, 159, 130 };
+	keyRegions[Key::One] = { 160, 1703, 159, 130 };
+	keyRegions[Key::Two] = { 320, 1703, 159, 130 };
+	keyRegions[Key::Three] = { 480, 1703, 159, 130 };
+	keyRegions[Key::Four] = { 640, 1703, 159, 130 };
+	keyRegions[Key::Five] = { 800, 1703, 159, 130 };
+	keyRegions[Key::Six] = { 960, 1703, 159, 130 };
+	keyRegions[Key::Seven] = { 1120, 1703, 159, 130 };
+	keyRegions[Key::Eight] = { 1280, 1703, 159, 130 };
+	keyRegions[Key::Nine] = { 1440, 1703, 159, 130 };
+	keyRegions[Key::Zero] = { 1600, 1703, 159, 130 };
+	keyRegions[Key::Minus] = { 1760, 1703, 159, 130 };
+	keyRegions[Key::Equals] = { 1920, 1703, 159, 130 };
+	keyRegions[Key::Backspace] = { 2080, 1703, 322, 130 };
+	keyRegions[Key::Home] = { 2400, 1703, 159, 130 };
 
 	// Tab row
-	keyRegions[Key::Tab] = { 0, 522, 320, 130 };
-	keyRegions[Key::Q] = { 319, 522, 161, 130 };
-	keyRegions[Key::W] = { 479, 522, 161, 130 };
-	keyRegions[Key::E] = { 639, 522, 161, 130 };
-	keyRegions[Key::R] = { 799, 522, 161, 130 };
-	keyRegions[Key::T] = { 959, 522, 161, 130 };
-	keyRegions[Key::Y] = { 1119, 522, 161, 130 };
-	keyRegions[Key::U] = { 1279, 522, 161, 130 };
-	keyRegions[Key::I] = { 1439, 522, 161, 130 };
-	keyRegions[Key::O] = { 1599, 522, 161, 130 };
-	keyRegions[Key::P] = { 1759, 522, 161, 130 };
-	keyRegions[Key::LBracket] = { 1919, 522, 161, 130 };
-	keyRegions[Key::RBracket] = { 2079, 522, 161, 130 };
-	keyRegions[Key::Backslash] = { 2239, 522, 161, 130 };
-	keyRegions[Key::PageUp] = { 2399, 522, 160, 130 };
+	keyRegions[Key::Tab] = { 0, 3406, 320, 130 };
+	keyRegions[Key::Q] = { 320, 3406, 159, 130 };
+	keyRegions[Key::W] = { 480, 3406, 159, 130 };
+	keyRegions[Key::E] = { 640, 3406, 159, 130 };
+	keyRegions[Key::R] = { 800, 3406, 159, 130 };
+	keyRegions[Key::T] = { 960, 3406, 159, 130 };
+	keyRegions[Key::Y] = { 1120, 3406, 159, 130 };
+	keyRegions[Key::U] = { 1280, 3406, 159, 130 };
+	keyRegions[Key::I] = { 1440, 3406, 159, 130 };
+	keyRegions[Key::O] = { 1600, 3406, 159, 130 };
+	keyRegions[Key::P] = { 1760, 3406, 159, 130 };
+	keyRegions[Key::LBracket] = { 1920, 3406, 159, 130 };
+	keyRegions[Key::RBracket] = { 2080, 3406, 159, 130 };
+	keyRegions[Key::Backslash] = { 2240, 3406, 159, 130 };
+	keyRegions[Key::PageUp] = { 2400, 3406, 159, 130 };
 
 	//Caps Lock row
-	keyRegions[Key::CapsLock] = { 0, 783, 320, 130 };
-	keyRegions[Key::A] = { 319, 783, 161, 130 };
-	keyRegions[Key::S] = { 479, 783, 161, 130 };
-	keyRegions[Key::D] = { 639, 783, 161, 130 };
-	keyRegions[Key::F] = { 799, 783, 161, 130 };
-	keyRegions[Key::G] = { 959, 783, 161, 130 };
-	keyRegions[Key::H] = { 1119, 783, 161, 130 };
-	keyRegions[Key::J] = { 1279, 783, 161, 130 };
-	keyRegions[Key::K] = { 1439, 783, 161, 130 };
-	keyRegions[Key::L] = { 1599, 783, 161, 130 };
-	keyRegions[Key::Semicolon] = { 1759, 783, 161, 130 };
-	keyRegions[Key::Quote] = { 1919, 783, 161, 130 };
-	keyRegions[Key::Enter] = { 2079, 783, 161, 130 };
-	keyRegions[Key::PageDown] = { 2399, 783, 160, 130 };
+	keyRegions[Key::CapsLock] = { 0, 5109, 320, 130 };
+	keyRegions[Key::A] = { 320, 5109, 159, 130 };
+	keyRegions[Key::S] = { 480, 5109, 159, 130 };
+	keyRegions[Key::D] = { 640, 5109, 159, 130 };
+	keyRegions[Key::F] = { 800, 5109, 159, 130 };
+	keyRegions[Key::G] = { 960, 5109, 159, 130 };
+	keyRegions[Key::H] = { 1120, 5109, 159, 130 };
+	keyRegions[Key::J] = { 1280, 5109, 159, 130 };
+	keyRegions[Key::K] = { 1440, 5109, 159, 130 };
+	keyRegions[Key::L] = { 1600, 5109, 159, 130 };
+	keyRegions[Key::Semicolon] = { 1760, 5109, 159, 130 };
+	keyRegions[Key::Quote] = { 1920, 5109, 159, 130 };
+	keyRegions[Key::Enter] = { 2080, 5109, 159, 130 };
+	keyRegions[Key::PageDown] = { 2400, 5109, 159, 130 };
 
 	// Shift row
-	keyRegions[Key::LShift] = { 0, 1044, 320, 130 };
-	keyRegions[Key::Z] = { 319, 1044, 161, 130 };
-	keyRegions[Key::X] = { 479, 1044, 161, 130 };
-	keyRegions[Key::C] = { 639, 1044, 161, 130 };
-	keyRegions[Key::V] = { 799, 1044, 161, 130 };
-	keyRegions[Key::B] = { 959, 1044, 161, 130 };
-	keyRegions[Key::N] = { 1119, 1044, 161, 130 };
-	keyRegions[Key::M] = { 1279, 1044, 161, 130 };
-	keyRegions[Key::Comma] = { 1439, 1044, 161, 130 };
-	keyRegions[Key::Period] = { 1599, 1044, 161, 130 };
-	keyRegions[Key::Forwardslash] = { 1759, 1044, 161, 130 };
-	keyRegions[Key::RShift] = { 1919, 1044, 321, 130 };
-	keyRegions[Key::Up] = { 2239, 1044, 161, 132 };
-	keyRegions[Key::End] = { 1399, 1044, 160, 130 };
+	keyRegions[Key::LShift] = { 0, 6812, 320, 130 };
+	keyRegions[Key::Z] = { 320, 6812, 159, 130 };
+	keyRegions[Key::X] = { 480, 6812, 159, 130 };
+	keyRegions[Key::C] = { 640, 6812, 159, 130 };
+	keyRegions[Key::V] = { 800, 6812, 159, 130 };
+	keyRegions[Key::B] = { 960, 6812, 159, 130 };
+	keyRegions[Key::N] = { 1120, 6812, 159, 130 };
+	keyRegions[Key::M] = { 1280, 6812, 159, 130 };
+	keyRegions[Key::Comma] = { 1440, 6812, 159, 130 };
+	keyRegions[Key::Period] = { 1600, 6812, 159, 130 };
+	keyRegions[Key::Forwardslash] = { 1760, 6812, 159, 130 };
+	keyRegions[Key::RShift] = { 1920, 6812, 321, 130 };
+	keyRegions[Key::Up] = { 2240, 6812, 159, 132 };
+	keyRegions[Key::End] = { 2400, 6812, 159, 130 };
 
 	// Control row
-	keyRegions[Key::LControl] = { 0, 1306, 161, 130 };
-	keyRegions[Key::Windows] = { 159, 1306, 161, 130 };
-	keyRegions[Key::LAlt] = { 319, 1306, 161, 130 };
-	keyRegions[Key::Spacebar] = { 479, 1306, 481, 130 };
-	keyRegions[Key::RAlt] = { 959, 1306, 161, 130 };
-	keyRegions[Key::Function] = { 1119, 1306, 161, 130 };
-	keyRegions[Key::RControl] = { 1279, 1306, 161, 130 };
-	keyRegions[Key::Left] = { 1439, 1306, 161, 130 };
-	keyRegions[Key::Down] = { 1599, 1306, 161, 130 };
-	keyRegions[Key::Right] = { 1759, 1306, 161, 130 };
+	keyRegions[Key::LControl] = { 0, 8515, 159, 130 };
+	keyRegions[Key::Windows] = { 160, 8515, 159, 130 };
+	keyRegions[Key::LAlt] = { 320, 8515, 159, 130 };
+	keyRegions[Key::Spacebar] = { 480, 8515, 481, 130 };
+	keyRegions[Key::RAlt] = { 960, 8515, 159, 130 };
+	keyRegions[Key::Function] = { 1120, 8515, 159, 130 };
+	keyRegions[Key::RControl] = { 1280, 8515, 159, 130 };
+	keyRegions[Key::Left] = { 1440, 8515, 159, 130 };
+	keyRegions[Key::Down] = { 1600, 8515, 159, 130 };
+	keyRegions[Key::Right] = { 1760, 8515, 159, 130 };
 }
 
 void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper)
@@ -426,50 +630,48 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 
 
 void Assign::KeyboardActionRegions(
-    const std::map<std::string, std::string>& actionKeyMap,
-    const std::map<std::string, Rect>& keyRegions,
-    std::map<std::string, std::shared_ptr<Rect>>& actionRegions
+	const std::map<std::string, std::string>& actionKeyMap,
+	const std::map<std::string, Rect>& keyRegions,
+	std::map<std::string, std::shared_ptr<Rect>>& actionRegions
 ) {
-    for (const auto& [action, key] : actionKeyMap) {
-        if (key.empty()) {
-            LOG("[KBMOverlay] Skipping keyboard action '{}': Key is empty.", action);
-            actionRegions[action] = nullptr;
-            continue;
-        }
+	for (const auto& [action, key] : actionKeyMap) {
+		if (key.empty()) {
+			actionRegions[action] = nullptr;
+			continue;
+		}
 
-        auto it = keyRegions.find(key);
-        if (it != keyRegions.end()) {
-            actionRegions[action] = std::make_shared<Rect>(it->second);
-            LOG("[KBMOverlay] Assigned keyboard region for action '{}': (x: {}, y: {}, width: {}, height: {})",
-                action, it->second.x, it->second.y, it->second.width, it->second.height);
-        } else {
-            LOG("[KBMOverlay] No keyboard region found for action '{}' with key '{}'", action, key);
-            actionRegions[action] = nullptr;
-        }
-    }
+		auto it = keyRegions.find(key);
+		if (it != keyRegions.end()) {
+			actionRegions[action] = std::make_shared<Rect>(it->second);
+		}
+		else {
+			actionRegions[action] = nullptr;
+		}
+	}
 }
 
 void Assign::MouseActionRegions(
-    const std::map<std::string, std::string>& actionKeyMap,
-    const std::map<std::string, Rect>& mouseKeyRegions,
-    std::map<std::string, std::shared_ptr<Rect>>& mouseActionRegions
+	const std::map<std::string, std::string>& actionKeyMap,
+	const std::map<std::string, Rect>& mouseKeyRegions,
+	std::map<std::string, std::shared_ptr<Rect>>& mouseActionRegions
 ) {
-    for (const auto& [action, key] : actionKeyMap) {
-        if (key.empty()) {
-            LOG("[KBMOverlay] Skipping mouse action '{}': Key is empty.", action);
-            mouseActionRegions[action] = nullptr;
-            continue;
-        }
+	for (const auto& [action, key] : actionKeyMap) {
+		if (key.empty()) {
+			LOG("[KBMOverlay] Skipping mouse action '{}': Key is empty.", action);
+			mouseActionRegions[action] = nullptr;
+			continue;
+		}
 
-        auto it = mouseKeyRegions.find(key);
-        if (it != mouseKeyRegions.end()) {
-            mouseActionRegions[action] = std::make_shared<Rect>(it->second);
-            LOG("[KBMOverlay] Assigned mouse region for action '{}': (x: {}, y: {}, width: {}, height: {})",
-                action, it->second.x, it->second.y, it->second.width, it->second.height);
-        } else {
-            LOG("[KBMOverlay] No mouse region found for action '{}' with key '{}'", action, key);
-            mouseActionRegions[action] = nullptr;
-        }
-    }
+		auto it = mouseKeyRegions.find(key);
+		if (it != mouseKeyRegions.end()) {
+			mouseActionRegions[action] = std::make_shared<Rect>(it->second);
+			LOG("[KBMOverlay] Assigned mouse region for action '{}': (x: {}, y: {}, width: {}, height: {})",
+				action, it->second.x, it->second.y, it->second.width, it->second.height);
+		}
+		else {
+			LOG("[KBMOverlay] No mouse region found for action '{}' with key '{}'", action, key);
+			mouseActionRegions[action] = nullptr;
+		}
+	}
 }
 

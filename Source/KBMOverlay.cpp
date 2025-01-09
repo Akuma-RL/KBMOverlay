@@ -21,7 +21,13 @@ void KBMOverlay::onLoad() {
 
     // Initialize screen size
     Vector2 screenSize = gameWrapper->GetScreenSize();
-    *ScreenSize = Vector2F(screenSize.X, screenSize.Y);
+    *ScreenSize = Vector2(screenSize.X, screenSize.Y);
+    
+    RegisterCVAR();
+
+    cfg.SetupConfigFile();
+    cfg.LoadSettingsFromFile();
+    cfg.ReloadBindsFromFile();
 
     Init::Profiles();
     activeProfileType = ProfileType::Recommended; // Set default profile
@@ -29,8 +35,6 @@ void KBMOverlay::onLoad() {
     // Initialize positions and regions
     Init::ActionPositions(actionPositions);
     Init::MouseActionPositions(mouseActionPositions);
-
-    cfg.SetupConfigFile();
 
     Init::KeyStates(keyStates, gameWrapper.get());
     gameWrapper->HookEvent("Function Engine.GameViewportClient.Tick",
@@ -42,9 +46,9 @@ void KBMOverlay::onLoad() {
     Init::ActionKeyMap(actionKeyMap);
 
     // Detect bindings for mouse overlay
-    if (actionKeyMap[Action::Jump] == MB::LeftMouseButton &&
+    if (actionKeyMap[Action::Jump] == MB::LeftMouseButton ||
         actionKeyMap[Action::Boost] == MB::RightMouseButton ||
-        actionKeyMap[Action::Boost] == MB::LeftMouseButton &&
+        actionKeyMap[Action::Boost] == MB::LeftMouseButton ||
         actionKeyMap[Action::Jump] == MB::RightMouseButton)
     {
         Init::MouseKeyRegions(mouseKeyRegions);
@@ -62,10 +66,7 @@ void KBMOverlay::onLoad() {
 
     // Always assign keyboard regions
     Assign::KeyboardActionRegions(actionKeyMap, keyRegions, actionRegions);
-
-    // Initialize default image using SetImage
-    SetImage("Custom"); // Replace "default" with the actual default color name
-
+    SetImage("");
     // Register canvas rendering
     gameWrapper->RegisterDrawable([this](CanvasWrapper canvas) {
         render.RenderCanvas(this, canvas);
@@ -75,11 +76,8 @@ void KBMOverlay::onLoad() {
 }
 
 void KBMOverlay::SetImage(const std::string& color) {
-    Utils::Normalize(color); // Normalize color name
-    LOG("[KBMOverlay] SetImage called with color: {}", color);
-
     // Construct the image path
-    std::string imagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "Image" / ("kbm_" + color + ".png")).string();
+    std::string imagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbm.png").string();
     LOG("[KBMOverlay] Constructed image path: {}", imagePath);
 
     // Check if the image file exists
@@ -116,6 +114,22 @@ void KBMOverlay::SetImage(const std::string& color) {
         });
 }
 
+void KBMOverlay::UpdatePressedKeys() {
+    pressedKeys.clear();
+
+    for (auto& [key, keyState] : keyStates) {
+        int keyIndex = keyState.index; // Use stored index to avoid redundant lookups
+        bool isCurrentlyPressed = gameWrapper->IsKeyPressed(keyIndex);
+
+        if (isCurrentlyPressed) {
+            pressedKeys.insert(key); // Add key to pressed keys
+        }
+
+        // Update key state
+        keyState.pressed = isCurrentlyPressed;
+    }
+}
+
 void KBMOverlay::onTick(std::string eventName) {
     if (!gameWrapper->IsInCustomTraining() &&
         (gameWrapper->IsInGame() || gameWrapper->IsInOnlineGame())) {
@@ -126,16 +140,14 @@ void KBMOverlay::onTick(std::string eventName) {
             // Update and log state changes
             if (keyState.pressed != isCurrentlyPressed) {
                 keyState.pressed = isCurrentlyPressed;
-                LOG("[KBMOverlay] Key '{}' pressed state changed to {}.", key, isCurrentlyPressed);
             }
         }
     }
 }
 
-void KBMOverlay::SetProfile(ProfileType profileType) {
-    activeProfileType = profileType;
-    LOG("[KBMOverlay] Active profile switched to: {}",
-        profileType == ProfileType::FullKeyboard ? "Full Keyboard" : "Recommended");
+void KBMOverlay::RegisterCVAR()
+{
+    cvarManager->registerCvar("kbm_enable_overlay", "1", "Enable the KBM overlay", true, true, 0, true, 1, true).bindTo(enableOverlay);
 }
 
 void KBMOverlay::RenderSettings() {

@@ -19,6 +19,7 @@ struct Profile {
     std::map<std::string, ImVec2> actionPositions; // Positions for actions (layout-specific)
 };
 
+extern std::map<std::string, ImVec2> keyPositions;
 
 struct KeyState {
 	int index;      // Virtual key index/code
@@ -34,6 +35,7 @@ namespace Init {
 	void KeyRegions(std::map<std::string, Rect>& keyRegions);
 	void KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper);
     void Profiles();
+    void KeyPositions(std::map<std::string, ImVec2>& keyPositions);
 }
 
 namespace Assign {

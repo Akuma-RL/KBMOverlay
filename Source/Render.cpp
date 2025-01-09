@@ -27,9 +27,10 @@ bool Render::IsPlaceholderRegion(const Rect& region, float scaleFactor) {
 }
 
 void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
-
+    if (*enableOverlay == false) { return; }
+    
     // Use canvasPosition as the origin for the entire canvas
-    Vector2F canvasOrigin = (canvasPosition != nullptr) ? *canvasPosition : Vector2F{ 0.F, 0.F };
+    Vector2 canvasOrigin = (canvasPosition != nullptr) ? *canvasPosition : Vector2{ 0, 0 };
 
     std::set<std::string> renderedKeys; // Track rendered keys
 
@@ -59,7 +60,7 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
 
             // Adjust for pressed state
             if (plugin->keyStates[key].pressed) {
-                region.y += 131; // Shift Y for "pressed" texture
+                region.y += *offsetBy; // Shift Y for "pressed" texture
             }
 
             // Get the original position for this action
@@ -70,8 +71,8 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
 
             // Apply scaling and canvas offset
             Vector2F scaledPos(
-                originalPos.x * (*overallScaleFactor),
-                originalPos.y * (*overallScaleFactor)
+                (*canvasPosition).X + (originalPos.x * (*overallScaleFactor)),
+                (*canvasPosition).Y + (originalPos.y * (*overallScaleFactor))
             );
             canvas.SetPosition(scaledPos);
 
@@ -86,6 +87,8 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
             );
         }
     }
+    // Use canvasPosition and overallScaleFactor directly
+
     // Render the mouse overlay if enabled
     if (*gUseMouseOverlay && plugin->mouseImage && plugin->mouseImage->IsLoadedForCanvas()) {
         for (const auto& [action, regionPtr] : plugin->mouseActionRegions) {
@@ -112,8 +115,8 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
 
             // Apply scaling and canvas offset
             Vector2F scaledPos(
-                originalPos.x * (*overallScaleFactor),
-                originalPos.y * (*overallScaleFactor)
+                (*canvasPosition).X + (originalPos.x * (*overallScaleFactor)),
+                (*canvasPosition).Y + (originalPos.y * (*overallScaleFactor))
             );
             canvas.SetPosition(scaledPos);
 
@@ -127,7 +130,5 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
                 { 1, 1, 1, 1 }, 0, 1
             );
         }
-    }
-    else {
     }
 }

@@ -89,6 +89,8 @@ namespace Action {
 namespace MB {
 	constexpr auto Body = "body";
 
+	constexpr auto ScrollWheel = "scrollwheel";
+
 	// Mouse binds
 	constexpr auto MouseX = "mousex";
 	constexpr auto MouseY = "mousey";

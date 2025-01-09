@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Config.h"
+#include "Tools/json.hpp"
 #include <fstream>
 #include <filesystem>
 #include <format>
@@ -19,7 +20,7 @@ void Config::SetupConfigFile() {
 	}
 	// If the config file does not exist, generate it
 	if (!std::filesystem::exists(filePath)) {
-		exportBindsToFile();
+		ExportBindsToFile();
 		LOG("Exporting binds to {}", filePath.string());
 	}
 
@@ -27,16 +28,16 @@ void Config::SetupConfigFile() {
 		// Check if the config file is corrupted
 		if (isConfigCorrupted(filePath)) {
 			LOG("Config file {} is corrupted, regenerating.", filePath.string());
-			exportBindsToFile(); // Regenerate the config file
+			ExportBindsToFile(); // Regenerate the config file
 		}
 		else {
-			reloadBindsFromFile(); // Reload binds if the file is valid
+			ReloadBindsFromFile(); // Reload binds if the file is valid
 			LOG("Reloading binds from {}", filePath.string());
 		}
 	}
 }
 
-void Config::exportBindsToFile() {
+void Config::ExportBindsToFile() {
 	// Get the current keybinds from the game
 	SettingsWrapper settings = kbm.gameWrapper->GetSettings();
 
@@ -54,9 +55,6 @@ void Config::exportBindsToFile() {
 				file << "Action: " << action
 					<< " | Key: " << key
 					<< " | Position: " << pos.x << "," << pos.y << "\n";
-
-				LOG("[KBMOverlay] Writing bind to file: Action: {}, Key: {}, Position: {},{}",
-					action, key, pos.x, pos.y);
 			}
 		}
 		file.close();
@@ -67,7 +65,7 @@ void Config::exportBindsToFile() {
 	}
 }
 
-void Config::reloadBindsFromFile() {
+void Config::ReloadBindsFromFile() {
 	std::ifstream file(kbm.cfgFile);
 	if (!file.is_open()) {
 		LOG("[KBMOverlay] Failed to open config file: {}", kbm.cfgFile);
@@ -168,8 +166,6 @@ void Config::reloadBindsFromFile() {
 				else if (action == Action::PushToTalk) *PushToTalkKey = normalizedKey;
 
 				else if (action == Action::ResetTraining) *ResetTrainingKey = normalizedKey;
-
-				LOG("[KBMOverlay] Mapped Action '{}' to Key '{}' at Position ({}, {}).", action, normalizedKey, kbm.actionPositions[action].x, kbm.actionPositions[action].y);
 			}
 		}
 		else {
@@ -206,4 +202,75 @@ bool Config::isConfigCorrupted(const std::filesystem::path& filePath) {
 
 	LOG("Config file passed corruption check: {}", filePath.string());
 	return false; // File is not corrupted
+}
+
+void Config::SaveSettingsToFile() {
+	std::filesystem::path filePath(kbm.settingsFile);
+
+	nlohmann::json settingsJson;
+	settingsJson["enableOverlay"] = *enableOverlay;
+	settingsJson["layoutIndex"] = *gLayoutIndex;
+	settingsJson["overallScaleFactor"] = *overallScaleFactor;
+	settingsJson["canvasPosition"] = { (*canvasPosition).X, (*canvasPosition).Y };
+	settingsJson["selectedIndex"] = *gSelectedIndex;
+
+	std::ofstream file(filePath);
+	if (file.is_open()) {
+		file << settingsJson.dump(4); // Pretty-print with 4 spaces
+		file.close();
+		LOG("[KBMOverlay] Settings saved to: {}", filePath.string());
+	}
+	else {
+		LOG("[KBMOverlay] Failed to open file for saving settings: {}", filePath.string());
+	}
+}
+
+void Config::LoadSettingsFromFile() {
+	std::filesystem::path filePath(kbm.settingsFile);
+
+	if (!std::filesystem::exists(filePath)) {
+		SaveSettingsToFile();
+		return;
+	}
+
+	std::ifstream file(filePath);
+	if (file.is_open()) {
+		nlohmann::json settingsJson;
+		file >> settingsJson;
+		file.close();
+
+		try {
+			*enableOverlay = settingsJson["enableOverlay"].get<bool>();
+			*gLayoutIndex = settingsJson["layoutIndex"].get<int>();
+			*overallScaleFactor = settingsJson["overallScaleFactor"].get<float>();
+			(*canvasPosition).X = settingsJson["canvasPosition"][0].get<float>();
+			(*canvasPosition).Y = settingsJson["canvasPosition"][1].get<float>();
+			*gSelectedIndex = settingsJson["selectedIndex"].get<int>();
+
+			// Apply the loaded selectedIndex to update related settings
+			switch (*gSelectedIndex) {
+			case 0: *offsetBy = 131; break; // Red
+			case 1: *offsetBy = 262; break; // Orange
+			case 2: *offsetBy = 393; break; // Yellow
+			case 3: *offsetBy = 524; break; // Green
+			case 4: *offsetBy = 655; break; // Teal
+			case 5: *offsetBy = 786; break; // Cyan
+			case 6: *offsetBy = 917; break; // Blue
+			case 7: *offsetBy = 1048; break; // Purple
+			case 8: *offsetBy = 1179; break; // Pink
+			case 9: *offsetBy = 1310; break; // Bubblegum
+			case 10: *offsetBy = 1441; break; // Black
+			case 11: *offsetBy = 1572; break; // Custom
+			default: *offsetBy = 131; break; // Default
+			}
+
+			LOG("[KBMOverlay] Settings loaded and applied from: {}", filePath.string());
+		}
+		catch (const std::exception& e) {
+			LOG("[KBMOverlay] Failed to parse settings file: {}. Error: {}", filePath.string(), e.what());
+		}
+	}
+	else {
+		LOG("[KBMOverlay] Failed to open file for loading settings: {}", filePath.string());
+	}
 }

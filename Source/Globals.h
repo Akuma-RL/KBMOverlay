@@ -3,16 +3,21 @@
 
 namespace fs = std::filesystem;
 
+extern std::shared_ptr<int> offsetBy;
+
+extern std::shared_ptr<int> gSelectedIndex;
+
+extern std::shared_ptr<int> gLayoutIndex;
 
 extern std::shared_ptr<bool> enableOverlay;
 
 extern std::shared_ptr<bool> gUseMouseOverlay;
 
-extern std::shared_ptr<Vector2F> ScreenSize;
+extern std::shared_ptr<Vector2> ScreenSize;
 
 extern std::shared_ptr<float>overallScaleFactor;
 
-extern std::shared_ptr<Vector2F>canvasPosition;
+extern std::shared_ptr<Vector2>canvasPosition;
 
 extern std::shared_ptr <std::string>ForwardKey;
 extern std::shared_ptr <std::string>ReverseKey;
@@ -72,3 +77,5 @@ extern std::shared_ptr <std::string>ChatPreset4Key;
 extern std::shared_ptr <std::string>PushToTalkKey;
 
 extern std::shared_ptr <std::string>ResetTrainingKey;
+
+extern std::map<std::string, ImVec2> keyPositions;
