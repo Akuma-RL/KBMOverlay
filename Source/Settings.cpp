@@ -21,7 +21,7 @@ void Settings::RenderSettings() {
         ImGui::SetTooltip("On/Off to Enable or Disable the Overlay");
     }
     // Dropdown for selecting color
-    std::vector<std::string> layoutOptions = { "Recommended", "Full Keyboard", "Custom"};
+    std::vector<std::string> layoutOptions = { "Recommended", "Actions", "Full Keyboard"};
     static int layoutIndex = *gLayoutIndex; // Track the selected index
 
     if (ImGui::BeginCombo("Select Layout", layoutOptions[layoutIndex].c_str())) {
@@ -30,7 +30,11 @@ void Settings::RenderSettings() {
             if (ImGui::Selectable(layoutOptions[i].c_str(), isSelected)) {
                 layoutIndex = i;
                 *gLayoutIndex = layoutIndex;
+                Init::KeyPositions(kbml.keyPositions);
                 cfgl.SaveSettingsToFile(); // Save the updated settings
+
+                // Dynamically update layout when selection changes
+                kbml.UpdateLayout();
             }
 
             if (isSelected) {
@@ -80,7 +84,16 @@ void Settings::RenderSettings() {
     if (ImGui::Button("Reset Defaults")) {
         imageScale = 50;
         *overallScaleFactor = .5f;
-        *canvasPosition = Vector2(50, 860);  // Replace with actual default values
+
+        if (*gLayoutIndex == 0) {
+            *canvasPosition = Vector2(40, 770);
+        }
+        else if (*gLayoutIndex == 1) {
+            *canvasPosition = Vector2(20, 770);
+        }
+        else if (*gLayoutIndex == 2) {
+            *canvasPosition = Vector2(20, 770);
+        }
         cfgl.SaveSettingsToFile(); // Save on change
     }
 

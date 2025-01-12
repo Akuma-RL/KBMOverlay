@@ -86,7 +86,8 @@ namespace Action {
 	constexpr auto ResetTraining = "ResetTraining";
 }
 
-namespace MB {
+namespace Key {
+
 	constexpr auto Body = "body";
 
 	constexpr auto ScrollWheel = "scrollwheel";
@@ -105,9 +106,6 @@ namespace MB {
 	constexpr auto MouseScrollDown = "mousescrolldown";
 
 	constexpr auto MiddleMouseButton = "middlemousebutton";
-}
-
-namespace Key {
 
 	// Escape row
 	constexpr auto Escape = "escape";

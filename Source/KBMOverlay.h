@@ -34,6 +34,7 @@ public:
 	std::map<std::string, std::string> actionKeyMap;
 
 	std::map<std::string, Rect> keyRegions;
+	std::map<std::string, ImVec2> keyPositions;
 
 	std::map<std::string, std::shared_ptr<Rect>> actionRegions;
 
@@ -42,10 +43,6 @@ public:
 	std::map<std::string, Rect> mouseKeyRegions;
 	std::map<std::string, ImVec2> mouseActionPositions;
 	std::map<std::string, std::shared_ptr<Rect>> mouseActionRegions;
-
-	ProfileType activeProfileType = ProfileType::Recommended; // Default profile
-	std::map<std::string, ImVec2> fullKeyboardPositions; // Positions for Full Keyboard profile
-	std::map<std::string, ImVec2> recommendedPositions;  // Positions for Recommended profile
 
 
 	std::string cfgFile = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbmbinds.cfg").string();
@@ -56,7 +53,9 @@ public:
 	void onUnload() override;
 	void RenderSettings() override;
 
-	void SetImage(const std::string& color);
+	void SetImage();
+
+	void UpdateLayout();
 
 	void onTick(std::string eventName);
 

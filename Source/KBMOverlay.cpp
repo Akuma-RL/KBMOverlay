@@ -11,7 +11,7 @@ Config cfg;
 
 std::shared_ptr<CVarManagerWrapper> _globalCvarManager;
 
-
+std::map<std::string, ImVec2> keyPositions;
 
 // Plugin setup
 BAKKESMOD_PLUGIN(KBMOverlay, "Keyboard & Mouse Overlay", plugin_version, PLUGINTYPE_FREEPLAY)
@@ -29,44 +29,17 @@ void KBMOverlay::onLoad() {
     cfg.LoadSettingsFromFile();
     cfg.ReloadBindsFromFile();
 
-    Init::Profiles();
-    activeProfileType = ProfileType::Recommended; // Set default profile
-
-    // Initialize positions and regions
-    Init::ActionPositions(actionPositions);
-    Init::MouseActionPositions(mouseActionPositions);
 
     Init::KeyStates(keyStates, gameWrapper.get());
+
+    // Initialize default layout
+    UpdateLayout();
+
     gameWrapper->HookEvent("Function Engine.GameViewportClient.Tick",
         std::bind(&KBMOverlay::onTick, this, std::placeholders::_1));
 
-    bool useMouseOverlay = false;
+    SetImage();
 
-    Init::KeyRegions(keyRegions);
-    Init::ActionKeyMap(actionKeyMap);
-
-    // Detect bindings for mouse overlay
-    if (actionKeyMap[Action::Jump] == MB::LeftMouseButton ||
-        actionKeyMap[Action::Boost] == MB::RightMouseButton ||
-        actionKeyMap[Action::Boost] == MB::LeftMouseButton ||
-        actionKeyMap[Action::Jump] == MB::RightMouseButton)
-    {
-        Init::MouseKeyRegions(mouseKeyRegions);
-        useMouseOverlay = true;
-        *gUseMouseOverlay = useMouseOverlay;
-    }
-
-    if (useMouseOverlay) {
-        LOG("[KBMOverlay] Mouse overlay enabled.");
-        Assign::MouseActionRegions(actionKeyMap, mouseKeyRegions, mouseActionRegions);
-    }
-    else {
-        LOG("[KBMOverlay] Mouse overlay disabled.");
-    }
-
-    // Always assign keyboard regions
-    Assign::KeyboardActionRegions(actionKeyMap, keyRegions, actionRegions);
-    SetImage("");
     // Register canvas rendering
     gameWrapper->RegisterDrawable([this](CanvasWrapper canvas) {
         render.RenderCanvas(this, canvas);
@@ -75,7 +48,7 @@ void KBMOverlay::onLoad() {
     LOG("[KBMOverlay] Plugin loaded.");
 }
 
-void KBMOverlay::SetImage(const std::string& color) {
+void KBMOverlay::SetImage() {
     // Construct the image path
     std::string imagePath = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbm.png").string();
     LOG("[KBMOverlay] Constructed image path: {}", imagePath);
@@ -86,32 +59,18 @@ void KBMOverlay::SetImage(const std::string& color) {
         return;
     }
 
-    // Schedule the image loading and updating on the game thread
-    gameWrapper->Execute([this, imagePath, color](GameWrapper* gw) {
-        try {
-            // Create and load the image
-            auto newImage = std::make_shared<ImageWrapper>(imagePath, true, false);
-            LOG("[KBMOverlay] Created new ImageWrapper instance on game thread");
+    keyboardImage = std::make_shared<ImageWrapper>(imagePath, true, false);
+    keyboardImage->LoadForCanvas();
 
-            newImage->LoadForCanvas();
-            LOG("[KBMOverlay] Called LoadForCanvas on game thread");
-
-            if (newImage->IsLoadedForCanvas()) {
-                std::lock_guard<std::mutex> guard(imageMutex); // Lock mutex for thread safety
-                keyboardImage = newImage;
-                LOG("[KBMOverlay] Successfully switched to new image: kbm_{}.png", color);
-            }
-            else {
-                LOG("[KBMOverlay] Failed to load new image for canvas: kbm_{}.png", color);
-            }
-        }
-        catch (const std::exception& e) {
-            LOG("[KBMOverlay] Exception during SetImage on game thread: {}", e.what());
-        }
-        catch (...) {
-            LOG("[KBMOverlay] Unknown exception during SetImage on game thread");
-        }
-        });
+    if (!keyboardImage->IsLoadedForCanvas()) {
+        LOG("[KBMOverlay] Failed to load keyboard image from: {}", imagePath);
+        keyboardImage = nullptr; // Clear the pointer to avoid accidental use
+        return;
+    }
+    if (!keyboardImage) {
+        LOG("[KBMOverlay] No keyboard image; skipping rendering.");
+        return;
+    }
 }
 
 void KBMOverlay::UpdatePressedKeys() {
@@ -130,20 +89,48 @@ void KBMOverlay::UpdatePressedKeys() {
     }
 }
 
-void KBMOverlay::onTick(std::string eventName) {
-    if (!gameWrapper->IsInCustomTraining() &&
-        (gameWrapper->IsInGame() || gameWrapper->IsInOnlineGame())) {
-        for (auto& [key, keyState] : keyStates) {
-            // Check if the key is pressed
-            bool isCurrentlyPressed = gameWrapper->IsKeyPressed(keyState.index);
+void KBMOverlay::UpdateLayout() {
+    // Clear existing mappings
+    actionRegions.clear();
+    keyRegions.clear();
+    actionKeyMap.clear();
+    keyPositions.clear();
 
-            // Update and log state changes
-            if (keyState.pressed != isCurrentlyPressed) {
-                keyState.pressed = isCurrentlyPressed;
-            }
+    Init::KeyRegions(keyRegions);
+    Init::ActionKeyMap(actionKeyMap);
+
+    // Initialize key positions based on the current layout index
+    Init::KeyPositions(keyPositions);
+
+    // Assign action regions using keyRegions and the updated key positions
+    for (const auto& [action, key] : actionKeyMap) {
+        // Find the key's position in keyRegions
+        auto keyRegionIt = keyRegions.find(key);
+        if (keyRegionIt != keyRegions.end()) {
+            // Create a shared pointer to the region and map it to the action
+            actionRegions[action] = std::make_shared<Rect>(keyRegionIt->second);
+        }
+        else {
+            LOG("[KBMOverlay] Key '{}' for action '{}' not found in keyRegions", key, action);
         }
     }
+
+    LOG("[KBMOverlay] Layout updated to index: {}, actionRegions size: {}", *gLayoutIndex, actionRegions.size());
 }
+
+void KBMOverlay::onTick(std::string eventName) {
+    static int lastLayoutIndex = *gLayoutIndex;
+
+    // Check if the layout index has changed
+    if (*gLayoutIndex != lastLayoutIndex) {
+        lastLayoutIndex = *gLayoutIndex;
+        UpdateLayout(); // Update the layout dynamically
+    }
+
+    // Update pressed key states
+    UpdatePressedKeys();
+}
+
 
 void KBMOverlay::RegisterCVAR()
 {

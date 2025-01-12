@@ -6,7 +6,6 @@
 
 KBMOverlay kbmo;
 
-std::map<std::string, ImVec2> keyPositions;
 
 void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 	//actionPositions[Action::ThrottleForward] = ImVec2(925, 260);
@@ -61,277 +60,211 @@ void Init::ActionPositions(std::map<std::string, ImVec2>& actionPositions) {
 	//actionPositions[Action::PushToTalk] = ImVec2(340, 195);
 
 	//actionPositions[Action::ResetTraining] = ImVec2(795, 65);
-
-	actionPositions[Action::ThrottleForward] = ImVec2(480, 65);
-	actionPositions[Action::ThrottleReverse] = ImVec2(470, 130);
-	actionPositions[Action::SteerRight] = ImVec2(275, 65);
-	actionPositions[Action::SteerLeft] = ImVec2(145, 65);
-	actionPositions[Action::YawRight] = ImVec2(275, 65);
-	actionPositions[Action::YawLeft] = ImVec2(145, 65);
-	actionPositions[Action::PitchDown] = ImVec2(210, 0);
-	actionPositions[Action::PitchUp] = ImVec2(210, 65);
-	actionPositions[Action::RollRight] = ImVec2(275, 0);
-	actionPositions[Action::RollLeft] = ImVec2(145, 0);
-	actionPositions[Action::Boost] = ImVec2(535, 130);
-	actionPositions[Action::Jump] = ImVec2(405, 130);
-	actionPositions[Action::Handbreak] = ImVec2(265, 130);
-	actionPositions[Action::SecondaryCamera] = ImVec2(65, 130);
-	actionPositions[Action::ToggleRoll] = ImVec2(0, 130);
-	actionPositions[Action::RearCamera] = ImVec2(0, 130);
-	actionPositions[Action::ToggleScoreboard] = ImVec2(0, 0);
 }
 
 void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
-	if (*gLayoutIndex == 0) {
-		Init::ActionPositions(kbmo.actionPositions);
+	keyPositions.clear();
+
+	if (*gLayoutIndex == 0) { // Recommended
+		keyPositions.clear();
+
+		// Mouse
+		//keyPositions[Key::Body] = ImVec2(380, 192);
+		//keyPositions[Key::ScrollWheel] = ImVec2(475, 108);
+
+		//keyPositions[Key::ThumbMouse2] = ImVec2(379.5, 216); // Front Mouse Button
+		//keyPositions[Key::ThumbMouse] = ImVec2(389.5, 267.5); // Back Mouse Button
+
+		//keyPositions[Key::LeftMouseButton] = ImVec2(380, 44.5);
+		//keyPositions[Key::RightMouseButton] = ImVec2(496.5, 44.5);
+
+		// Keyboard
+
+		keyPositions[Key::Up] = ImVec2(465, 257);
+		keyPositions[Key::Left] = ImVec2(390, 323);
+		keyPositions[Key::Down] = ImVec2(455, 323);
+		keyPositions[Key::Right] = ImVec2(520, 323);
+
+		keyPositions[Key::Tab] = ImVec2(0, 192);
+		keyPositions[Key::Q] = ImVec2(130, 192);
+		keyPositions[Key::W] = ImVec2(195, 192);
+		keyPositions[Key::E] = ImVec2(260, 192);
+
+		keyPositions[Key::LShift] = ImVec2(0, 257);
+		keyPositions[Key::A] = ImVec2(130, 257);
+		keyPositions[Key::S] = ImVec2(195, 257);
+		keyPositions[Key::D] = ImVec2(260, 257);
+
+		keyPositions[Key::LControl] = ImVec2(0, 323);
+		keyPositions[Key::Spacebar] = ImVec2(65, 323);
+		keyPositions[Key::RControl] = ImVec2(260, 323);
 	}
-	if (*gLayoutIndex == 1) {
+	else if (*gLayoutIndex == 1)
+	{
+		keyPositions.clear();
+
+		keyPositions[Action::ThrottleForward] = ImVec2(910, 257);
+		keyPositions[Action::ThrottleReverse] = ImVec2(910, 321);
+
+		keyPositions[Action::SteerRight] = ImVec2(275, 192);
+		keyPositions[Action::SteerLeft] = ImVec2(145, 192);
+
+		keyPositions[Action::LookUp] = ImVec2(535, 257);
+		keyPositions[Action::LookDown] = ImVec2(535, 321);
+		keyPositions[Action::LookRight] = ImVec2(600, 321);
+		keyPositions[Action::LookLeft] = ImVec2(470, 321);
+
+		keyPositions[Action::YawRight] = ImVec2(275, 192);
+		keyPositions[Action::YawLeft] = ImVec2(145, 192);
+
+		keyPositions[Action::PitchDown] = ImVec2(210, 128);
+		keyPositions[Action::PitchUp] = ImVec2(210, 192);
+
+		keyPositions[Action::RollRight] = ImVec2(275, 128);
+		keyPositions[Action::RollLeft] = ImVec2(145, 128);
+
+		keyPositions[Action::Boost] = ImVec2(990, 321);
+
+		keyPositions[Action::Jump] = ImVec2(860, 321);
+
+		keyPositions[Action::Handbreak] = ImVec2(795, 321);
+
+		keyPositions[Action::SecondaryCamera] = ImVec2(210, 321);
+
+		keyPositions[Action::ToggleRoll] = ImVec2(0, 257);
+
+		keyPositions[Action::RearCamera] = ImVec2(0, 321);
+
+		keyPositions[Action::UsePickup] = ImVec2(340, 128);
+		keyPositions[Action::NextPickup] = ImVec2(275, 257);
+		keyPositions[Action::Grab] = ImVec2(0, 260);
+
+		keyPositions[Action::ToggleMidGameMenu] = ImVec2(0, 0);
+		keyPositions[Action::ToggleScoreboard] = ImVec2(0, 128);
+
+		keyPositions[Action::Chat] = ImVec2(405, 128);
+		keyPositions[Action::TeamChat] = ImVec2(470, 128);
+		keyPositions[Action::PartyChat] = ImVec2(535, 128);
+
+
+		keyPositions[Action::ChatPreset1] = ImVec2(145, 64);
+		keyPositions[Action::ChatPreset2] = ImVec2(210, 64);
+		keyPositions[Action::ChatPreset3] = ImVec2(275, 64);
+		keyPositions[Action::ChatPreset4] = ImVec2(340, 64);
+
+		keyPositions[Action::PushToTalk] = ImVec2(340, 193);
+
+		keyPositions[Action::ResetTraining] = ImVec2(795, 63);
+	}
+	else if (*gLayoutIndex == 2) { // Full Keyboard
+		keyPositions.clear(); // Clear existing positions
+
+		//// Mouse
+		//keyPositions[Key::Body] = ImVec2(1130, 190);
+		//keyPositions[Key::ScrollWheel] = ImVec2(1225, 106);
+
+		//keyPositions[Key::ThumbMouse2] = ImVec2(1129.5, 214); // Front Mouse Button
+		//keyPositions[Key::ThumbMouse] = ImVec2(1139.5, 265.5); // Back Mouse Button
+
+		//keyPositions[Key::LeftMouseButton] = ImVec2(1130, 42.5);
+		//keyPositions[Key::RightMouseButton] = ImVec2(1246.5, 42.5);
+
 		// Escape row
 		keyPositions[Key::Escape] = ImVec2(0, 0);
 		keyPositions[Key::F1] = ImVec2(65, 0);
 		keyPositions[Key::F2] = ImVec2(130, 0);
 		keyPositions[Key::F3] = ImVec2(195, 0);
 		keyPositions[Key::F4] = ImVec2(260, 0);
-		keyPositions[Key::F5] = ImVec2(320, 0);
-		keyPositions[Key::F6] = ImVec2(385, 0);
-		keyPositions[Key::F7] = ImVec2(450, 0);
-		keyPositions[Key::F8] = ImVec2(515, 0);
-		keyPositions[Key::F9] = ImVec2(580, 0);
-		keyPositions[Key::F10] = ImVec2(645, 0);
-		keyPositions[Key::F11] = ImVec2(710, 0);
-		keyPositions[Key::F12] = ImVec2(775, 0);
-		keyPositions[Key::PrintScreen] = ImVec2(840, 0);
-		keyPositions[Key::Pause] = ImVec2(905, 0);
-		keyPositions[Key::Delete] = ImVec2(970, 0);
+		keyPositions[Key::F5] = ImVec2(325, 0);
+		keyPositions[Key::F6] = ImVec2(390, 0);
+		keyPositions[Key::F7] = ImVec2(455, 0);
+		keyPositions[Key::F8] = ImVec2(520, 0);
+		keyPositions[Key::F9] = ImVec2(585, 0);
+		keyPositions[Key::F10] = ImVec2(650, 0);
+		keyPositions[Key::F11] = ImVec2(715, 0);
+		keyPositions[Key::F12] = ImVec2(780, 0);
+		keyPositions[Key::PrintScreen] = ImVec2(845, 0);
+		keyPositions[Key::Pause] = ImVec2(910, 0);
+		keyPositions[Key::Delete] = ImVec2(975, 0);
 
 		// ~ row
-		keyPositions[Key::Tilde] = ImVec2(0, 65);
-		keyPositions[Key::One] = ImVec2(65, 65);
-		keyPositions[Key::Two] = ImVec2(130, 65);
-		keyPositions[Key::Three] = ImVec2(195, 65);
-		keyPositions[Key::Four] = ImVec2(260, 65);
-		keyPositions[Key::Five] = ImVec2(325, 65);
-		keyPositions[Key::Six] = ImVec2(390, 65);
-		keyPositions[Key::Seven] = ImVec2(455, 65);
-		keyPositions[Key::Eight] = ImVec2(520, 65);
-		keyPositions[Key::Nine] = ImVec2(585, 65);
-		keyPositions[Key::Zero] = ImVec2(650, 65);
-		keyPositions[Key::Minus] = ImVec2(715, 65);
-		keyPositions[Key::Equals] = ImVec2(780, 65);
-		keyPositions[Key::Backspace] = ImVec2(845, 65);;
-		keyPositions[Key::Home] = ImVec2(990, 65);
+		keyPositions[Key::Tilde] = ImVec2(0, 64);
+		keyPositions[Key::One] = ImVec2(65, 64);
+		keyPositions[Key::Two] = ImVec2(130, 64);
+		keyPositions[Key::Three] = ImVec2(195, 64);
+		keyPositions[Key::Four] = ImVec2(260, 64);
+		keyPositions[Key::Five] = ImVec2(325, 64);
+		keyPositions[Key::Six] = ImVec2(390, 64);
+		keyPositions[Key::Seven] = ImVec2(455, 64);
+		keyPositions[Key::Eight] = ImVec2(520, 64);
+		keyPositions[Key::Nine] = ImVec2(585, 64);
+		keyPositions[Key::Zero] = ImVec2(650, 64);
+		keyPositions[Key::Minus] = ImVec2(715, 64);
+		keyPositions[Key::Equals] = ImVec2(780, 64);
+		keyPositions[Key::Backspace] = ImVec2(845, 64);;
+		keyPositions[Key::Home] = ImVec2(975, 64);
 
 		// Tab row
-		keyPositions[Key::Tab] = ImVec2(0, 130);
-		keyPositions[Key::Q] = ImVec2(145, 130);
-		keyPositions[Key::W] = ImVec2(210, 130);
-		keyPositions[Key::E] = ImVec2(275, 130);
-		keyPositions[Key::R] = ImVec2(340, 130);
-		keyPositions[Key::T] = ImVec2(405, 130);
-		keyPositions[Key::Y] = ImVec2(470, 130);
-		keyPositions[Key::U] = ImVec2(535, 130);
-		keyPositions[Key::I] = ImVec2(600, 130);
-		keyPositions[Key::O] = ImVec2(665, 130);
-		keyPositions[Key::P] = ImVec2(730, 130);
-		keyPositions[Key::LBracket] = ImVec2(795, 130);
-		keyPositions[Key::RBracket] = ImVec2(860, 130);
-		keyPositions[Key::Backslash] = ImVec2(925, 130);
-		keyPositions[Key::PageUp] = ImVec2(990, 130);
+		keyPositions[Key::Tab] = ImVec2(0, 128);
+		keyPositions[Key::Q] = ImVec2(130, 128);
+		keyPositions[Key::W] = ImVec2(195, 128);
+		keyPositions[Key::E] = ImVec2(260, 128);
+		keyPositions[Key::R] = ImVec2(325, 128);
+		keyPositions[Key::T] = ImVec2(390, 128);
+		keyPositions[Key::Y] = ImVec2(455, 128);
+		keyPositions[Key::U] = ImVec2(520, 128);
+		keyPositions[Key::I] = ImVec2(585, 128);
+		keyPositions[Key::O] = ImVec2(650, 128);
+		keyPositions[Key::P] = ImVec2(715, 128);
+		keyPositions[Key::LBracket] = ImVec2(780, 128);
+		keyPositions[Key::RBracket] = ImVec2(845, 128);
+		keyPositions[Key::Backslash] = ImVec2(910, 128);
+		keyPositions[Key::PageUp] = ImVec2(975, 128);
 
 		//Caps Lock row
-		keyPositions[Key::CapsLock] = ImVec2(0, 195);
-		keyPositions[Key::A] = ImVec2(145, 195);
-		keyPositions[Key::S] = ImVec2(210, 195);
-		keyPositions[Key::D] = ImVec2(275, 195);
-		keyPositions[Key::F] = ImVec2(340, 195);
-		keyPositions[Key::G] = ImVec2(405, 195);
-		keyPositions[Key::H] = ImVec2(470, 195);
-		keyPositions[Key::J] = ImVec2(535, 195);
-		keyPositions[Key::K] = ImVec2(600, 195);
-		keyPositions[Key::L] = ImVec2(665, 195);
-		keyPositions[Key::Semicolon] = ImVec2(730, 195);
-		keyPositions[Key::Quote] = ImVec2(795, 195);
-		keyPositions[Key::Enter] = ImVec2(860, 195);
-		keyPositions[Key::PageDown] = ImVec2(1005, 195);
+		keyPositions[Key::CapsLock] = ImVec2(0, 192);
+		keyPositions[Key::A] = ImVec2(130, 192);
+		keyPositions[Key::S] = ImVec2(195, 192);
+		keyPositions[Key::D] = ImVec2(260, 192);
+		keyPositions[Key::F] = ImVec2(325, 192);
+		keyPositions[Key::G] = ImVec2(390, 192);
+		keyPositions[Key::H] = ImVec2(455, 192);
+		keyPositions[Key::J] = ImVec2(520, 192);
+		keyPositions[Key::K] = ImVec2(585, 192);
+		keyPositions[Key::L] = ImVec2(650, 192);
+		keyPositions[Key::Semicolon] = ImVec2(715, 192);
+		keyPositions[Key::Quote] = ImVec2(780, 192);
+		keyPositions[Key::Enter] = ImVec2(845, 192);
+		keyPositions[Key::PageDown] = ImVec2(975, 192);
 
 		// Shift row
-		keyPositions[Key::LShift] = ImVec2(0, 260);
-		keyPositions[Key::Z] = ImVec2(145, 260);
-		keyPositions[Key::X] = ImVec2(210, 260);
-		keyPositions[Key::C] = ImVec2(275, 260);
-		keyPositions[Key::V] = ImVec2(340, 260);
-		keyPositions[Key::B] = ImVec2(405, 260);
-		keyPositions[Key::N] = ImVec2(470, 260);
-		keyPositions[Key::M] = ImVec2(535, 260);
-		keyPositions[Key::Comma] = ImVec2(600, 260);
-		keyPositions[Key::Period] = ImVec2(665, 260);
-		keyPositions[Key::Forwardslash] = ImVec2(730, 260);
-		keyPositions[Key::RShift] = ImVec2(795, 260);
-		keyPositions[Key::Up] = ImVec2(940, 260);
-		keyPositions[Key::End] = ImVec2(1005, 260);
+		keyPositions[Key::LShift] = ImVec2(0, 257);
+		keyPositions[Key::Z] = ImVec2(130, 257);
+		keyPositions[Key::X] = ImVec2(195, 257);
+		keyPositions[Key::C] = ImVec2(260, 257);
+		keyPositions[Key::V] = ImVec2(325, 257);
+		keyPositions[Key::B] = ImVec2(390, 257);
+		keyPositions[Key::N] = ImVec2(455, 257);
+		keyPositions[Key::M] = ImVec2(520, 257);
+		keyPositions[Key::Comma] = ImVec2(585, 257);
+		keyPositions[Key::Period] = ImVec2(650, 257);
+		keyPositions[Key::Forwardslash] = ImVec2(715, 257);
+		keyPositions[Key::RShift] = ImVec2(780, 257);
+		keyPositions[Key::Up] = ImVec2(910, 257);
+		keyPositions[Key::End] = ImVec2(975, 257);
 
 		// Control row
-		keyPositions[Key::LControl] = ImVec2(0, 325);
-		keyPositions[Key::Windows] = ImVec2(65, 325);
-		keyPositions[Key::LAlt] = ImVec2(145, 325);
-		keyPositions[Key::Spacebar] = ImVec2(210, 325);
-		keyPositions[Key::RAlt] = ImVec2(405, 325);
-		keyPositions[Key::Function] = ImVec2(470, 325);
-		keyPositions[Key::RControl] = ImVec2(535, 325);
-		keyPositions[Key::Left] = ImVec2(860, 325);
-		keyPositions[Key::Down] = ImVec2(925, 325);
-		keyPositions[Key::Right] = ImVec2(990, 325);
+		keyPositions[Key::LControl] = ImVec2(0, 321);
+		keyPositions[Key::Windows] = ImVec2(65, 321);
+		keyPositions[Key::LAlt] = ImVec2(130, 321);
+		keyPositions[Key::Spacebar] = ImVec2(195, 321);
+		keyPositions[Key::RAlt] = ImVec2(650, 321);
+		keyPositions[Key::Function] = ImVec2(715, 321);
+		keyPositions[Key::RControl] = ImVec2(780, 321);
+		keyPositions[Key::Left] = ImVec2(845, 321);
+		keyPositions[Key::Down] = ImVec2(910, 321);
+		keyPositions[Key::Right] = ImVec2(975, 321);
 	}
-
-	if (*gLayoutIndex == 2) {
-		// Escape row
-		keyPositions[Key::Escape] = ImVec2(0, 0);
-		keyPositions[Key::F1] = ImVec2(65, 0);
-		keyPositions[Key::F2] = ImVec2(130, 0);
-		keyPositions[Key::F3] = ImVec2(195, 0);
-		keyPositions[Key::F4] = ImVec2(260, 0);
-		keyPositions[Key::F5] = ImVec2(320, 0);
-		keyPositions[Key::F6] = ImVec2(385, 0);
-		keyPositions[Key::F7] = ImVec2(450, 0);
-		keyPositions[Key::F8] = ImVec2(515, 0);
-		keyPositions[Key::F9] = ImVec2(580, 0);
-		keyPositions[Key::F10] = ImVec2(645, 0);
-		keyPositions[Key::F11] = ImVec2(710, 0);
-		keyPositions[Key::F12] = ImVec2(775, 0);
-		keyPositions[Key::PrintScreen] = ImVec2(840, 0);
-		keyPositions[Key::Pause] = ImVec2(905, 0);
-		keyPositions[Key::Delete] = ImVec2(970, 0);
-
-		// ~ row
-		keyPositions[Key::Tilde] = ImVec2(0, 65);
-		keyPositions[Key::One] = ImVec2(65, 65);
-		keyPositions[Key::Two] = ImVec2(130, 65);
-		keyPositions[Key::Three] = ImVec2(195, 65);
-		keyPositions[Key::Four] = ImVec2(260, 65);
-		keyPositions[Key::Five] = ImVec2(325, 65);
-		keyPositions[Key::Six] = ImVec2(390, 65);
-		keyPositions[Key::Seven] = ImVec2(455, 65);
-		keyPositions[Key::Eight] = ImVec2(520, 65);
-		keyPositions[Key::Nine] = ImVec2(585, 65);
-		keyPositions[Key::Zero] = ImVec2(650, 65);
-		keyPositions[Key::Minus] = ImVec2(715, 65);
-		keyPositions[Key::Equals] = ImVec2(780, 65);
-		keyPositions[Key::Backspace] = ImVec2(845, 65);;
-		keyPositions[Key::Home] = ImVec2(990, 65);
-
-		// Tab row
-		keyPositions[Key::Tab] = ImVec2(0, 130);
-		keyPositions[Key::Q] = ImVec2(145, 130);
-		keyPositions[Key::W] = ImVec2(210, 130);
-		keyPositions[Key::E] = ImVec2(275, 130);
-		keyPositions[Key::R] = ImVec2(340, 130);
-		keyPositions[Key::T] = ImVec2(405, 130);
-		keyPositions[Key::Y] = ImVec2(470, 130);
-		keyPositions[Key::U] = ImVec2(535, 130);
-		keyPositions[Key::I] = ImVec2(600, 130);
-		keyPositions[Key::O] = ImVec2(665, 130);
-		keyPositions[Key::P] = ImVec2(730, 130);
-		keyPositions[Key::LBracket] = ImVec2(795, 130);
-		keyPositions[Key::RBracket] = ImVec2(860, 130);
-		keyPositions[Key::Backslash] = ImVec2(925, 130);
-		keyPositions[Key::PageUp] = ImVec2(990, 130);
-
-		//Caps Lock row
-		keyPositions[Key::CapsLock] = ImVec2(0, 195);
-		keyPositions[Key::A] = ImVec2(145, 195);
-		keyPositions[Key::S] = ImVec2(210, 195);
-		keyPositions[Key::D] = ImVec2(275, 195);
-		keyPositions[Key::F] = ImVec2(340, 195);
-		keyPositions[Key::G] = ImVec2(405, 195);
-		keyPositions[Key::H] = ImVec2(470, 195);
-		keyPositions[Key::J] = ImVec2(535, 195);
-		keyPositions[Key::K] = ImVec2(600, 195);
-		keyPositions[Key::L] = ImVec2(665, 195);
-		keyPositions[Key::Semicolon] = ImVec2(730, 195);
-		keyPositions[Key::Quote] = ImVec2(795, 195);
-		keyPositions[Key::Enter] = ImVec2(860, 195);
-		keyPositions[Key::PageDown] = ImVec2(1005, 195);
-
-		// Shift row
-		keyPositions[Key::LShift] = ImVec2(0, 260);
-		keyPositions[Key::Z] = ImVec2(145, 260);
-		keyPositions[Key::X] = ImVec2(210, 260);
-		keyPositions[Key::C] = ImVec2(275, 260);
-		keyPositions[Key::V] = ImVec2(340, 260);
-		keyPositions[Key::B] = ImVec2(405, 260);
-		keyPositions[Key::N] = ImVec2(470, 260);
-		keyPositions[Key::M] = ImVec2(535, 260);
-		keyPositions[Key::Comma] = ImVec2(600, 260);
-		keyPositions[Key::Period] = ImVec2(665, 260);
-		keyPositions[Key::Forwardslash] = ImVec2(730, 260);
-		keyPositions[Key::RShift] = ImVec2(795, 260);
-		keyPositions[Key::Up] = ImVec2(940, 260);
-		keyPositions[Key::End] = ImVec2(1005, 260);
-
-		// Control row
-		keyPositions[Key::LControl] = ImVec2(0, 325);
-		keyPositions[Key::Windows] = ImVec2(65, 325);
-		keyPositions[Key::LAlt] = ImVec2(145, 325);
-		keyPositions[Key::Spacebar] = ImVec2(210, 325);
-		keyPositions[Key::RAlt] = ImVec2(405, 325);
-		keyPositions[Key::Function] = ImVec2(470, 325);
-		keyPositions[Key::RControl] = ImVec2(535, 325);
-		keyPositions[Key::Left] = ImVec2(860, 325);
-		keyPositions[Key::Down] = ImVec2(925, 325);
-		keyPositions[Key::Right] = ImVec2(990, 325);
-	}
-}
-
-void Init::Profiles() {
-	// Full Keyboard Profile: Use all key regions
-	for (const auto& [key, _] : kbmo.keyRegions) {
-		kbmo.fullKeyboardPositions[key] = ImVec2(0, 0); // Default all keys to (0,0)
-	}
-
-	// Recommended Profile: Use selected keys
-	kbmo.recommendedPositions = {
-		// top row
-		{"tab", ImVec2(0, 0)},
-		{"q", ImVec2(145, 0)},
-		{"w", ImVec2(210, 0)},
-		{"e", ImVec2(275, 0)},
-
-		// second row
-		{"leftshift", ImVec2(0, 65)},
-		{"a", ImVec2(145, 65)},
-		{"s", ImVec2(210, 200)},
-		{"d", ImVec2(275, 200)},
-
-		// third row
-		{"leftcontrol", ImVec2(0, 130)},
-		{"spacebar", ImVec2(65, 130)},
-		{"rightcontrol", ImVec2(265, 130)},
-
-		{"up", ImVec2(480, 65)},
-		{"down", ImVec2(470, 130)},
-		{"left", ImVec2(405, 130)},
-		{"right", ImVec2(535, 130)},
-	};
-
-	LOG("[KBMOverlay] Profiles initialized.");
-}
-
-void Init::MouseActionPositions(std::map<std::string, ImVec2>& mouseActionPositions) {
-	mouseActionPositions[MB::Body] = ImVec2(326, 0);
-
-	mouseActionPositions[MB::MouseX] = ImVec2(326, 0);
-	mouseActionPositions[MB::MouseY] = ImVec2(326, 0);
-
-	mouseActionPositions[MB::ThumbMouse] = ImVec2(326, 0);
-	mouseActionPositions[MB::ThumbMouse2] = ImVec2(326, 0);
-
-	mouseActionPositions[MB::LeftMouseButton] = ImVec2(1040, 300);
-	mouseActionPositions[MB::RightMouseButton] = ImVec2(1216, 0);
-
-	mouseActionPositions[MB::MouseScrollDown] = ImVec2(326, 0);
-	mouseActionPositions[MB::MouseScrollUp] = ImVec2(326, 0);
-
-	mouseActionPositions[MB::MiddleMouseButton] = ImVec2(326, 0);
 }
 
 void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
@@ -389,35 +322,28 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
 	actionKeyMap[Action::ResetTraining] = *ResetTrainingKey;
 }
 
-// Initialize mouse key regions
-void Init::MouseKeyRegions(std::map<std::string, Rect>& mouseKeyRegions) {
-	mouseKeyRegions[MB::Body] = { 2204, 8515, 285, 244 };
-
-	mouseKeyRegions[MB::MouseX] = { 2450, 8736, 22, 22 };
-	mouseKeyRegions[MB::MouseY] = { 2450, 8736, 22, 22 };
-
-	mouseKeyRegions[MB::ThumbMouse] = { 2408, 8760, 42, 64 };
-	mouseKeyRegions[MB::ThumbMouse2] = { 2408, 8760, 42, 64 };
-
-	mouseKeyRegions[MB::LeftMouseButton] = { 1920, 8515, 141, 176 };
-	mouseKeyRegions[MB::RightMouseButton] = { 2062, 8515, 141, 176 };
-
-	mouseKeyRegions[MB::MouseScrollDown] = { 2356, 8760, 50, 97 };
-	mouseKeyRegions[MB::MouseScrollUp] = { 2306, 8760, 50, 97 };
-
-	mouseKeyRegions[MB::MiddleMouseButton] = { 2250, 8760, 50, 97 };
-
-	mouseKeyRegions[MB::ScrollWheel] = { 2204, 8760, 50, 97 };
-}
 
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
+	// Mouse
+	keyRegions[Key::LeftMouseButton] = { 2560, 1703, 227, 283 };
+	keyRegions[Key::RightMouseButton] = { 2788, 1703, 227, 283 };
+
+	keyRegions[Key::ScrollWheel] = { 3017, 2097, 80, 156 };
+
+	keyRegions[Key::Body] = { 3017, 1703, 459, 393 };
+
+	keyRegions[Key::ThumbMouse2] = { 3345, 2097, 69, 103 };
+	keyRegions[Key::ThumbMouse] = { 3345, 2097, 69, 103 };
+
+	keyRegions[Key::MouseX] = { 3414, 2097, 37, 36 };
+	keyRegions[Key::MouseY] = { 3414, 2097, 37, 36 };
 
 	// Escape row
 	keyRegions[Key::Escape] = { 0, 0, 159, 130 };
 	keyRegions[Key::F1] = { 160, 0, 159, 130 };
 	keyRegions[Key::F2] = { 320, 0, 159, 130 };
 	keyRegions[Key::F3] = { 480, 0, 159, 130 };
-	keyRegions[Key::F4] = { 650, 0, 159, 130 };
+	keyRegions[Key::F4] = { 640, 0, 159, 130 };
 	keyRegions[Key::F5] = { 800, 0, 159, 130 };
 	keyRegions[Key::F6] = { 960, 0, 159, 130 };
 	keyRegions[Key::F7] = { 1120, 0, 159, 130 };
@@ -477,7 +403,7 @@ void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 	keyRegions[Key::L] = { 1600, 5109, 159, 130 };
 	keyRegions[Key::Semicolon] = { 1760, 5109, 159, 130 };
 	keyRegions[Key::Quote] = { 1920, 5109, 159, 130 };
-	keyRegions[Key::Enter] = { 2080, 5109, 159, 130 };
+	keyRegions[Key::Enter] = { 2080, 5109, 320, 130 };
 	keyRegions[Key::PageDown] = { 2400, 5109, 159, 130 };
 
 	// Shift row
@@ -500,7 +426,14 @@ void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 	keyRegions[Key::LControl] = { 0, 8515, 159, 130 };
 	keyRegions[Key::Windows] = { 160, 8515, 159, 130 };
 	keyRegions[Key::LAlt] = { 320, 8515, 159, 130 };
-	keyRegions[Key::Spacebar] = { 480, 8515, 481, 130 };
+
+	keyRegions[Key::Spacebar] = { 2560, 0, 940, 130 };
+
+	if (*gLayoutIndex == 0) {
+		keyRegions[Key::Spacebar] = { 480, 8515, 419, 130 };
+	} else {
+		keyRegions[Key::Spacebar] = { 2560, 0, 940, 130 };
+	}
 	keyRegions[Key::RAlt] = { 960, 8515, 159, 130 };
 	keyRegions[Key::Function] = { 1120, 8515, 159, 130 };
 	keyRegions[Key::RControl] = { 1280, 8515, 159, 130 };
@@ -516,19 +449,19 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 		keyStates[action] = { keyIndex, false }; // Initialize with key index and not pressed
 
 		// Mouse
-		keyStates[MB::MouseX] = { gameWrapper->GetFNameIndexByString("MouseX"), false };
-		keyStates[MB::MouseY] = { gameWrapper->GetFNameIndexByString("MouseY"), false };
+		keyStates[Key::MouseX] = { gameWrapper->GetFNameIndexByString("MouseX"), false };
+		keyStates[Key::MouseY] = { gameWrapper->GetFNameIndexByString("MouseY"), false };
 
-		keyStates[MB::ThumbMouse] = { gameWrapper->GetFNameIndexByString("ThumbMouse"), false };
-		keyStates[MB::ThumbMouse2] = { gameWrapper->GetFNameIndexByString("ThumbMouse2"), false };
+		keyStates[Key::ThumbMouse] = { gameWrapper->GetFNameIndexByString("ThumbMouse"), false };
+		keyStates[Key::ThumbMouse2] = { gameWrapper->GetFNameIndexByString("ThumbMouse2"), false };
 
-		keyStates[MB::LeftMouseButton] = { gameWrapper->GetFNameIndexByString("LeftMouseButton"), false };
-		keyStates[MB::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMousebutton"), false };
+		keyStates[Key::LeftMouseButton] = { gameWrapper->GetFNameIndexByString("LeftMouseButton"), false };
+		keyStates[Key::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMousebutton"), false };
 
-		keyStates[MB::MouseScrollDown] = { gameWrapper->GetFNameIndexByString("MouseScrollDown"), false };
-		keyStates[MB::MouseScrollUp] = { gameWrapper->GetFNameIndexByString("MouseScrollUp"), false };
+		keyStates[Key::MouseScrollDown] = { gameWrapper->GetFNameIndexByString("MouseScrollDown"), false };
+		keyStates[Key::MouseScrollUp] = { gameWrapper->GetFNameIndexByString("MouseScrollUp"), false };
 
-		keyStates[MB::MiddleMouseButton] = { gameWrapper->GetFNameIndexByString("MiddleMouseButton"), false };
+		keyStates[Key::MiddleMouseButton] = { gameWrapper->GetFNameIndexByString("MiddleMouseButton"), false };
 
 		// Escape row
 		keyStates[Key::Escape] = { gameWrapper->GetFNameIndexByString("Escape"), false };
@@ -634,43 +567,36 @@ void Assign::KeyboardActionRegions(
 	const std::map<std::string, Rect>& keyRegions,
 	std::map<std::string, std::shared_ptr<Rect>>& actionRegions
 ) {
+	// Clear existing regions
+	actionRegions.clear();
+
+	// Handle Full Keyboard Layout
+	if (*gLayoutIndex == 2) { // Full Keyboard
+		for (const auto& [key, region] : keyRegions) {
+			// Include only keys present in actionKeyMap
+			if (actionKeyMap.find(key) != actionKeyMap.end()) {
+				actionRegions[key] = std::make_shared<Rect>(region);
+			}
+		}
+		return; // Full Keyboard layout does not use action-specific logic
+	}
+
+	// Handle Recommended or Custom Layouts
 	for (const auto& [action, key] : actionKeyMap) {
 		if (key.empty()) {
-			actionRegions[action] = nullptr;
+			actionRegions[action] = std::make_shared<Rect>(Rect{ 0, 0, 0, 0 }); // Assign empty Rect
+			LOG("[Assign::KeyboardActionRegions] Action '{}' has no assigned key.", action);
 			continue;
 		}
 
+		// Find the key region in keyRegions
 		auto it = keyRegions.find(key);
 		if (it != keyRegions.end()) {
 			actionRegions[action] = std::make_shared<Rect>(it->second);
 		}
 		else {
-			actionRegions[action] = nullptr;
-		}
-	}
-}
-
-void Assign::MouseActionRegions(
-	const std::map<std::string, std::string>& actionKeyMap,
-	const std::map<std::string, Rect>& mouseKeyRegions,
-	std::map<std::string, std::shared_ptr<Rect>>& mouseActionRegions
-) {
-	for (const auto& [action, key] : actionKeyMap) {
-		if (key.empty()) {
-			LOG("[KBMOverlay] Skipping mouse action '{}': Key is empty.", action);
-			mouseActionRegions[action] = nullptr;
-			continue;
-		}
-
-		auto it = mouseKeyRegions.find(key);
-		if (it != mouseKeyRegions.end()) {
-			mouseActionRegions[action] = std::make_shared<Rect>(it->second);
-			LOG("[KBMOverlay] Assigned mouse region for action '{}': (x: {}, y: {}, width: {}, height: {})",
-				action, it->second.x, it->second.y, it->second.width, it->second.height);
-		}
-		else {
-			LOG("[KBMOverlay] No mouse region found for action '{}' with key '{}'", action, key);
-			mouseActionRegions[action] = nullptr;
+			actionRegions[action] = std::make_shared<Rect>(Rect{ 0, 0, 0, 0 }); // Assign empty Rect
+			LOG("[Assign::KeyboardActionRegions] Key '{}' for action '{}' not found in keyRegions.", key, action);
 		}
 	}
 }
