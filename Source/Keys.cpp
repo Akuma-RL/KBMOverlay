@@ -68,23 +68,25 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 	if (*gLayoutIndex == 0) { // Recommended
 		keyPositions.clear();
 
-		// Mouse
-		//keyPositions[Key::Body] = ImVec2(380, 192);
-		//keyPositions[Key::ScrollWheel] = ImVec2(475, 108);
+		if (*gLayoutIndex == 0 && *gUseMouseOverlay == true) {
+			// Mouse
+			keyPositions[Mouse::Body] = ImVec2(380, 192);
+			keyPositions[Mouse::ScrollWheel] = ImVec2(475, 108);
 
-		//keyPositions[Key::ThumbMouse2] = ImVec2(379.5, 216); // Front Mouse Button
-		//keyPositions[Key::ThumbMouse] = ImVec2(389.5, 267.5); // Back Mouse Button
+			keyPositions[Mouse::ThumbMouse2] = ImVec2(379.5, 216); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouse] = ImVec2(389.5, 267.5); // Back Mouse Button
 
-		//keyPositions[Key::LeftMouseButton] = ImVec2(380, 44.5);
-		//keyPositions[Key::RightMouseButton] = ImVec2(496.5, 44.5);
-
+			keyPositions[Mouse::LeftMouseButton] = ImVec2(380, 44.5);
+			keyPositions[Mouse::RightMouseButton] = ImVec2(496.5, 44.5);
+		}
+		else if (*gLayoutIndex == 0 && *gUseMouseOverlay == false) {
+			// Arrow Keys
+			keyPositions[Key::Up] = ImVec2(465, 257);
+			keyPositions[Key::Left] = ImVec2(390, 323);
+			keyPositions[Key::Down] = ImVec2(455, 323);
+			keyPositions[Key::Right] = ImVec2(520, 323);
+		}
 		// Keyboard
-
-		keyPositions[Key::Up] = ImVec2(465, 257);
-		keyPositions[Key::Left] = ImVec2(390, 323);
-		keyPositions[Key::Down] = ImVec2(455, 323);
-		keyPositions[Key::Right] = ImVec2(520, 323);
-
 		keyPositions[Key::Tab] = ImVec2(0, 192);
 		keyPositions[Key::Q] = ImVec2(130, 192);
 		keyPositions[Key::W] = ImVec2(195, 192);
@@ -99,6 +101,7 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 		keyPositions[Key::Spacebar] = ImVec2(65, 323);
 		keyPositions[Key::RControl] = ImVec2(260, 323);
 	}
+
 	else if (*gLayoutIndex == 1)
 	{
 		keyPositions.clear();
@@ -156,18 +159,21 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 
 		keyPositions[Action::ResetTraining] = ImVec2(795, 63);
 	}
+
 	else if (*gLayoutIndex == 2) { // Full Keyboard
 		keyPositions.clear(); // Clear existing positions
 
-		//// Mouse
-		//keyPositions[Key::Body] = ImVec2(1130, 190);
-		//keyPositions[Key::ScrollWheel] = ImVec2(1225, 106);
+		if (*gLayoutIndex == 2 && *gUseMouseOverlay == true) {
+			// Mouse
+			keyPositions[Mouse::Body] = ImVec2(1130, 190);
+			keyPositions[Mouse::ScrollWheel] = ImVec2(1225, 106);
 
-		//keyPositions[Key::ThumbMouse2] = ImVec2(1129.5, 214); // Front Mouse Button
-		//keyPositions[Key::ThumbMouse] = ImVec2(1139.5, 265.5); // Back Mouse Button
+			keyPositions[Mouse::ThumbMouse2] = ImVec2(1129.5, 214); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouse] = ImVec2(1139.5, 265.5); // Back Mouse Button
 
-		//keyPositions[Key::LeftMouseButton] = ImVec2(1130, 42.5);
-		//keyPositions[Key::RightMouseButton] = ImVec2(1246.5, 42.5);
+			keyPositions[Mouse::LeftMouseButton] = ImVec2(1130, 42.5);
+			keyPositions[Mouse::RightMouseButton] = ImVec2(1246.5, 42.5);
+		}
 
 		// Escape row
 		keyPositions[Key::Escape] = ImVec2(0, 0);
@@ -267,7 +273,10 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 	}
 }
 
-void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
+void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap, std::vector<std::string>& mouseBinds) {
+	actionKeyMap.clear();
+	mouseBinds.clear();
+	*gUseMouseOverlay = false;
 
 	actionKeyMap[Action::ThrottleForward] = *ForwardKey;
 	actionKeyMap[Action::ThrottleReverse] = *ReverseKey;
@@ -320,23 +329,39 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap) {
 	actionKeyMap[Action::PushToTalk] = *PushToTalkKey;
 
 	actionKeyMap[Action::ResetTraining] = *ResetTrainingKey;
+
+	// Explicitly check for mouse keys
+	for (const auto& [action, key] : actionKeyMap) {
+		if (key == Mouse::MouseX || key == Mouse::MouseY) {
+			continue; // Ignore default bindings
+		}
+		if (key == Mouse::ThumbMouse || key == Mouse::ThumbMouse2 ||
+			key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
+			key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
+			key == Mouse::MiddleMouseButton) {
+			mouseBinds.push_back(key); // Track mouse-specific bindings
+		}
+	}
+	if (!mouseBinds.empty()) {
+		*gUseMouseOverlay = true;
+	}
 }
 
 
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 	// Mouse
-	keyRegions[Key::LeftMouseButton] = { 2560, 1703, 227, 283 };
-	keyRegions[Key::RightMouseButton] = { 2788, 1703, 227, 283 };
+	keyRegions[Mouse::LeftMouseButton] = { 2560, 1703, 227, 283 };
+	keyRegions[Mouse::RightMouseButton] = { 2788, 1703, 227, 283 };
 
-	keyRegions[Key::ScrollWheel] = { 3017, 2097, 80, 156 };
+	keyRegions[Mouse::ScrollWheel] = { 3017, 2097, 80, 156 };
 
-	keyRegions[Key::Body] = { 3017, 1703, 459, 393 };
+	keyRegions[Mouse::Body] = { 3017, 1703, 459, 393 };
 
-	keyRegions[Key::ThumbMouse2] = { 3345, 2097, 69, 103 };
-	keyRegions[Key::ThumbMouse] = { 3345, 2097, 69, 103 };
+	keyRegions[Mouse::ThumbMouse2] = { 3345, 2097, 69, 103 };
+	keyRegions[Mouse::ThumbMouse] = { 3345, 2097, 69, 103 };
 
-	keyRegions[Key::MouseX] = { 3414, 2097, 37, 36 };
-	keyRegions[Key::MouseY] = { 3414, 2097, 37, 36 };
+	keyRegions[Mouse::MouseX] = { 3414, 2097, 37, 36 };
+	keyRegions[Mouse::MouseY] = { 3414, 2097, 37, 36 };
 
 	// Escape row
 	keyRegions[Key::Escape] = { 0, 0, 159, 130 };
@@ -431,7 +456,8 @@ void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 
 	if (*gLayoutIndex == 0) {
 		keyRegions[Key::Spacebar] = { 480, 8515, 419, 130 };
-	} else {
+	}
+	else {
 		keyRegions[Key::Spacebar] = { 2560, 0, 940, 130 };
 	}
 	keyRegions[Key::RAlt] = { 960, 8515, 159, 130 };
@@ -445,60 +471,60 @@ void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 void Init::ActionTitles(std::map<std::string, Rect>& actionTitles)
 {
 
-	actionTitles[Action::ThrottleForward] =		{ 0,10218,159,27 };
+	actionTitles[Action::ThrottleForward] = { 0,10218,159,27 };
 
-	actionTitles[Action::ThrottleReverse] =		{ 160,10218,159,27 };
+	actionTitles[Action::ThrottleReverse] = { 160,10218,159,27 };
 
-	actionTitles[Action::SteerRight] =			{ 320,10218,159,27 };
-	actionTitles[Action::SteerLeft] =			{ 480,10218,159,27 };
+	actionTitles[Action::SteerRight] = { 320,10218,159,27 };
+	actionTitles[Action::SteerLeft] = { 480,10218,159,27 };
 
-	actionTitles[Action::LookUp] =				{ 640,10218,159,27 };
+	actionTitles[Action::LookUp] = { 640,10218,159,27 };
 
-	actionTitles[Action::LookDown] =			{ 0,10246,159,27 };
-	actionTitles[Action::LookRight] =			{ 160,10246,159,27 };
-	actionTitles[Action::LookLeft] =			{ 320,10246,159,27 };
+	actionTitles[Action::LookDown] = { 0,10246,159,27 };
+	actionTitles[Action::LookRight] = { 160,10246,159,27 };
+	actionTitles[Action::LookLeft] = { 320,10246,159,27 };
 
-	actionTitles[Action::YawRight] =			{ 480,10246,159,27 };
-	actionTitles[Action::YawLeft] =				{ 640,10246,159,27 };
+	actionTitles[Action::YawRight] = { 480,10246,159,27 };
+	actionTitles[Action::YawLeft] = { 640,10246,159,27 };
 
-	actionTitles[Action::PitchUp] =				{ 0,10274,159,27 };
-	actionTitles[Action::PitchDown] =			{ 160,10274,159,27 };
+	actionTitles[Action::PitchUp] = { 0,10274,159,27 };
+	actionTitles[Action::PitchDown] = { 160,10274,159,27 };
 
-	actionTitles[Action::RollRight] =			{ 320,10274,159,27 };
-	actionTitles[Action::RollLeft] =			{ 480,10274,159,27 };
+	actionTitles[Action::RollRight] = { 320,10274,159,27 };
+	actionTitles[Action::RollLeft] = { 480,10274,159,27 };
 
-	actionTitles[Action::Boost] =				{ 640,10274,159,27 };
+	actionTitles[Action::Boost] = { 640,10274,159,27 };
 
-	actionTitles[Action::Jump] =				{ 0,10302,159,27 };
+	actionTitles[Action::Jump] = { 0,10302,159,27 };
 
-	actionTitles[Action::Handbreak] =			{ 160,10302,159,27 };
+	actionTitles[Action::Handbreak] = { 160,10302,159,27 };
 
-	actionTitles[Action::SecondaryCamera] =		{ 320,10302,159,27 };
+	actionTitles[Action::SecondaryCamera] = { 320,10302,159,27 };
 
-	actionTitles[Action::ToggleRoll] =			{ 480,10302,159,27 };
+	actionTitles[Action::ToggleRoll] = { 480,10302,159,27 };
 
-	actionTitles[Action::RearCamera] =			{ 640,10302,159,27 };
+	actionTitles[Action::RearCamera] = { 640,10302,159,27 };
 
-	actionTitles[Action::UsePickup] =			{ 0,10330,159,27 };
-	actionTitles[Action::NextPickup] =			{ 160,10330,159,27 };
-	actionTitles[Action::Grab] =				{ 320,10330,159,27 };
+	actionTitles[Action::UsePickup] = { 0,10330,159,27 };
+	actionTitles[Action::NextPickup] = { 160,10330,159,27 };
+	actionTitles[Action::Grab] = { 320,10330,159,27 };
 
-	actionTitles[Action::ToggleMidGameMenu] =	{ 480,10330,159,27 };
-	actionTitles[Action::ToggleScoreboard] =	{ 640,10330,159,27 };
+	actionTitles[Action::ToggleMidGameMenu] = { 480,10330,159,27 };
+	actionTitles[Action::ToggleScoreboard] = { 640,10330,159,27 };
 
-	actionTitles[Action::Chat] =				{ 0,10358,159,27 };
-	actionTitles[Action::TeamChat] =			{ 160,10358,159,27 };
-	actionTitles[Action::PartyChat] =			{ 320,10358,159,27 };
+	actionTitles[Action::Chat] = { 0,10358,159,27 };
+	actionTitles[Action::TeamChat] = { 160,10358,159,27 };
+	actionTitles[Action::PartyChat] = { 320,10358,159,27 };
 
 
-	actionTitles[Action::ChatPreset1] =			{ 480,10358,159,27 };
-	actionTitles[Action::ChatPreset2] =			{ 640,10358,159,27 };
-	actionTitles[Action::ChatPreset3] =			{ 0,10387,159,27 };
-	actionTitles[Action::ChatPreset4] =			{ 160,10387,159,27 };
+	actionTitles[Action::ChatPreset1] = { 480,10358,159,27 };
+	actionTitles[Action::ChatPreset2] = { 640,10358,159,27 };
+	actionTitles[Action::ChatPreset3] = { 0,10387,159,27 };
+	actionTitles[Action::ChatPreset4] = { 160,10387,159,27 };
 
-	actionTitles[Action::PushToTalk] =			{ 320,10387,159,27 };
+	actionTitles[Action::PushToTalk] = { 320,10387,159,27 };
 
-	actionTitles[Action::ResetTraining] =		{ 480,10387,159,27 };
+	actionTitles[Action::ResetTraining] = { 480,10387,159,27 };
 }
 
 void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper)
@@ -508,19 +534,19 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 		keyStates[action] = { keyIndex, false }; // Initialize with key index and not pressed
 
 		// Mouse
-		keyStates[Key::MouseX] = { gameWrapper->GetFNameIndexByString("MouseX"), false };
-		keyStates[Key::MouseY] = { gameWrapper->GetFNameIndexByString("MouseY"), false };
+		keyStates[Mouse::MouseX] = { gameWrapper->GetFNameIndexByString("MouseX"), false };
+		keyStates[Mouse::MouseY] = { gameWrapper->GetFNameIndexByString("MouseY"), false };
 
-		keyStates[Key::ThumbMouse] = { gameWrapper->GetFNameIndexByString("ThumbMouse"), false };
-		keyStates[Key::ThumbMouse2] = { gameWrapper->GetFNameIndexByString("ThumbMouse2"), false };
+		keyStates[Mouse::ThumbMouse] = { gameWrapper->GetFNameIndexByString("ThumbMouse"), false };
+		keyStates[Mouse::ThumbMouse2] = { gameWrapper->GetFNameIndexByString("ThumbMouse2"), false };
 
-		keyStates[Key::LeftMouseButton] = { gameWrapper->GetFNameIndexByString("LeftMouseButton"), false };
-		keyStates[Key::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMousebutton"), false };
+		keyStates[Mouse::LeftMouseButton] = { gameWrapper->GetFNameIndexByString("LeftMouseButton"), false };
+		keyStates[Mouse::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMousebutton"), false };
 
-		keyStates[Key::MouseScrollDown] = { gameWrapper->GetFNameIndexByString("MouseScrollDown"), false };
-		keyStates[Key::MouseScrollUp] = { gameWrapper->GetFNameIndexByString("MouseScrollUp"), false };
+		keyStates[Mouse::MouseScrollDown] = { gameWrapper->GetFNameIndexByString("MouseScrollDown"), false };
+		keyStates[Mouse::MouseScrollUp] = { gameWrapper->GetFNameIndexByString("MouseScrollUp"), false };
 
-		keyStates[Key::MiddleMouseButton] = { gameWrapper->GetFNameIndexByString("MiddleMouseButton"), false };
+		keyStates[Mouse::MiddleMouseButton] = { gameWrapper->GetFNameIndexByString("MiddleMouseButton"), false };
 
 		// Escape row
 		keyStates[Key::Escape] = { gameWrapper->GetFNameIndexByString("Escape"), false };
@@ -619,7 +645,6 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 		keyStates[Key::Right] = { gameWrapper->GetFNameIndexByString("Right"), false };
 	}
 }
-
 
 void Assign::KeyboardActionRegions(
 	const std::map<std::string, std::string>& actionKeyMap,

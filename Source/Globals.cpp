@@ -18,7 +18,11 @@ std::shared_ptr<Vector2> ScreenSize = std::make_shared<Vector2>();
 
 std::shared_ptr<float>overallScaleFactor = std::make_shared<float>(.5f);
 
-std::shared_ptr<Vector2>canvasPosition = std::make_shared<Vector2>(50, 860);
+std::shared_ptr<float>mouseScaleFactor = std::make_shared<float>(.5f);
+
+std::shared_ptr<Vector2>canvasPosition = std::make_shared<Vector2>(40, 770);
+
+std::shared_ptr<Vector2>mouseCanvasPosition = std::make_shared<Vector2>(40, 770);
 
 std::shared_ptr<std::string> ForwardKey = std::make_shared<std::string>();
 std::shared_ptr<std::string> ReverseKey = std::make_shared<std::string>();

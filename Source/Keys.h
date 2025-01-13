@@ -20,7 +20,7 @@ struct KeyState {
 // Functions for initializing key maps
 namespace Init {
 	void ActionPositions(std::map<std::string, ImVec2>& actionPositions);
-	void ActionKeyMap(std::map<std::string, std::string>& actionKeyMap);
+	void ActionKeyMap(std::map<std::string, std::string>& actionKeyMap, std::vector<std::string>& mouseBinds);
 	void KeyRegions(std::map<std::string, Rect>& keyRegions);
 	void KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper);
     void KeyPositions(std::map<std::string, ImVec2>& keyPositions);

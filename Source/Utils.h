@@ -87,7 +87,9 @@ namespace Action {
 	constexpr auto ResetTraining = "ResetTraining";
 }
 
-namespace Key {
+namespace Mouse {
+
+	// Aesthetic maps
 
 	constexpr auto Body = "body";
 
@@ -97,8 +99,8 @@ namespace Key {
 	constexpr auto MouseX = "mousex";
 	constexpr auto MouseY = "mousey";
 
-	constexpr auto ThumbMouse = "thumbmouse";
-	constexpr auto ThumbMouse2 = "thumbmouse2";
+	constexpr auto ThumbMouse2 = "thumbmouse2"; // front button
+	constexpr auto ThumbMouse = "thumbmouse"; // back button
 
 	constexpr auto LeftMouseButton = "leftmousebutton";
 	constexpr auto RightMouseButton = "rightmousebutton";
@@ -108,6 +110,9 @@ namespace Key {
 
 	constexpr auto MiddleMouseButton = "middlemousebutton";
 
+}
+
+namespace Key {
 	// Escape row
 	constexpr auto Escape = "escape";
 	constexpr auto F1 = "f1";

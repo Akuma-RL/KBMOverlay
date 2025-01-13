@@ -29,8 +29,18 @@ bool Render::IsPlaceholderRegion(const Rect& region, float scaleFactor) {
 void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
     if (!(*enableOverlay)) return;
 
-    // Draw the keys
+    // Draw the keyboard keys
     for (const auto& [key, position] : plugin->keyPositions) {
+
+        // Skip mouse keys when rendering the keyboard canvas
+        if (key == Mouse::ThumbMouse || key == Mouse::ThumbMouse2 ||
+            key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
+            key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
+            key == Mouse::MiddleMouseButton || key == Mouse::MouseX ||
+            key == Mouse::MouseY || key == Mouse::Body ||
+            key == Mouse::ScrollWheel ) {
+            continue;
+        }
         Rect region = plugin->keyRegions[key];
         Vector2F scaledPos(
             (*canvasPosition).X + (position.x * (*overallScaleFactor)),
@@ -74,6 +84,36 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
                 titleRect.width, titleRect.height,
                 { 1, 1, 1, 1 }, 0, 1
             );
+        }
+    }
+
+    // Draw the mouse overlay on its own canvas
+    if (*gUseMouseOverlay) {
+        for (const auto& [mouseKey, position] : plugin->keyPositions) {
+            // Process only mouse keys
+            if (mouseKey == Mouse::ThumbMouse || mouseKey == Mouse::ThumbMouse2 ||
+                mouseKey == Mouse::LeftMouseButton || mouseKey == Mouse::RightMouseButton ||
+                mouseKey == Mouse::MouseScrollUp || mouseKey == Mouse::MouseScrollDown ||
+                mouseKey == Mouse::MiddleMouseButton || mouseKey == Mouse::MouseX ||
+                mouseKey == Mouse::MouseY || mouseKey == Mouse::Body ||
+                mouseKey == Mouse::ScrollWheel) {
+
+                Rect region = plugin->keyRegions[mouseKey];
+                Vector2F scaledMousePos(
+                    (*mouseCanvasPosition).X + (position.x * (*mouseScaleFactor)),
+                    (*mouseCanvasPosition).Y + (position.y * (*mouseScaleFactor))
+                );
+                canvas.SetPosition(scaledMousePos);
+
+                canvas.DrawTile(
+                    plugin->keyboardImage.get(), // Same image as keyboard
+                    region.width / plugin->scaleFactor * (*mouseScaleFactor),
+                    region.height / plugin->scaleFactor * (*mouseScaleFactor),
+                    region.x, region.y,
+                    region.width, region.height,
+                    { 1, 1, 1, 1 }, 0, 1
+                );
+            }
         }
     }
 }

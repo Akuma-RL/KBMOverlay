@@ -20,8 +20,12 @@ extern std::shared_ptr<bool> gUseMouseOverlay;
 extern std::shared_ptr<Vector2> ScreenSize;
 
 extern std::shared_ptr<float>overallScaleFactor;
+extern std::shared_ptr<float>mouseScaleFactor;
+
 
 extern std::shared_ptr<Vector2>canvasPosition;
+extern std::shared_ptr<Vector2>mouseCanvasPosition;
+
 
 extern std::shared_ptr <std::string>ForwardKey;
 extern std::shared_ptr <std::string>ReverseKey;

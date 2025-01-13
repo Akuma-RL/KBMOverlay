@@ -32,6 +32,8 @@ public:
 	std::map<std::string, ImVec2> actionPositions;
 
 	std::map<std::string, std::string> actionKeyMap;
+	std::vector<std::string> mouseBinds;
+
 	std::map<std::string, Rect> actionTitles;
 
 
@@ -41,7 +43,6 @@ public:
 	std::map<std::string, std::shared_ptr<Rect>> actionRegions;
 
 	// Mouse overlay related members
-	std::shared_ptr<ImageWrapper> mouseImage;
 	std::map<std::string, Rect> mouseKeyRegions;
 	std::map<std::string, ImVec2> mouseActionPositions;
 	std::map<std::string, std::shared_ptr<Rect>> mouseActionRegions;
