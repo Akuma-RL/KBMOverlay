@@ -60,18 +60,29 @@ void Settings::RenderSettings() {
     // Size slider for image scaling
     ImGui::TextUnformatted("Image Size Slider");
 
+    // Dynamically calculate minimum size based on enableActionTitles
+    int minSize = (*enableActionTitles) ? 75 : 50;
+
+
+    // Display the current image scale as a percentage
     static int imageScale = static_cast<int>(*overallScaleFactor * 100.0f); // Convert float to int for display
-    int minSize = 50;
-    if (*enableActionTitles == true) {
-        minSize = 75;
-    }
-    if (ImGui::SliderInt("Image Size", &imageScale, minSize, 200)) { // Slider range: 50% to 200%
-        *overallScaleFactor = static_cast<float>(imageScale) / 100.0f; // Convert back to float
-        if (*enableActionTitles == true && imageScale < 75) {
-            imageScale = 75;
+
+    if (ImGui::SliderInt("Image Size", &imageScale, minSize, 200)) { // Slider range: minSize to 200%
+        // Clamp imageScale to the minimum size
+        if (imageScale < minSize) {
+            imageScale = minSize;
+            *overallScaleFactor = static_cast<float>(imageScale) / 100.0f;
         }
-        cfgl.SaveSettingsToFile(); // Save the new value to the config
+
+        // Update the overallScaleFactor
+        *overallScaleFactor = static_cast<float>(imageScale) / 100.0f;
+
+        // Save the new value to the config
+        cfgl.SaveSettingsToFile();
     }
+    if (*enableActionTitles == true && imageScale < 75) { imageScale = 75; *overallScaleFactor = .75; }
+
+    // Display tooltip for the slider
     if (ImGui::IsItemHovered()) {
         std::string hoverTextSize = "Image scale is " + std::to_string(imageScale) + "%";
         ImGui::SetTooltip(hoverTextSize.c_str());
@@ -98,37 +109,6 @@ void Settings::RenderSettings() {
     if (ImGui::IsItemHovered()) {
         std::string hoverYText = "Overlay Y position is " + std::to_string((*canvasPosition).Y);
         ImGui::SetTooltip(hoverYText.c_str());
-    }
-
-    // Reset sliders to defaults
-    if (ImGui::Button("Reset Defaults")) {
-        if (*enableActionTitles == true)
-        {
-            imageScale = 75;
-            *overallScaleFactor = .75f;
-            if (*gLayoutIndex == 0) {
-                *canvasPosition = Vector2(1, 675);
-            }
-            else if (*gLayoutIndex == 1) {
-                *canvasPosition = Vector2(1, 675);
-            }
-            else if (*gLayoutIndex == 2) {
-                *canvasPosition = Vector2(1, 675);
-            }
-        }
-        imageScale = 50;
-        *overallScaleFactor = .5f;
-
-        if (*gLayoutIndex == 0) {
-            *canvasPosition = Vector2(40, 770);
-        }
-        else if (*gLayoutIndex == 1) {
-            *canvasPosition = Vector2(20, 770);
-        }
-        else if (*gLayoutIndex == 2) {
-            *canvasPosition = Vector2(20, 770);
-        }
-        cfgl.SaveSettingsToFile(); // Save on change
     }
 
     ImGui::TextUnformatted("Overlay Color Settings");
@@ -170,5 +150,40 @@ void Settings::RenderSettings() {
             }
         }
         ImGui::EndCombo();
+    }
+
+    // Reset sliders to defaults
+    if (ImGui::Button("Reset Defaults")) {
+        if (*enableActionTitles) {
+            imageScale = 75;
+            *overallScaleFactor = 0.75f;
+
+            if (*gLayoutIndex == 0) {
+                *canvasPosition = Vector2(1, 675);
+            }
+            else if (*gLayoutIndex == 1) {
+                *canvasPosition = Vector2(1, 675);
+            }
+            else if (*gLayoutIndex == 2) {
+                *canvasPosition = Vector2(1, 675);
+            }
+        }
+        else {
+            imageScale = 50;
+            *overallScaleFactor = 0.5f;
+
+            if (*gLayoutIndex == 0) {
+                *canvasPosition = Vector2(40, 770);
+            }
+            else if (*gLayoutIndex == 1) {
+                *canvasPosition = Vector2(20, 770);
+            }
+            else if (*gLayoutIndex == 2) {
+                *canvasPosition = Vector2(20, 770);
+            }
+        }
+
+        // Save the updated settings
+        cfgl.SaveSettingsToFile();
     }
 }
