@@ -90,20 +90,21 @@ void KBMOverlay::UpdatePressedKeys() {
 }
 
 void KBMOverlay::UpdateLayout() {
-    // Clear existing mappings
+    // Clear previous mappings
     actionRegions.clear();
     actionPositions.clear();
     keyRegions.clear();
+    actionTitles.clear();
     actionKeyMap.clear();
     keyPositions.clear();
 
+    // Initialize positions and mappings
     Init::KeyRegions(keyRegions);
     Init::ActionTitles(actionTitles);
     Init::ActionKeyMap(actionKeyMap);
-
-    // Initialize key positions based on the current layout index
     Init::KeyPositions(keyPositions);
 
+    // Determine if the player is airborne
     bool isAirborne = Utils::IsPlayerAirborne(gameWrapper.get());
 
     for (const auto& [action, key] : actionKeyMap) {
@@ -117,21 +118,17 @@ void KBMOverlay::UpdateLayout() {
             continue; // Skip actions with keys not in the current layout
         }
 
+        // Skip aerial actions when the player is on the ground
+        if (!isAirborne &&
+            (action == Action::PitchUp || action == Action::PitchDown ||
+                action == Action::YawLeft || action == Action::YawRight)) {
+            continue;
+        }
+
         ImVec2 keyPos = keyPosIt->second;
 
         // Get custom offset dynamically
         ImVec2 offset = GetCustomOffset(key);
-
-        // Determine the appropriate action title based on state
-        std::string displayedAction = action;
-
-        // Map overlapping actions based on state
-        if (isAirborne == true) {
-            if (action == Action::ThrottleForward) displayedAction = Action::PitchDown;
-            else if (action == Action::ThrottleReverse) displayedAction = Action::PitchUp;
-            else if (action == Action::SteerLeft) displayedAction = Action::YawLeft;
-            else if (action == Action::SteerRight) displayedAction = Action::YawRight;
-        }
 
         // Calculate title position with the applied offset
         ImVec2 titlePos = { keyPos.x + offset.x, keyPos.y + offset.y };
@@ -141,23 +138,32 @@ void KBMOverlay::UpdateLayout() {
     }
 }
 
+
+
+
+
 void KBMOverlay::onTick(std::string eventName) {
     static int lastLayoutIndex = *gLayoutIndex;
-    bool isCurrentlyAirborne = Utils::IsPlayerAirborne(gameWrapper.get());
     static bool wasAirborne = false;
+
+    bool isCurrentlyAirborne = Utils::IsPlayerAirborne(gameWrapper.get());
 
     // Check if the layout index has changed
     if (*gLayoutIndex != lastLayoutIndex) {
         lastLayoutIndex = *gLayoutIndex;
         UpdateLayout(); // Update the layout dynamically
     }
+
+    // Check if the airborne state has changed
     if (isCurrentlyAirborne != wasAirborne) {
         wasAirborne = isCurrentlyAirborne;
         UpdateLayout(); // Update the layout dynamically
     }
+
     // Update pressed key states
     UpdatePressedKeys();
 }
+
 
 
 void KBMOverlay::RegisterCVAR()

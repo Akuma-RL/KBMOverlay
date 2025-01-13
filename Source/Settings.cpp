@@ -61,8 +61,15 @@ void Settings::RenderSettings() {
     ImGui::TextUnformatted("Image Size Slider");
 
     static int imageScale = static_cast<int>(*overallScaleFactor * 100.0f); // Convert float to int for display
-    if (ImGui::SliderInt("Image Size", &imageScale, 50, 200)) { // Slider range: 50% to 200%
+    int minSize = 50;
+    if (*enableActionTitles == true) {
+        minSize = 75;
+    }
+    if (ImGui::SliderInt("Image Size", &imageScale, minSize, 200)) { // Slider range: 50% to 200%
         *overallScaleFactor = static_cast<float>(imageScale) / 100.0f; // Convert back to float
+        if (*enableActionTitles == true && imageScale < 75) {
+            imageScale = 75;
+        }
         cfgl.SaveSettingsToFile(); // Save the new value to the config
     }
     if (ImGui::IsItemHovered()) {
@@ -95,6 +102,20 @@ void Settings::RenderSettings() {
 
     // Reset sliders to defaults
     if (ImGui::Button("Reset Defaults")) {
+        if (*enableActionTitles == true)
+        {
+            imageScale = 75;
+            *overallScaleFactor = .75f;
+            if (*gLayoutIndex == 0) {
+                *canvasPosition = Vector2(1, 675);
+            }
+            else if (*gLayoutIndex == 1) {
+                *canvasPosition = Vector2(1, 675);
+            }
+            else if (*gLayoutIndex == 2) {
+                *canvasPosition = Vector2(1, 675);
+            }
+        }
         imageScale = 50;
         *overallScaleFactor = .5f;
 
