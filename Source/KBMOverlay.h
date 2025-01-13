@@ -32,6 +32,8 @@ public:
 	std::map<std::string, ImVec2> actionPositions;
 
 	std::map<std::string, std::string> actionKeyMap;
+	std::map<std::string, Rect> actionTitles;
+
 
 	std::map<std::string, Rect> keyRegions;
 	std::map<std::string, ImVec2> keyPositions;

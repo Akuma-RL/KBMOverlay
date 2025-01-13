@@ -442,6 +442,65 @@ void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 	keyRegions[Key::Right] = { 1760, 8515, 159, 130 };
 }
 
+void Init::ActionTitles(std::map<std::string, Rect>& actionTitles)
+{
+
+	actionTitles[Action::ThrottleForward] =		{ 0,10218,159,27 };
+
+	actionTitles[Action::ThrottleReverse] =		{ 160,10218,159,27 };
+
+	actionTitles[Action::SteerRight] =			{ 320,10218,159,27 };
+	actionTitles[Action::SteerLeft] =			{ 480,10218,159,27 };
+
+	actionTitles[Action::LookUp] =				{ 640,10218,159,27 };
+
+	actionTitles[Action::LookDown] =			{ 0,10246,159,27 };
+	actionTitles[Action::LookRight] =			{ 160,10246,159,27 };
+	actionTitles[Action::LookLeft] =			{ 320,10246,159,27 };
+
+	actionTitles[Action::YawRight] =			{ 480,10246,159,27 };
+	actionTitles[Action::YawLeft] =				{ 640,10246,159,27 };
+
+	actionTitles[Action::PitchUp] =				{ 0,10274,159,27 };
+	actionTitles[Action::PitchDown] =			{ 160,10274,159,27 };
+
+	actionTitles[Action::RollRight] =			{ 320,10274,159,27 };
+	actionTitles[Action::RollLeft] =			{ 480,10274,159,27 };
+
+	actionTitles[Action::Boost] =				{ 640,10274,159,27 };
+
+	actionTitles[Action::Jump] =				{ 0,10302,159,27 };
+
+	actionTitles[Action::Handbreak] =			{ 160,10302,159,27 };
+
+	actionTitles[Action::SecondaryCamera] =		{ 320,10302,159,27 };
+
+	actionTitles[Action::ToggleRoll] =			{ 480,10302,159,27 };
+
+	actionTitles[Action::RearCamera] =			{ 640,10302,159,27 };
+
+	actionTitles[Action::UsePickup] =			{ 0,10330,159,27 };
+	actionTitles[Action::NextPickup] =			{ 160,10330,159,27 };
+	actionTitles[Action::Grab] =				{ 320,10330,159,27 };
+
+	actionTitles[Action::ToggleMidGameMenu] =	{ 480,10330,159,27 };
+	actionTitles[Action::ToggleScoreboard] =	{ 640,10330,159,27 };
+
+	actionTitles[Action::Chat] =				{ 0,10358,159,27 };
+	actionTitles[Action::TeamChat] =			{ 160,10358,159,27 };
+	actionTitles[Action::PartyChat] =			{ 320,10358,159,27 };
+
+
+	actionTitles[Action::ChatPreset1] =			{ 480,10358,159,27 };
+	actionTitles[Action::ChatPreset2] =			{ 640,10358,159,27 };
+	actionTitles[Action::ChatPreset3] =			{ 0,10387,159,27 };
+	actionTitles[Action::ChatPreset4] =			{ 160,10387,159,27 };
+
+	actionTitles[Action::PushToTalk] =			{ 320,10387,159,27 };
+
+	actionTitles[Action::ResetTraining] =		{ 480,10387,159,27 };
+}
+
 void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper)
 {
 	for (const auto& action : relevantActions) { // Iterate through relevantActions

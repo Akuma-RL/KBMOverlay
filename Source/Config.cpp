@@ -209,6 +209,7 @@ void Config::SaveSettingsToFile() {
 
 	nlohmann::json settingsJson;
 	settingsJson["enableOverlay"] = *enableOverlay;
+	settingsJson["enableActionTitles"] = *enableActionTitles;
 	settingsJson["layoutIndex"] = *gLayoutIndex;
 	settingsJson["overallScaleFactor"] = *overallScaleFactor;
 	settingsJson["canvasPosition"] = { (*canvasPosition).X, (*canvasPosition).Y };
@@ -241,6 +242,7 @@ void Config::LoadSettingsFromFile() {
 
 		try {
 			*enableOverlay = settingsJson["enableOverlay"].get<bool>();
+			*enableActionTitles = settingsJson["enableActionTitles"].get<bool>();
 			*gLayoutIndex = settingsJson["layoutIndex"].get<int>();
 			*overallScaleFactor = settingsJson["overallScaleFactor"].get<float>();
 			(*canvasPosition).X = settingsJson["canvasPosition"][0].get<float>();

@@ -20,6 +20,18 @@ void Settings::RenderSettings() {
     if (ImGui::IsItemHovered()) {
         ImGui::SetTooltip("On/Off to Enable or Disable the Overlay");
     }
+
+    // Toggle Action Titles
+    static bool showTitles = *enableActionTitles;
+    if (ImGui::Checkbox("Show Action Titles", &showTitles)) {
+        *enableActionTitles = showTitles;
+        kbml.UpdateLayout();
+        cfgl.SaveSettingsToFile(); // Save the setting
+    }
+    if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip("Toggle to show or hide action titles on the overlay.");
+    }
+
     // Dropdown for selecting color
     std::vector<std::string> layoutOptions = { "Recommended", "Actions", "Full Keyboard"};
     static int layoutIndex = *gLayoutIndex; // Track the selected index
@@ -30,11 +42,12 @@ void Settings::RenderSettings() {
             if (ImGui::Selectable(layoutOptions[i].c_str(), isSelected)) {
                 layoutIndex = i;
                 *gLayoutIndex = layoutIndex;
-                Init::KeyPositions(kbml.keyPositions);
-                cfgl.SaveSettingsToFile(); // Save the updated settings
 
-                // Dynamically update layout when selection changes
-                kbml.UpdateLayout();
+                Init::KeyPositions(kbml.keyPositions);  // Reinitialize KeyPositions for the new layout
+
+                kbml.UpdateLayout();                    // Recalculate positions for the new layout
+
+                cfgl.SaveSettingsToFile();              // Save the updated settings
             }
 
             if (isSelected) {

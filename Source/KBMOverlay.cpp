@@ -92,41 +92,69 @@ void KBMOverlay::UpdatePressedKeys() {
 void KBMOverlay::UpdateLayout() {
     // Clear existing mappings
     actionRegions.clear();
+    actionPositions.clear();
     keyRegions.clear();
     actionKeyMap.clear();
     keyPositions.clear();
 
     Init::KeyRegions(keyRegions);
+    Init::ActionTitles(actionTitles);
     Init::ActionKeyMap(actionKeyMap);
 
     // Initialize key positions based on the current layout index
     Init::KeyPositions(keyPositions);
 
-    // Assign action regions using keyRegions and the updated key positions
-    for (const auto& [action, key] : actionKeyMap) {
-        // Find the key's position in keyRegions
-        auto keyRegionIt = keyRegions.find(key);
-        if (keyRegionIt != keyRegions.end()) {
-            // Create a shared pointer to the region and map it to the action
-            actionRegions[action] = std::make_shared<Rect>(keyRegionIt->second);
-        }
-        else {
-            LOG("[KBMOverlay] Key '{}' for action '{}' not found in keyRegions", key, action);
-        }
-    }
+    bool isAirborne = Utils::IsPlayerAirborne(gameWrapper.get());
 
-    LOG("[KBMOverlay] Layout updated to index: {}, actionRegions size: {}", *gLayoutIndex, actionRegions.size());
+    for (const auto& [action, key] : actionKeyMap) {
+        if (key.empty()) {
+            continue; // Skip unbound actions
+        }
+
+        // Check if the key is part of the current layout
+        auto keyPosIt = keyPositions.find(key);
+        if (keyPosIt == keyPositions.end()) {
+            continue; // Skip actions with keys not in the current layout
+        }
+
+        ImVec2 keyPos = keyPosIt->second;
+
+        // Get custom offset dynamically
+        ImVec2 offset = GetCustomOffset(key);
+
+        // Determine the appropriate action title based on state
+        std::string displayedAction = action;
+
+        // Map overlapping actions based on state
+        if (isAirborne == true) {
+            if (action == Action::ThrottleForward) displayedAction = Action::PitchDown;
+            else if (action == Action::ThrottleReverse) displayedAction = Action::PitchUp;
+            else if (action == Action::SteerLeft) displayedAction = Action::YawLeft;
+            else if (action == Action::SteerRight) displayedAction = Action::YawRight;
+        }
+
+        // Calculate title position with the applied offset
+        ImVec2 titlePos = { keyPos.x + offset.x, keyPos.y + offset.y };
+
+        // Assign to actionPositions for rendering
+        actionPositions[action] = titlePos;
+    }
 }
 
 void KBMOverlay::onTick(std::string eventName) {
     static int lastLayoutIndex = *gLayoutIndex;
+    bool isCurrentlyAirborne = Utils::IsPlayerAirborne(gameWrapper.get());
+    static bool wasAirborne = false;
 
     // Check if the layout index has changed
     if (*gLayoutIndex != lastLayoutIndex) {
         lastLayoutIndex = *gLayoutIndex;
         UpdateLayout(); // Update the layout dynamically
     }
-
+    if (isCurrentlyAirborne != wasAirborne) {
+        wasAirborne = isCurrentlyAirborne;
+        UpdateLayout(); // Update the layout dynamically
+    }
     // Update pressed key states
     UpdatePressedKeys();
 }

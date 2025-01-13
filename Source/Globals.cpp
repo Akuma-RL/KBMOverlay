@@ -1,11 +1,14 @@
 #include "pch.h"
 #include "Globals.h"
+#include "Keys.h"
 
 std::shared_ptr<int> offsetBy = std::make_shared<int>(131);
 
 std::shared_ptr<int> gSelectedIndex = std::make_shared<int>(0);
 
 std::shared_ptr<int> gLayoutIndex = std::make_shared<int>(0);
+
+std::shared_ptr<bool> enableActionTitles = std::make_shared<bool>(false);
 
 std::shared_ptr<bool> enableOverlay = std::make_shared<bool>(false);
 
@@ -74,3 +77,22 @@ std::shared_ptr<std::string> ChatPreset4Key = std::make_shared<std::string>();
 std::shared_ptr<std::string> PushToTalkKey = std::make_shared<std::string>();
 
 std::shared_ptr<std::string> ResetTrainingKey = std::make_shared<std::string>();
+
+ImVec2 GetCustomOffset(const std::string& key) {
+    if (key == Key::Spacebar) {
+        return (*gLayoutIndex == 0) ? ImVec2(65.0f, 45.0f) : ImVec2(195.0f, 45.0f);
+    }
+    else if (
+        key == Key::Backspace ||
+        key == Key::Tab ||
+        key == Key::CapsLock ||
+        key == Key::Enter ||
+        key == Key::LShift ||
+        key == Key::RShift
+        ) {
+        return ImVec2(32.5f, 45.0f);
+    }
+    else {
+        return ImVec2(0.0f, 45.0f); // Default offset
+    }
+}

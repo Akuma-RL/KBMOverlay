@@ -3,6 +3,8 @@
 
 namespace fs = std::filesystem;
 
+
+
 extern std::shared_ptr<int> offsetBy;
 
 extern std::shared_ptr<int> gSelectedIndex;
@@ -10,6 +12,8 @@ extern std::shared_ptr<int> gSelectedIndex;
 extern std::shared_ptr<int> gLayoutIndex;
 
 extern std::shared_ptr<bool> enableOverlay;
+
+extern std::shared_ptr<bool> enableActionTitles;
 
 extern std::shared_ptr<bool> gUseMouseOverlay;
 
@@ -79,3 +83,4 @@ extern std::shared_ptr <std::string>PushToTalkKey;
 extern std::shared_ptr <std::string>ResetTrainingKey;
 
 extern std::map<std::string, ImVec2> keyPositions;
+extern ImVec2 GetCustomOffset(const std::string& key);

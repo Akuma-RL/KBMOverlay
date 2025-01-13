@@ -24,6 +24,7 @@ namespace Init {
 	void KeyRegions(std::map<std::string, Rect>& keyRegions);
 	void KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* gameWrapper);
     void KeyPositions(std::map<std::string, ImVec2>& keyPositions);
+	void ActionTitles(std::map<std::string, Rect>& actionTitles);
 }
 
 namespace Assign {

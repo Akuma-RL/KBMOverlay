@@ -22,6 +22,7 @@ namespace Utils
 
 	extern const std::map<std::string, std::string> conflictingActions;
 	void FilterActionKeyMap(std::map<std::string, std::string>& actionKeyMap);
+	bool IsPlayerAirborne(GameWrapper* gameWrapper);
 };
 
 // Make relevant actions globally accessible

@@ -130,3 +130,16 @@ const std::unordered_set<std::string> relevantActions = {
 
     Action::ResetTraining
 };
+
+bool Utils::IsPlayerAirborne(GameWrapper* gameWrapper) {
+    if (!gameWrapper || !gameWrapper->IsInGame()) {
+        return false; // Not in a game or invalid wrapper
+    }
+
+    auto car = gameWrapper->GetLocalCar();
+    if (!car) {
+        return false; // No car data available
+    }
+    if (car.GetbOnGround() == true) { return false; }
+    if (car.GetbOnGround() == false) { return true; }
+}

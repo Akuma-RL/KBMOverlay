@@ -27,30 +27,58 @@ bool Render::IsPlaceholderRegion(const Rect& region, float scaleFactor) {
 }
 
 void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
-    if (!(*enableOverlay)) return;
+	if (!(*enableOverlay)) return;
 
-    for (const auto& [key, position] : plugin->keyPositions) {
-        Rect region = plugin->keyRegions[key];  // Fetch key region
-        Vector2F scaledPos(
-            (*canvasPosition).X + (position.x * (*overallScaleFactor)),
-            (*canvasPosition).Y + (position.y * (*overallScaleFactor))
-        );
-        canvas.SetPosition(scaledPos);
+	for (const auto& [key, position] : plugin->keyPositions) {
+		Rect region = plugin->keyRegions[key];  // Fetch key region
+		Vector2F scaledPos(
+			(*canvasPosition).X + (position.x * (*overallScaleFactor)),
+			(*canvasPosition).Y + (position.y * (*overallScaleFactor))
+		);
+		canvas.SetPosition(scaledPos);
 
-        // Adjust for pressed state
-        if (plugin->keyStates[key].pressed) {
-            region.y += *offsetBy;
-        }
+		// Adjust for pressed state
+		if (plugin->keyStates[key].pressed) {
+			region.y += *offsetBy;
+		}
 
-        // Draw the key
-        canvas.DrawTile(
-            plugin->keyboardImage.get(),
-            region.width / plugin->scaleFactor * (*overallScaleFactor),
-            region.height / plugin->scaleFactor * (*overallScaleFactor),
-            region.x, region.y,
-            region.width, region.height,
-            { 1, 1, 1, 1 }, 0, 1
-        );
-    }
+		// Draw the key
+		canvas.DrawTile(
+			plugin->keyboardImage.get(),
+			region.width / plugin->scaleFactor * (*overallScaleFactor),
+			region.height / plugin->scaleFactor * (*overallScaleFactor),
+			region.x, region.y,
+			region.width, region.height,
+			{ 1, 1, 1, 1 }, 0, 1
+		);
+	}
+
+	// Skip drawing action titles if disabled
+	if (*enableActionTitles == true) {
+
+		// Draw the action titles
+		for (const auto& [action, position] : plugin->actionPositions) {
+			if (plugin->actionTitles.find(action) == plugin->actionTitles.end()) {
+				continue; // Skip actions without a valid title
+			}
+
+			Rect titleRect = plugin->actionTitles[action];
+
+			// Draw title using action position
+			Vector2F scaledTitlePos(
+				(*canvasPosition).X + (position.x * (*overallScaleFactor)),
+				(*canvasPosition).Y + (position.y * (*overallScaleFactor))
+			);
+			canvas.SetPosition(scaledTitlePos);
+			canvas.DrawTile(
+				plugin->keyboardImage.get(),
+				titleRect.width / plugin->scaleFactor * (*overallScaleFactor),
+				titleRect.height / plugin->scaleFactor * (*overallScaleFactor),
+				titleRect.x, titleRect.y,
+				titleRect.width, titleRect.height,
+				{ 1, 1, 1, 1 }, 0, 1
+			);
+		}
+	}
+	else { return; }
 }
-
