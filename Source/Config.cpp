@@ -1,4 +1,4 @@
-#include "pch.h"
+	#include "pch.h"
 #include "Config.h"
 #include "Tools/json.hpp"
 #include <fstream>
@@ -213,10 +213,19 @@ void Config::SaveSettingsToFile() {
 	nlohmann::json settingsJson;
 	settingsJson["enableOverlay"] = *enableOverlay;
 	settingsJson["enableActionTitles"] = *enableActionTitles;
+	settingsJson[""];
 	settingsJson["layoutIndex"] = *gLayoutIndex;
-	settingsJson["overallScaleFactor"] = *overallScaleFactor;
-	settingsJson["canvasPosition"] = { (*canvasPosition).X, (*canvasPosition).Y };
-	settingsJson["selectedIndex"] = *gSelectedIndex;
+	settingsJson["colorIndex"] = *gColorIndex;
+	settingsJson[""];
+	settingsJson["parentScaleFactor"] = *parentScaleFactor;
+	settingsJson["parentCanvasPosition"] = { (*parentCanvasPosition).X, (*parentCanvasPosition).Y };
+	settingsJson[""];
+	settingsJson["keyboardScaleFactor"] = *keyboardScaleFactor;
+	settingsJson["keyboardCanvasPosition"] = { (*keyboardCanvasPosition).X, (*keyboardCanvasPosition).Y };
+	settingsJson[""];
+	settingsJson["mouseScaleFactor"] = *mouseScaleFactor;
+	settingsJson["mouseCanvasPosition"] = (*mouseCanvasPosition).X, (*mouseCanvasPosition).Y;
+
 
 	std::ofstream file(filePath);
 	if (file.is_open()) {
@@ -247,13 +256,19 @@ void Config::LoadSettingsFromFile() {
 			*enableOverlay = settingsJson["enableOverlay"].get<bool>();
 			*enableActionTitles = settingsJson["enableActionTitles"].get<bool>();
 			*gLayoutIndex = settingsJson["layoutIndex"].get<int>();
-			*overallScaleFactor = settingsJson["overallScaleFactor"].get<float>();
-			(*canvasPosition).X = settingsJson["canvasPosition"][0].get<float>();
-			(*canvasPosition).Y = settingsJson["canvasPosition"][1].get<float>();
-			*gSelectedIndex = settingsJson["selectedIndex"].get<int>();
+			*gColorIndex = settingsJson["colorIndex"].get<int>();
+			*parentScaleFactor = settingsJson["parentScaleFactor"].get<float>();
+			(*parentCanvasPosition).X = settingsJson["parentCanvasPosition"][0].get<float>();
+			(*parentCanvasPosition).Y = settingsJson["parentCanvasPosition"][1].get<float>();
+			*keyboardScaleFactor = settingsJson["keyboardScaleFactor"].get<float>();
+			(*keyboardCanvasPosition).X = settingsJson["keyboardCanvasPosition"][0].get<float>();
+			(*keyboardCanvasPosition).Y = settingsJson["keyboardCanvasPosition"][1].get<float>();
+			*mouseScaleFactor = settingsJson["mouseScaleFactor"].get<float>();
+			(*mouseCanvasPosition).X = settingsJson["mouseCanvasPosition"][0].get<float>();
+			(*mouseCanvasPosition).Y = settingsJson["mouseCanvasPosition"][1].get<float>();
 
 			// Apply the loaded selectedIndex to update related settings
-			switch (*gSelectedIndex) {
+			switch (*gColorIndex) {
 			case 0: *offsetBy = 131; break; // Red
 			case 1: *offsetBy = 262; break; // Orange
 			case 2: *offsetBy = 393; break; // Yellow

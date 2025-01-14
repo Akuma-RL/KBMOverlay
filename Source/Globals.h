@@ -7,9 +7,10 @@ namespace fs = std::filesystem;
 
 extern std::shared_ptr<int> offsetBy;
 
-extern std::shared_ptr<int> gSelectedIndex;
-
 extern std::shared_ptr<int> gLayoutIndex;
+
+extern std::shared_ptr<int> gColorIndex;
+
 
 extern std::shared_ptr<bool> enableOverlay;
 
@@ -19,12 +20,16 @@ extern std::shared_ptr<bool> gUseMouseOverlay;
 
 extern std::shared_ptr<Vector2> ScreenSize;
 
-extern std::shared_ptr<float>overallScaleFactor;
+
+
+extern std::shared_ptr<float>keyboardScaleFactor;
+extern std::shared_ptr<Vector2>keyboardCanvasPosition;
+
 extern std::shared_ptr<float>mouseScaleFactor;
-
-
-extern std::shared_ptr<Vector2>canvasPosition;
 extern std::shared_ptr<Vector2>mouseCanvasPosition;
+
+extern std::shared_ptr<float> parentScaleFactor;
+extern std::shared_ptr<Vector2> parentCanvasPosition;
 
 
 extern std::shared_ptr <std::string>ForwardKey;

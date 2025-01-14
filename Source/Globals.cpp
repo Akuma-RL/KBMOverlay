@@ -4,7 +4,7 @@
 
 std::shared_ptr<int> offsetBy = std::make_shared<int>(131);
 
-std::shared_ptr<int> gSelectedIndex = std::make_shared<int>(0);
+std::shared_ptr<int> gColorIndex = std::make_shared<int>(0);
 
 std::shared_ptr<int> gLayoutIndex = std::make_shared<int>(0);
 
@@ -16,13 +16,15 @@ std::shared_ptr<bool> gUseMouseOverlay = std::make_shared<bool>(false);
 
 std::shared_ptr<Vector2> ScreenSize = std::make_shared<Vector2>();
 
-std::shared_ptr<float>overallScaleFactor = std::make_shared<float>(.5f);
+std::shared_ptr<float>keyboardScaleFactor = std::make_shared<float>(.5f);
+std::shared_ptr<Vector2>keyboardCanvasPosition = std::make_shared<Vector2>(0, 0);
+
 
 std::shared_ptr<float>mouseScaleFactor = std::make_shared<float>(.5f);
+std::shared_ptr<Vector2>mouseCanvasPosition = std::make_shared<Vector2>(0, 0);
 
-std::shared_ptr<Vector2>canvasPosition = std::make_shared<Vector2>(40, 770);
-
-std::shared_ptr<Vector2>mouseCanvasPosition = std::make_shared<Vector2>(40, 770);
+std::shared_ptr<float> parentScaleFactor = std::make_shared<float>(1.0f);
+std::shared_ptr<Vector2> parentCanvasPosition = std::make_shared<Vector2>(0, 0);
 
 std::shared_ptr<std::string> ForwardKey = std::make_shared<std::string>();
 std::shared_ptr<std::string> ReverseKey = std::make_shared<std::string>();

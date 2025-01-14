@@ -69,40 +69,40 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 		keyPositions.clear();
 
 		if (*gLayoutIndex == 0 && *gUseMouseOverlay == true) {
-			keyPositions[Mouse::Body] = ImVec2(380, 192);
-			
+			keyPositions[Mouse::Body] = ImVec2(0.5, 147.5);
+
 			// Mouse
-			keyPositions[Mouse::MiddleMouseButton ] = ImVec2(475, 108);
-			keyPositions[Mouse::MouseScrollUp] = ImVec2(475, 108);
-			keyPositions[Mouse::MouseScrollDown] = ImVec2(475, 108);
+			keyPositions[Mouse::MiddleMouseButton] = ImVec2(95.5, 63.5);
+			keyPositions[Mouse::MouseScrollUp] = ImVec2(95.5, 63.5);
+			keyPositions[Mouse::MouseScrollDown] = ImVec2(95.5, 63.5);
 
-			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(379.5, 216); // Front Mouse Button
-			keyPositions[Mouse::ThumbMouseButton] = ImVec2(389.5, 267.5); // Back Mouse Button
+			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(0, 171.5); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouseButton] = ImVec2(10, 223); // Back Mouse Button
 
-			keyPositions[Mouse::LeftMouseButton] = ImVec2(380, 44.5);
-			keyPositions[Mouse::RightMouseButton] = ImVec2(496.5, 44.5);
+			keyPositions[Mouse::LeftMouseButton] = ImVec2(0.5, 0);
+			keyPositions[Mouse::RightMouseButton] = ImVec2(117, 0);
 		}
 		else if (*gLayoutIndex == 0 && *gUseMouseOverlay == false) {
 			// Arrow Keys
-			keyPositions[Key::Up] = ImVec2(465, 257);
-			keyPositions[Key::Left] = ImVec2(390, 323);
-			keyPositions[Key::Down] = ImVec2(455, 323);
-			keyPositions[Key::Right] = ImVec2(520, 323);
+			keyPositions[Key::Up] = ImVec2(465, 64);
+			keyPositions[Key::Left] = ImVec2(390, 128);
+			keyPositions[Key::Down] = ImVec2(455, 128);
+			keyPositions[Key::Right] = ImVec2(520, 128);
 		}
 		// Keyboard
-		keyPositions[Key::Tab] = ImVec2(0, 192);
-		keyPositions[Key::Q] = ImVec2(130, 192);
-		keyPositions[Key::W] = ImVec2(195, 192);
-		keyPositions[Key::E] = ImVec2(260, 192);
+		keyPositions[Key::Tab] = ImVec2(0, 0);
+		keyPositions[Key::Q] = ImVec2(130, 0);
+		keyPositions[Key::W] = ImVec2(195, 0);
+		keyPositions[Key::E] = ImVec2(260, 0);
 
-		keyPositions[Key::LShift] = ImVec2(0, 257);
-		keyPositions[Key::A] = ImVec2(130, 257);
-		keyPositions[Key::S] = ImVec2(195, 257);
-		keyPositions[Key::D] = ImVec2(260, 257);
+		keyPositions[Key::LShift] = ImVec2(0, 64);
+		keyPositions[Key::A] = ImVec2(130, 64);
+		keyPositions[Key::S] = ImVec2(195, 64);
+		keyPositions[Key::D] = ImVec2(260, 64);
 
-		keyPositions[Key::LControl] = ImVec2(0, 323);
-		keyPositions[Key::Spacebar] = ImVec2(65, 323);
-		keyPositions[Key::RControl] = ImVec2(260, 323);
+		keyPositions[Key::LControl] = ImVec2(0, 128);
+		keyPositions[Key::Spacebar] = ImVec2(65, 128);
+		keyPositions[Key::RControl] = ImVec2(260, 128);
 	}
 
 	else if (*gLayoutIndex == 1)
@@ -110,18 +110,18 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 		keyPositions.clear();
 
 		if (*gLayoutIndex == 2 && *gUseMouseOverlay == true) {
-			keyPositions[Mouse::Body] = ImVec2(1130, 190);
+			keyPositions[Mouse::Body] = ImVec2(0.5, 147.5);
 
 			// Mouse
-			keyPositions[Mouse::MiddleMouseButton] = ImVec2(475, 108);
-			keyPositions[Mouse::MouseScrollUp] = ImVec2(475, 108);
-			keyPositions[Mouse::MouseScrollDown] = ImVec2(475, 108);
+			keyPositions[Mouse::MiddleMouseButton] = ImVec2(95.5, 63.5);
+			keyPositions[Mouse::MouseScrollUp] = ImVec2(95.5, 63.5);
+			keyPositions[Mouse::MouseScrollDown] = ImVec2(95.5, 63.5);
 
-			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(1129.5, 214); // Front Mouse Button
-			keyPositions[Mouse::ThumbMouseButton] = ImVec2(1139.5, 265.5); // Back Mouse Button
+			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(0, 171.5); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouseButton] = ImVec2(10, 223); // Back Mouse Button
 
-			keyPositions[Mouse::LeftMouseButton] = ImVec2(1130, 42.5);
-			keyPositions[Mouse::RightMouseButton] = ImVec2(1246.5, 42.5);
+			keyPositions[Mouse::LeftMouseButton] = ImVec2(0.5, 0);
+			keyPositions[Mouse::RightMouseButton] = ImVec2(117, 0);
 		}
 
 
@@ -183,18 +183,18 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 		keyPositions.clear(); // Clear existing positions
 
 		if (*gLayoutIndex == 2 && *gUseMouseOverlay == true) {
-			keyPositions[Mouse::Body] = ImVec2(1130, 190);
+			keyPositions[Mouse::Body] = ImVec2(0.5, 147.5);
 
 			// Mouse
-			keyPositions[Mouse::MiddleMouseButton] = ImVec2(1225, 106);
-			keyPositions[Mouse::MouseScrollUp] = ImVec2(1225, 106);
-			keyPositions[Mouse::MouseScrollDown] = ImVec2(1225, 106);
+			keyPositions[Mouse::MiddleMouseButton] = ImVec2(95.5, 63.5);
+			keyPositions[Mouse::MouseScrollUp] = ImVec2(95.5, 63.5);
+			keyPositions[Mouse::MouseScrollDown] = ImVec2(95.5, 63.5);
 
-			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(1129.5, 214); // Front Mouse Button
-			keyPositions[Mouse::ThumbMouseButton] = ImVec2(1139.5, 265.5); // Back Mouse Button
+			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(0, 171.5); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouseButton] = ImVec2(10, 223); // Back Mouse Button
 
-			keyPositions[Mouse::LeftMouseButton] = ImVec2(1130, 42.5);
-			keyPositions[Mouse::RightMouseButton] = ImVec2(1246.5, 42.5);
+			keyPositions[Mouse::LeftMouseButton] = ImVec2(0.5, 0);
+			keyPositions[Mouse::RightMouseButton] = ImVec2(117, 0);
 		}
 
 		// Escape row
@@ -373,7 +373,7 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap, std::v
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
 
 	keyRegions[Mouse::Body] = { 3017, 1703, 459, 393 };
-	
+
 	// Mouse
 	keyRegions[Mouse::LeftMouseButton] = { 2560, 1703, 227, 283 };
 	keyRegions[Mouse::RightMouseButton] = { 2788, 1703, 227, 283 };

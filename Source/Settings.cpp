@@ -65,26 +65,26 @@ void Settings::RenderSettings() {
 
 
     // Display the current image scale as a percentage
-    static int imageScale = static_cast<int>(*overallScaleFactor * 100.0f); // Convert float to int for display
+    static int imageScale = static_cast<int>(*parentScaleFactor * 100.0f); // Convert float to int for display
 
-    if (ImGui::SliderInt("Image Size", &imageScale, minSize, 200)) { // Slider range: minSize to 200%
+    if (ImGui::SliderInt("Overlay Size", &imageScale, minSize, 200)) { // Slider range: minSize to 200%
         // Clamp imageScale to the minimum size
         if (imageScale < minSize) {
             imageScale = minSize;
-            *overallScaleFactor = static_cast<float>(imageScale) / 100.0f;
+            *parentScaleFactor = static_cast<float>(imageScale) / 100.0f;
         }
 
         // Update the overallScaleFactor
-        *overallScaleFactor = static_cast<float>(imageScale) / 100.0f;
+        *parentScaleFactor = static_cast<float>(imageScale) / 100.0f;
 
         // Save the new value to the config
         cfgl.SaveSettingsToFile();
     }
-    if (*enableActionTitles == true && imageScale < 75) { imageScale = 75; *overallScaleFactor = .75; }
+    if (*enableActionTitles == true && imageScale < 75) { imageScale = 75; *parentScaleFactor = .75; }
 
     // Display tooltip for the slider
     if (ImGui::IsItemHovered()) {
-        std::string hoverTextSize = "Image scale is " + std::to_string(imageScale) + "%";
+        std::string hoverTextSize = "Overlay scale is " + std::to_string(imageScale) + "%";
         ImGui::SetTooltip(hoverTextSize.c_str());
     }
 
@@ -93,21 +93,21 @@ void Settings::RenderSettings() {
 
     Vector2 screen = *ScreenSize;
 
-    if (ImGui::SliderInt("Horizontal Position", &(*canvasPosition).X, 0, screen.X)) {
+    if (ImGui::SliderInt("Horizontal Position", &(*parentCanvasPosition).X, 0, screen.X)) {
         // No need to assign back to canvasPosition, changes are directly applied
         cfgl.SaveSettingsToFile(); // Save on change
     }
     if (ImGui::IsItemHovered()) {
-        std::string hoverXText = "Overlay X position is " + std::to_string((*canvasPosition).X);
+        std::string hoverXText = "Overlay X position is " + std::to_string((*parentCanvasPosition).X);
         ImGui::SetTooltip(hoverXText.c_str());
     }
 
-    if (ImGui::SliderInt("Vertical Position", &(*canvasPosition).Y, 0, screen.Y)) {
+    if (ImGui::SliderInt("Vertical Position", &(*parentCanvasPosition).Y, 0, screen.Y)) {
         // No need to assign back to canvasPosition, changes are directly applied
         cfgl.SaveSettingsToFile(); // Save on change
     }
     if (ImGui::IsItemHovered()) {
-        std::string hoverYText = "Overlay Y position is " + std::to_string((*canvasPosition).Y);
+        std::string hoverYText = "Overlay Y position is " + std::to_string((*parentCanvasPosition).Y);
         ImGui::SetTooltip(hoverYText.c_str());
     }
 
@@ -116,14 +116,14 @@ void Settings::RenderSettings() {
     // Dropdown for selecting color
     std::vector<std::string> colorOptions = { "Red", "Orange", "Yellow", "Green", "Teal", "Cyan", "Blue", "Purple", "Pink", "Bubblegum", "Black", "Custom" };
 
-    static int selectedIndex = *gSelectedIndex; // Track the selected index
+    static int selectedIndex = *gColorIndex; // Track the selected index
 
     if (ImGui::BeginCombo("Select Color", colorOptions[selectedIndex].c_str())) {
         for (int i = 0; i < colorOptions.size(); ++i) {
             bool isSelected = (selectedIndex == i);
             if (ImGui::Selectable(colorOptions[i].c_str(), isSelected)) {
                 selectedIndex = i;
-                *gSelectedIndex = selectedIndex;
+                *gColorIndex = selectedIndex;
 
                 // Apply the new selection
                 switch (selectedIndex) {
@@ -156,38 +156,38 @@ void Settings::RenderSettings() {
     if (ImGui::Button("Reset Defaults")) {
         if (*enableActionTitles) {
             imageScale = 75;
-            *overallScaleFactor = 0.75f;
+            *parentScaleFactor = 0.75f;
             *mouseScaleFactor = .5;
 
             if (*gLayoutIndex == 0) {
-                *canvasPosition = Vector2(2, 675);
+                *parentCanvasPosition = Vector2(2, 675);
                 *mouseCanvasPosition = Vector2(2, 675);
             }
             else if (*gLayoutIndex == 1) {
-                *canvasPosition = Vector2(2, 675);
+                *parentCanvasPosition = Vector2(2, 675);
                 *mouseCanvasPosition = Vector2(2, 675);
             }
             else if (*gLayoutIndex == 2) {
-                *canvasPosition = Vector2(2, 675);
+                *parentCanvasPosition = Vector2(2, 675);
                 *mouseCanvasPosition = Vector2(2, 675);
             }
         }
         else {
             imageScale = 50;
-            *overallScaleFactor = 0.5f;
+            *parentScaleFactor = 0.5f;
             *mouseScaleFactor = .25;
 
             if (*gLayoutIndex == 0) {
-                *canvasPosition = Vector2(40, 770);
+                *parentCanvasPosition = Vector2(40, 770);
                 *mouseCanvasPosition = Vector2(40, 770);
 
             }
             else if (*gLayoutIndex == 1) {
-                *canvasPosition = Vector2(20, 770);
+                *parentCanvasPosition = Vector2(20, 770);
                 *mouseCanvasPosition = Vector2(40, 770);
             }
             else if (*gLayoutIndex == 2) {
-                *canvasPosition = Vector2(20, 770);
+                *parentCanvasPosition = Vector2(20, 770);
                 *mouseCanvasPosition = Vector2(40, 770);
             }
         }
