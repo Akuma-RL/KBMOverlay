@@ -33,4 +33,6 @@ namespace Assign {
         const std::map<std::string, Rect>& keyRegions,
         std::map<std::string, std::shared_ptr<Rect>>& actionRegions
     );
+
+	ImVec2 MouseKeyOffset(const std::string& key, int selectedIndex);
 }

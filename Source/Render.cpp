@@ -33,12 +33,11 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
     for (const auto& [key, position] : plugin->keyPositions) {
 
         // Skip mouse keys when rendering the keyboard canvas
-        if (key == Mouse::ThumbMouse || key == Mouse::ThumbMouse2 ||
+        if (key == Mouse::ThumbMouseButton || key == Mouse::ThumbMouseButton2 ||
             key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
             key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
             key == Mouse::MiddleMouseButton || key == Mouse::MouseX ||
-            key == Mouse::MouseY || key == Mouse::Body ||
-            key == Mouse::ScrollWheel ) {
+            key == Mouse::MouseY || key == Mouse::Body) {
             continue;
         }
         Rect region = plugin->keyRegions[key];
@@ -91,19 +90,29 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
     if (*gUseMouseOverlay) {
         for (const auto& [mouseKey, position] : plugin->keyPositions) {
             // Process only mouse keys
-            if (mouseKey == Mouse::ThumbMouse || mouseKey == Mouse::ThumbMouse2 ||
+            if (mouseKey == Mouse::ThumbMouseButton || mouseKey == Mouse::ThumbMouseButton2 ||
                 mouseKey == Mouse::LeftMouseButton || mouseKey == Mouse::RightMouseButton ||
                 mouseKey == Mouse::MouseScrollUp || mouseKey == Mouse::MouseScrollDown ||
                 mouseKey == Mouse::MiddleMouseButton || mouseKey == Mouse::MouseX ||
-                mouseKey == Mouse::MouseY || mouseKey == Mouse::Body ||
-                mouseKey == Mouse::ScrollWheel) {
+                mouseKey == Mouse::MouseY || mouseKey == Mouse::Body) {
 
                 Rect region = plugin->keyRegions[mouseKey];
                 Vector2F scaledMousePos(
                     (*mouseCanvasPosition).X + (position.x * (*mouseScaleFactor)),
                     (*mouseCanvasPosition).Y + (position.y * (*mouseScaleFactor))
                 );
+
                 canvas.SetPosition(scaledMousePos);
+
+                // Apply key-specific offsets based on the selected index
+                ImVec2 offset = Assign::MouseKeyOffset(mouseKey, *gSelectedIndex);
+                scaledMousePos.X += offset.x;
+                scaledMousePos.Y += offset.y;
+
+                if (plugin->keyStates[mouseKey].pressed) {
+                    region.x += offset.x;
+                    region.y += offset.y;
+                }
 
                 canvas.DrawTile(
                     plugin->keyboardImage.get(), // Same image as keyboard

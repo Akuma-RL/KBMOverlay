@@ -42,11 +42,6 @@ public:
 
 	std::map<std::string, std::shared_ptr<Rect>> actionRegions;
 
-	// Mouse overlay related members
-	std::map<std::string, Rect> mouseKeyRegions;
-	std::map<std::string, ImVec2> mouseActionPositions;
-	std::map<std::string, std::shared_ptr<Rect>> mouseActionRegions;
-
 
 	std::string cfgFile = (gameWrapper->GetDataFolder() / "KBMOverlay" / "kbmbinds.cfg").string();
 

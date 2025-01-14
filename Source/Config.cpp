@@ -16,26 +16,29 @@ void Config::SetupConfigFile() {
 	// Ensure the parent directory exists
 	if (!std::filesystem::exists(filePath.parent_path())) {
 		std::filesystem::create_directories(filePath.parent_path());
-		LOG("No file exists in {}, generating one now", filePath.string());
-	}
-	// If the config file does not exist, generate it
-	if (!std::filesystem::exists(filePath)) {
-		ExportBindsToFile();
-		LOG("Exporting binds to {}", filePath.string());
+		LOG("[KBMOverlay] No directory exists in {}, generating it now.", filePath.parent_path().string());
 	}
 
-	else {
-		// Check if the config file is corrupted
+	// Always overwrite the config file with the latest binds
+	LOG("[KBMOverlay] Overwriting or regenerating binds in {}", filePath.string());
+	ExportBindsToFile();
+
+	// Verify the file content after writing
+	if (std::filesystem::exists(filePath)) {
 		if (isConfigCorrupted(filePath)) {
-			LOG("Config file {} is corrupted, regenerating.", filePath.string());
+			LOG("[KBMOverlay] Config file {} is corrupted after writing, regenerating.", filePath.string());
 			ExportBindsToFile(); // Regenerate the config file
 		}
 		else {
 			ReloadBindsFromFile(); // Reload binds if the file is valid
-			LOG("Reloading binds from {}", filePath.string());
+			LOG("[KBMOverlay] Reloading binds from {}", filePath.string());
 		}
 	}
+	else {
+		LOG("[KBMOverlay] Failed to write or find the config file: {}", filePath.string());
+	}
 }
+
 
 void Config::ExportBindsToFile() {
 	// Get the current keybinds from the game

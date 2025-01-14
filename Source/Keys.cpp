@@ -69,12 +69,15 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 		keyPositions.clear();
 
 		if (*gLayoutIndex == 0 && *gUseMouseOverlay == true) {
-			// Mouse
 			keyPositions[Mouse::Body] = ImVec2(380, 192);
-			keyPositions[Mouse::ScrollWheel] = ImVec2(475, 108);
+			
+			// Mouse
+			keyPositions[Mouse::MiddleMouseButton ] = ImVec2(475, 108);
+			keyPositions[Mouse::MouseScrollUp] = ImVec2(475, 108);
+			keyPositions[Mouse::MouseScrollDown] = ImVec2(475, 108);
 
-			keyPositions[Mouse::ThumbMouse2] = ImVec2(379.5, 216); // Front Mouse Button
-			keyPositions[Mouse::ThumbMouse] = ImVec2(389.5, 267.5); // Back Mouse Button
+			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(379.5, 216); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouseButton] = ImVec2(389.5, 267.5); // Back Mouse Button
 
 			keyPositions[Mouse::LeftMouseButton] = ImVec2(380, 44.5);
 			keyPositions[Mouse::RightMouseButton] = ImVec2(496.5, 44.5);
@@ -105,6 +108,22 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 	else if (*gLayoutIndex == 1)
 	{
 		keyPositions.clear();
+
+		if (*gLayoutIndex == 2 && *gUseMouseOverlay == true) {
+			keyPositions[Mouse::Body] = ImVec2(1130, 190);
+
+			// Mouse
+			keyPositions[Mouse::MiddleMouseButton] = ImVec2(475, 108);
+			keyPositions[Mouse::MouseScrollUp] = ImVec2(475, 108);
+			keyPositions[Mouse::MouseScrollDown] = ImVec2(475, 108);
+
+			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(1129.5, 214); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouseButton] = ImVec2(1139.5, 265.5); // Back Mouse Button
+
+			keyPositions[Mouse::LeftMouseButton] = ImVec2(1130, 42.5);
+			keyPositions[Mouse::RightMouseButton] = ImVec2(1246.5, 42.5);
+		}
+
 
 		keyPositions[Action::ThrottleForward] = ImVec2(910, 257);
 		keyPositions[Action::ThrottleReverse] = ImVec2(910, 321);
@@ -164,12 +183,15 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 		keyPositions.clear(); // Clear existing positions
 
 		if (*gLayoutIndex == 2 && *gUseMouseOverlay == true) {
-			// Mouse
 			keyPositions[Mouse::Body] = ImVec2(1130, 190);
-			keyPositions[Mouse::ScrollWheel] = ImVec2(1225, 106);
 
-			keyPositions[Mouse::ThumbMouse2] = ImVec2(1129.5, 214); // Front Mouse Button
-			keyPositions[Mouse::ThumbMouse] = ImVec2(1139.5, 265.5); // Back Mouse Button
+			// Mouse
+			keyPositions[Mouse::MiddleMouseButton] = ImVec2(1225, 106);
+			keyPositions[Mouse::MouseScrollUp] = ImVec2(1225, 106);
+			keyPositions[Mouse::MouseScrollDown] = ImVec2(1225, 106);
+
+			keyPositions[Mouse::ThumbMouseButton2] = ImVec2(1129.5, 214); // Front Mouse Button
+			keyPositions[Mouse::ThumbMouseButton] = ImVec2(1139.5, 265.5); // Back Mouse Button
 
 			keyPositions[Mouse::LeftMouseButton] = ImVec2(1130, 42.5);
 			keyPositions[Mouse::RightMouseButton] = ImVec2(1246.5, 42.5);
@@ -335,7 +357,7 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap, std::v
 		if (key == Mouse::MouseX || key == Mouse::MouseY) {
 			continue; // Ignore default bindings
 		}
-		if (key == Mouse::ThumbMouse || key == Mouse::ThumbMouse2 ||
+		if (key == Mouse::ThumbMouseButton || key == Mouse::ThumbMouseButton2 ||
 			key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
 			key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
 			key == Mouse::MiddleMouseButton) {
@@ -349,16 +371,20 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap, std::v
 
 
 void Init::KeyRegions(std::map<std::string, Rect>& keyRegions) {
+
+	keyRegions[Mouse::Body] = { 3017, 1703, 459, 393 };
+	
 	// Mouse
 	keyRegions[Mouse::LeftMouseButton] = { 2560, 1703, 227, 283 };
 	keyRegions[Mouse::RightMouseButton] = { 2788, 1703, 227, 283 };
 
-	keyRegions[Mouse::ScrollWheel] = { 3017, 2097, 80, 156 };
+	keyRegions[Mouse::MiddleMouseButton] = { 3017, 2097, 80, 156 };
+	keyRegions[Mouse::MouseScrollUp] = { 3017, 2097, 80, 156 };
+	keyRegions[Mouse::MouseScrollDown] = { 3017, 2097, 80, 156 };
 
-	keyRegions[Mouse::Body] = { 3017, 1703, 459, 393 };
 
-	keyRegions[Mouse::ThumbMouse2] = { 3345, 2097, 69, 103 };
-	keyRegions[Mouse::ThumbMouse] = { 3345, 2097, 69, 103 };
+	keyRegions[Mouse::ThumbMouseButton2] = { 3345, 2097, 69, 103 };
+	keyRegions[Mouse::ThumbMouseButton] = { 3345, 2097, 69, 103 };
 
 	keyRegions[Mouse::MouseX] = { 3414, 2097, 37, 36 };
 	keyRegions[Mouse::MouseY] = { 3414, 2097, 37, 36 };
@@ -537,11 +563,11 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 		keyStates[Mouse::MouseX] = { gameWrapper->GetFNameIndexByString("MouseX"), false };
 		keyStates[Mouse::MouseY] = { gameWrapper->GetFNameIndexByString("MouseY"), false };
 
-		keyStates[Mouse::ThumbMouse] = { gameWrapper->GetFNameIndexByString("ThumbMouse"), false };
-		keyStates[Mouse::ThumbMouse2] = { gameWrapper->GetFNameIndexByString("ThumbMouse2"), false };
+		keyStates[Mouse::ThumbMouseButton] = { gameWrapper->GetFNameIndexByString("ThumbMouseButton"), false };
+		keyStates[Mouse::ThumbMouseButton2] = { gameWrapper->GetFNameIndexByString("ThumbMouseButton2"), false };
 
 		keyStates[Mouse::LeftMouseButton] = { gameWrapper->GetFNameIndexByString("LeftMouseButton"), false };
-		keyStates[Mouse::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMousebutton"), false };
+		keyStates[Mouse::RightMouseButton] = { gameWrapper->GetFNameIndexByString("RightMouseButton"), false };
 
 		keyStates[Mouse::MouseScrollDown] = { gameWrapper->GetFNameIndexByString("MouseScrollDown"), false };
 		keyStates[Mouse::MouseScrollUp] = { gameWrapper->GetFNameIndexByString("MouseScrollUp"), false };
@@ -644,7 +670,145 @@ void Init::KeyStates(std::map<std::string, KeyState>& keyStates, GameWrapper* ga
 		keyStates[Key::Left] = { gameWrapper->GetFNameIndexByString("Left"), false };
 		keyStates[Key::Right] = { gameWrapper->GetFNameIndexByString("Right"), false };
 	}
+
 }
+
+
+ImVec2 Assign::MouseKeyOffset(const std::string& key, int selectedIndex) {
+	if (key == Mouse::ThumbMouseButton) {
+		if (selectedIndex == 0) return ImVec2(0.0f, 105.0f);
+		if (selectedIndex == 1) return ImVec2(0.0f, 210.0f);
+		if (selectedIndex == 2) return ImVec2(0.0f, 315.0f);
+		if (selectedIndex == 3) return ImVec2(0.0f, 420.0f);
+		if (selectedIndex == 4) return ImVec2(0.0f, 525.0f);
+		if (selectedIndex == 5) return ImVec2(0.0f, 630.0f);
+		if (selectedIndex == 6) return ImVec2(0.0f, 735.0f);
+		if (selectedIndex == 7) return ImVec2(0.0f, 840.0f);
+		if (selectedIndex == 8) return ImVec2(0.0f, 945.0f);
+		if (selectedIndex == 9) return ImVec2(0.0f, 1050.0f);
+		if (selectedIndex == 10) return ImVec2(0.0f, 1155.0f);
+		if (selectedIndex == 11) return ImVec2(0.0f, 1260.0f);
+	}
+	else if (key == Mouse::ThumbMouseButton2) {
+		if (selectedIndex == 0) return ImVec2(0.0f, 105.0f);
+		if (selectedIndex == 1) return ImVec2(0.0f, 210.0f);
+		if (selectedIndex == 2) return ImVec2(0.0f, 315.0f);
+		if (selectedIndex == 3) return ImVec2(0.0f, 420.0f);
+		if (selectedIndex == 4) return ImVec2(0.0f, 525.0f);
+		if (selectedIndex == 5) return ImVec2(0.0f, 630.0f);
+		if (selectedIndex == 6) return ImVec2(0.0f, 735.0f);
+		if (selectedIndex == 7) return ImVec2(0.0f, 840.0f);
+		if (selectedIndex == 8) return ImVec2(0.0f, 945.0f);
+		if (selectedIndex == 9) return ImVec2(0.0f, 1050.0f);
+		if (selectedIndex == 10) return ImVec2(0.0f, 1155.0f);
+		if (selectedIndex == 11) return ImVec2(0.0f, 1260.0f);
+	}
+	else if (key == Mouse::LeftMouseButton) {
+		if (selectedIndex == 0) return ImVec2(0.0f, 286.0f);
+		if (selectedIndex == 1) return ImVec2(0.0f, 572.0f);
+		if (selectedIndex == 2) return ImVec2(0.0f, 858.0f);
+		if (selectedIndex == 3) return ImVec2(0.0f, 1144.0f);
+		if (selectedIndex == 4) return ImVec2(0.0f, 1430.0f);
+		if (selectedIndex == 5) return ImVec2(0.0f, 1716.0f);
+		if (selectedIndex == 6) return ImVec2(0.0f, 2002.0f);
+		if (selectedIndex == 7) return ImVec2(0.0f, 2288.0f);
+		if (selectedIndex == 8) return ImVec2(0.0f, 2574.0f);
+		if (selectedIndex == 9) return ImVec2(0.0f, 2860.0f);
+		if (selectedIndex == 10) return ImVec2(0.0f, 3146.0f);
+		if (selectedIndex == 11) return ImVec2(0.0f, 3432.0f);
+	}
+	else if (key == Mouse::RightMouseButton) {
+		if (selectedIndex == 0) return ImVec2(0.0f, 286.0f);
+		if (selectedIndex == 1) return ImVec2(0.0f, 572.0f);
+		if (selectedIndex == 2) return ImVec2(0.0f, 858.0f);
+		if (selectedIndex == 3) return ImVec2(0.0f, 1144.0f);
+		if (selectedIndex == 4) return ImVec2(0.0f, 1430.0f);
+		if (selectedIndex == 5) return ImVec2(0.0f, 1716.0f);
+		if (selectedIndex == 6) return ImVec2(0.0f, 2002.0f);
+		if (selectedIndex == 7) return ImVec2(0.0f, 2288.0f);
+		if (selectedIndex == 8) return ImVec2(0.0f, 2574.0f);
+		if (selectedIndex == 9) return ImVec2(0.0f, 2860.0f);
+		if (selectedIndex == 10) return ImVec2(0.0f, 3146.0f);
+		if (selectedIndex == 11) return ImVec2(0.0f, 3432.0f);
+	}
+	else if (key == Mouse::MiddleMouseButton) {
+		if (selectedIndex == 0) return ImVec2(82.0f, 0.0f);
+		if (selectedIndex == 1) return ImVec2(82.0f, 158.0f);
+		if (selectedIndex == 2) return ImVec2(82.0f, 316.0f);
+		if (selectedIndex == 3) return ImVec2(82.0f, 474.0f);
+		if (selectedIndex == 4) return ImVec2(82.0f, 632.0f);
+		if (selectedIndex == 5) return ImVec2(82.0f, 790.0f);
+		if (selectedIndex == 6) return ImVec2(82.0f, 948.0f);
+		if (selectedIndex == 7) return ImVec2(82.0f, 1106.0f);
+		if (selectedIndex == 8) return ImVec2(82.0f, 1264.0f);
+		if (selectedIndex == 9) return ImVec2(82.0f, 1422.0f);
+		if (selectedIndex == 10) return ImVec2(82.0f, 1580.0f);
+		if (selectedIndex == 11) return ImVec2(82.0f, 1738.0f);
+	}
+	else if (key == Mouse::MouseScrollUp) {
+		if (selectedIndex == 0) return ImVec2(164.0f, 0.0f);
+		if (selectedIndex == 1) return ImVec2(164.0f, 158.0f);
+		if (selectedIndex == 2) return ImVec2(164.0f, 316.0f);
+		if (selectedIndex == 3) return ImVec2(164.0f, 474.0f);
+		if (selectedIndex == 4) return ImVec2(164.0f, 632.0f);
+		if (selectedIndex == 5) return ImVec2(164.0f, 790.0f);
+		if (selectedIndex == 6) return ImVec2(164.0f, 948.0f);
+		if (selectedIndex == 7) return ImVec2(164.0f, 1106.0f);
+		if (selectedIndex == 8) return ImVec2(164.0f, 1264.0f);
+		if (selectedIndex == 9) return ImVec2(164.0f, 1422.0f);
+		if (selectedIndex == 10) return ImVec2(164.0f, 1580.0f);
+		if (selectedIndex == 11) return ImVec2(164.0f, 1738.0f);
+	}
+	else if (key == Mouse::MouseScrollDown) {
+		if (selectedIndex == 0) return ImVec2(246.0f, 0.0f);
+		if (selectedIndex == 1) return ImVec2(246.0f, 158.0f);
+		if (selectedIndex == 2) return ImVec2(246.0f, 316.0f);
+		if (selectedIndex == 3) return ImVec2(246.0f, 474.0f);
+		if (selectedIndex == 4) return ImVec2(246.0f, 632.0f);
+		if (selectedIndex == 5) return ImVec2(246.0f, 790.0f);
+		if (selectedIndex == 6) return ImVec2(246.0f, 948.0f);
+		if (selectedIndex == 7) return ImVec2(246.0f, 1106.0f);
+		if (selectedIndex == 8) return ImVec2(246.0f, 1264.0f);
+		if (selectedIndex == 9) return ImVec2(246.0f, 1422.0f);
+		if (selectedIndex == 10) return ImVec2(246.0f, 1580.0f);
+		if (selectedIndex == 11) return ImVec2(246.0f, 1738.0f);
+	}
+	else if (key == Mouse::MouseX) {
+		if (selectedIndex == 0) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 1) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 2) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 3) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 4) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 5) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 6) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 7) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 8) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 9) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 10) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 11) return ImVec2(0.0f, 0.0f);
+	}
+	else if (key == Mouse::MouseY) {
+		if (selectedIndex == 0) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 1) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 2) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 3) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 4) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 5) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 6) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 7) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 8) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 9) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 10) return ImVec2(0.0f, 0.0f);
+		if (selectedIndex == 11) return ImVec2(0.0f, 0.0f);
+	}
+	else if (key == Mouse::Body) {
+		return ImVec2(0.0f, 0.0f);
+	}
+
+	// Default case if key or index is not specifically handled
+	return ImVec2(0.0f, 0.0f);
+}
+
 
 void Assign::KeyboardActionRegions(
 	const std::map<std::string, std::string>& actionKeyMap,

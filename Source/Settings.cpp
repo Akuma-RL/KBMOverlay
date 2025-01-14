@@ -157,29 +157,38 @@ void Settings::RenderSettings() {
         if (*enableActionTitles) {
             imageScale = 75;
             *overallScaleFactor = 0.75f;
+            *mouseScaleFactor = .5;
 
             if (*gLayoutIndex == 0) {
-                *canvasPosition = Vector2(1, 675);
+                *canvasPosition = Vector2(2, 675);
+                *mouseCanvasPosition = Vector2(2, 675);
             }
             else if (*gLayoutIndex == 1) {
-                *canvasPosition = Vector2(1, 675);
+                *canvasPosition = Vector2(2, 675);
+                *mouseCanvasPosition = Vector2(2, 675);
             }
             else if (*gLayoutIndex == 2) {
-                *canvasPosition = Vector2(1, 675);
+                *canvasPosition = Vector2(2, 675);
+                *mouseCanvasPosition = Vector2(2, 675);
             }
         }
         else {
             imageScale = 50;
             *overallScaleFactor = 0.5f;
+            *mouseScaleFactor = .25;
 
             if (*gLayoutIndex == 0) {
                 *canvasPosition = Vector2(40, 770);
+                *mouseCanvasPosition = Vector2(40, 770);
+
             }
             else if (*gLayoutIndex == 1) {
                 *canvasPosition = Vector2(20, 770);
+                *mouseCanvasPosition = Vector2(40, 770);
             }
             else if (*gLayoutIndex == 2) {
                 *canvasPosition = Vector2(20, 770);
+                *mouseCanvasPosition = Vector2(40, 770);
             }
         }
 

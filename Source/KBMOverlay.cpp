@@ -80,8 +80,20 @@ void KBMOverlay::UpdatePressedKeys() {
 		int keyIndex = keyState.index; // Use stored index to avoid redundant lookups
 		bool isCurrentlyPressed = gameWrapper->IsKeyPressed(keyIndex);
 
+		// Special handling for mouse keys
+		if (key == Mouse::ThumbMouseButton || key == Mouse::ThumbMouseButton2 ||
+			key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
+			key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
+			key == Mouse::MiddleMouseButton || key == Mouse::MouseX ||
+			key == Mouse::MouseY) {
+			// Check mouse-specific input
+			isCurrentlyPressed = gameWrapper->IsKeyPressed(keyIndex);
+		}
+
 		if (isCurrentlyPressed) {
 			pressedKeys.insert(key); // Add key to pressed keys
+			// Log the key and its state
+			LOG("[KBMOverlay] Key state updated: {} -> {}", key, isCurrentlyPressed ? "Pressed" : "Released");
 		}
 
 		// Update key state
@@ -175,8 +187,6 @@ void KBMOverlay::onTick(std::string eventName) {
 	// Update pressed key states
 	UpdatePressedKeys();
 }
-
-
 
 void KBMOverlay::RegisterCVAR()
 {

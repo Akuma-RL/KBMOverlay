@@ -35,10 +35,10 @@ namespace Action {
 	constexpr auto SteerRight = "SteerRight";
 	constexpr auto SteerLeft = "SteerLeft";
 
-	constexpr auto LookUp = "LookUp";
-	constexpr auto LookDown = "LookDown";
-	constexpr auto LookRight = "LookRight";
-	constexpr auto LookLeft = "LookLeft";
+	constexpr auto LookUp = "SwivelUp";
+	constexpr auto LookDown = "SwivelDown";
+	constexpr auto LookRight = "SwivelRight";
+	constexpr auto LookLeft = "SwivelLeft";
 
 	constexpr auto YawRight = "YawRight";
 	constexpr auto YawLeft = "YawLeft";
@@ -93,14 +93,12 @@ namespace Mouse {
 
 	constexpr auto Body = "body";
 
-	constexpr auto ScrollWheel = "scrollwheel";
-
 	// Mouse binds
 	constexpr auto MouseX = "mousex";
 	constexpr auto MouseY = "mousey";
 
-	constexpr auto ThumbMouse2 = "thumbmouse2"; // front button
-	constexpr auto ThumbMouse = "thumbmouse"; // back button
+	constexpr auto ThumbMouseButton2 = "thumbmousebutton2"; // front button
+	constexpr auto ThumbMouseButton = "thumbmousebutton"; // back button
 
 	constexpr auto LeftMouseButton = "leftmousebutton";
 	constexpr auto RightMouseButton = "rightmousebutton";

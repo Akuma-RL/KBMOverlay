@@ -143,3 +143,4 @@ bool Utils::IsPlayerAirborne(GameWrapper* gameWrapper) {
 
     return !car.GetbOnGround(); // Returns true if not on the ground
 }
+
