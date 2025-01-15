@@ -93,7 +93,7 @@ void KBMOverlay::UpdatePressedKeys() {
 		if (isCurrentlyPressed) {
 			pressedKeys.insert(key); // Add key to pressed keys
 			// Log the key and its state
-			LOG("[KBMOverlay] Key state updated: {} -> {}", key, isCurrentlyPressed ? "Pressed" : "Released");
+			//LOG("[KBMOverlay] Key state updated: {} -> {}", key, isCurrentlyPressed ? "Pressed" : "Released");
 		}
 
 		// Update key state

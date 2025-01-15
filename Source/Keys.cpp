@@ -68,6 +68,18 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 	if (*gLayoutIndex == 0) { // Recommended
 		keyPositions.clear();
 
+		// Keyboard
+		keyPositions[Key::Tab] = ImVec2(0, 0);
+		keyPositions[Key::Q] = ImVec2(130, 0);
+		keyPositions[Key::W] = ImVec2(195, 0);
+		keyPositions[Key::E] = ImVec2(260, 0);
+
+		keyPositions[Key::LShift] = ImVec2(0, 64);
+		keyPositions[Key::A] = ImVec2(130, 64);
+		keyPositions[Key::S] = ImVec2(195, 64);
+		keyPositions[Key::D] = ImVec2(260, 64);
+
+		keyPositions[Key::LControl] = ImVec2(0, 128);
 		if (*gLayoutIndex == 0 && *gUseMouseOverlay == true) {
 			keyPositions[Mouse::Body] = ImVec2(0.5, 147.5);
 
@@ -81,6 +93,9 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 
 			keyPositions[Mouse::LeftMouseButton] = ImVec2(0.5, 0);
 			keyPositions[Mouse::RightMouseButton] = ImVec2(117, 0);
+
+			keyPositions[Key::Spacebar] = ImVec2(130, 128);
+			keyPositions[Key::LAlt] = ImVec2(65, 128);
 		}
 		else if (*gLayoutIndex == 0 && *gUseMouseOverlay == false) {
 			// Arrow Keys
@@ -88,22 +103,12 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 			keyPositions[Key::Left] = ImVec2(390, 128);
 			keyPositions[Key::Down] = ImVec2(455, 128);
 			keyPositions[Key::Right] = ImVec2(520, 128);
+
+			keyPositions[Key::Spacebar] = ImVec2(65, 128);
+			keyPositions[Key::RControl] = ImVec2(260, 128);
 		}
-		// Keyboard
-		keyPositions[Key::Tab] = ImVec2(0, 0);
-		keyPositions[Key::Q] = ImVec2(130, 0);
-		keyPositions[Key::W] = ImVec2(195, 0);
-		keyPositions[Key::E] = ImVec2(260, 0);
-
-		keyPositions[Key::LShift] = ImVec2(0, 64);
-		keyPositions[Key::A] = ImVec2(130, 64);
-		keyPositions[Key::S] = ImVec2(195, 64);
-		keyPositions[Key::D] = ImVec2(260, 64);
-
-		keyPositions[Key::LControl] = ImVec2(0, 128);
-		keyPositions[Key::Spacebar] = ImVec2(65, 128);
-		keyPositions[Key::RControl] = ImVec2(260, 128);
 	}
+
 
 	else if (*gLayoutIndex == 1)
 	{
@@ -833,7 +838,7 @@ void Assign::KeyboardActionRegions(
 	for (const auto& [action, key] : actionKeyMap) {
 		if (key.empty()) {
 			actionRegions[action] = std::make_shared<Rect>(Rect{ 0, 0, 0, 0 }); // Assign empty Rect
-			LOG("[Assign::KeyboardActionRegions] Action '{}' has no assigned key.", action);
+			//LOG("[Assign::KeyboardActionRegions] Action '{}' has no assigned key.", action);
 			continue;
 		}
 
@@ -844,7 +849,7 @@ void Assign::KeyboardActionRegions(
 		}
 		else {
 			actionRegions[action] = std::make_shared<Rect>(Rect{ 0, 0, 0, 0 }); // Assign empty Rect
-			LOG("[Assign::KeyboardActionRegions] Key '{}' for action '{}' not found in keyRegions.", key, action);
+			//LOG("[Assign::KeyboardActionRegions] Key '{}' for action '{}' not found in keyRegions.", key, action);
 		}
 	}
 }

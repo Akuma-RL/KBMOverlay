@@ -16,11 +16,11 @@ std::shared_ptr<bool> gUseMouseOverlay = std::make_shared<bool>(false);
 
 std::shared_ptr<Vector2> ScreenSize = std::make_shared<Vector2>();
 
-std::shared_ptr<float>keyboardScaleFactor = std::make_shared<float>(.5f);
+std::shared_ptr<float>keyboardScaleFactor = std::make_shared<float>(1.0f);
 std::shared_ptr<Vector2>keyboardCanvasPosition = std::make_shared<Vector2>(0, 0);
 
 
-std::shared_ptr<float>mouseScaleFactor = std::make_shared<float>(.5f);
+std::shared_ptr<float>mouseScaleFactor = std::make_shared<float>(1.0f);
 std::shared_ptr<Vector2>mouseCanvasPosition = std::make_shared<Vector2>(0, 0);
 
 std::shared_ptr<float> parentScaleFactor = std::make_shared<float>(1.0f);

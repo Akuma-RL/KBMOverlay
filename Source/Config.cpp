@@ -213,16 +213,12 @@ void Config::SaveSettingsToFile() {
 	nlohmann::json settingsJson;
 	settingsJson["enableOverlay"] = *enableOverlay;
 	settingsJson["enableActionTitles"] = *enableActionTitles;
-	settingsJson[""];
 	settingsJson["layoutIndex"] = *gLayoutIndex;
 	settingsJson["colorIndex"] = *gColorIndex;
-	settingsJson[""];
 	settingsJson["parentScaleFactor"] = *parentScaleFactor;
 	settingsJson["parentCanvasPosition"] = { (*parentCanvasPosition).X, (*parentCanvasPosition).Y };
-	settingsJson[""];
 	settingsJson["keyboardScaleFactor"] = *keyboardScaleFactor;
 	settingsJson["keyboardCanvasPosition"] = { (*keyboardCanvasPosition).X, (*keyboardCanvasPosition).Y };
-	settingsJson[""];
 	settingsJson["mouseScaleFactor"] = *mouseScaleFactor;
 	settingsJson["mouseCanvasPosition"] = (*mouseCanvasPosition).X, (*mouseCanvasPosition).Y;
 
