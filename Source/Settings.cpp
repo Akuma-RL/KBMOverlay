@@ -145,23 +145,6 @@ void Settings::RenderSettings() {
 				selectedIndex = i;
 				*gColorIndex = selectedIndex;
 
-				// Apply the new selection
-				switch (selectedIndex) {
-				case 0: *offsetBy = 131; break; // Red
-				case 1: *offsetBy = 262; break; // Orange
-				case 2: *offsetBy = 393; break; // Yellow
-				case 3: *offsetBy = 524; break; // Green
-				case 4: *offsetBy = 655; break; // Teal
-				case 5: *offsetBy = 786; break; // Cyan
-				case 6: *offsetBy = 917; break; // Blue
-				case 7: *offsetBy = 1048; break; // Purple
-				case 8: *offsetBy = 1179; break; // Pink
-				case 9: *offsetBy = 1310; break; // Bubblegum
-				case 10: *offsetBy = 1441; break; // Black
-				case 11: *offsetBy = 1572; break; // Custom
-				default: *offsetBy = 131; break; // Default
-				}
-
 				cfgl.SaveSettingsToFile(); // Save the updated settings
 			}
 

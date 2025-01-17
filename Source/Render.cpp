@@ -55,8 +55,12 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
         );
         canvas.SetPosition(scaledPos);
 
+        // Apply key-specific offsets based on the selected index
+        ImVec2 kbOffset = Assign::KeyboardKeyOffset(*gColorIndex);
+
+        scaledPos.Y += kbOffset.y;
         if (plugin->keyStates[key].pressed) {
-            region.y += *offsetBy;
+            region.y += kbOffset.y;
         }
 
         // Draw the key
@@ -109,7 +113,7 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
             }
         }
     }
-    
+
     // Draw the action titles if enabled
     if (*enableActionTitles) {
         for (const auto& [action, position] : plugin->actionPositions) {
@@ -118,15 +122,27 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
             }
 
             Rect titleRect = plugin->actionTitles[action];
-            Vector2F scaledTitlePos(
-                parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,
-                parentOffset.Y + ((*keyboardCanvasPosition).Y + position.y * (*keyboardScaleFactor)) * parentScale
-            );
-            canvas.SetPosition(scaledTitlePos);
+            const std::string& boundKey = plugin->actionKeyMap[action];
+            bool isMouseKey = std::find(plugin->mouseBinds.begin(), plugin->mouseBinds.end(), boundKey) != plugin->mouseBinds.end();
+
+            // Determine canvas position based on whether the key is a mouse key
+            Vector2F canvasPosition = isMouseKey
+                ? Vector2F(
+                    parentOffset.X + ((*mouseCanvasPosition).X + position.x * (*mouseScaleFactor)) * parentScale,
+                    parentOffset.Y + ((*mouseCanvasPosition).Y + position.y * (*mouseScaleFactor)) * parentScale
+                )
+                : Vector2F(
+                    parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,
+                    parentOffset.Y + ((*keyboardCanvasPosition).Y + position.y * (*keyboardScaleFactor)) * parentScale
+                );
+
+            canvas.SetPosition(canvasPosition);
+
+            // Draw the action title
             canvas.DrawTile(
                 plugin->keyboardImage.get(),
-                titleRect.width / plugin->scaleFactor * (*keyboardScaleFactor) * parentScale,
-                titleRect.height / plugin->scaleFactor * (*keyboardScaleFactor) * parentScale,
+                titleRect.width / plugin->scaleFactor * parentScale,
+                titleRect.height / plugin->scaleFactor * parentScale,
                 titleRect.x, titleRect.y,
                 titleRect.width, titleRect.height,
                 { 1, 1, 1, 1 }, 0, 1

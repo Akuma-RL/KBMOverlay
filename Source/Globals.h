@@ -11,7 +11,6 @@ extern std::shared_ptr<int> gLayoutIndex;
 
 extern std::shared_ptr<int> gColorIndex;
 
-
 extern std::shared_ptr<bool> enableOverlay;
 
 extern std::shared_ptr<bool> enableActionTitles;
@@ -19,8 +18,6 @@ extern std::shared_ptr<bool> enableActionTitles;
 extern std::shared_ptr<bool> gUseMouseOverlay;
 
 extern std::shared_ptr<Vector2> ScreenSize;
-
-
 
 extern std::shared_ptr<float>keyboardScaleFactor;
 extern std::shared_ptr<Vector2>keyboardCanvasPosition;
@@ -30,7 +27,6 @@ extern std::shared_ptr<Vector2>mouseCanvasPosition;
 
 extern std::shared_ptr<float> parentScaleFactor;
 extern std::shared_ptr<Vector2> parentCanvasPosition;
-
 
 extern std::shared_ptr <std::string>ForwardKey;
 extern std::shared_ptr <std::string>ReverseKey;

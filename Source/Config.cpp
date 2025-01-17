@@ -220,7 +220,7 @@ void Config::SaveSettingsToFile() {
 	settingsJson["keyboardScaleFactor"] = *keyboardScaleFactor;
 	settingsJson["keyboardCanvasPosition"] = { (*keyboardCanvasPosition).X, (*keyboardCanvasPosition).Y };
 	settingsJson["mouseScaleFactor"] = *mouseScaleFactor;
-	settingsJson["mouseCanvasPosition"] = (*mouseCanvasPosition).X, (*mouseCanvasPosition).Y;
+	settingsJson["mouseCanvasPosition"] = { (*mouseCanvasPosition).X, (*mouseCanvasPosition).Y };
 
 
 	std::ofstream file(filePath);
@@ -262,23 +262,6 @@ void Config::LoadSettingsFromFile() {
 			*mouseScaleFactor = settingsJson["mouseScaleFactor"].get<float>();
 			(*mouseCanvasPosition).X = settingsJson["mouseCanvasPosition"][0].get<float>();
 			(*mouseCanvasPosition).Y = settingsJson["mouseCanvasPosition"][1].get<float>();
-
-			// Apply the loaded selectedIndex to update related settings
-			switch (*gColorIndex) {
-			case 0: *offsetBy = 131; break; // Red
-			case 1: *offsetBy = 262; break; // Orange
-			case 2: *offsetBy = 393; break; // Yellow
-			case 3: *offsetBy = 524; break; // Green
-			case 4: *offsetBy = 655; break; // Teal
-			case 5: *offsetBy = 786; break; // Cyan
-			case 6: *offsetBy = 917; break; // Blue
-			case 7: *offsetBy = 1048; break; // Purple
-			case 8: *offsetBy = 1179; break; // Pink
-			case 9: *offsetBy = 1310; break; // Bubblegum
-			case 10: *offsetBy = 1441; break; // Black
-			case 11: *offsetBy = 1572; break; // Custom
-			default: *offsetBy = 131; break; // Default
-			}
 
 			LOG("[KBMOverlay] Settings loaded and applied from: {}", filePath.string());
 		}

@@ -30,6 +30,8 @@ public:
 	std::shared_ptr<ImageWrapper> keyboardImage;
 
 	std::map<std::string, ImVec2> actionPositions;
+	std::map<std::string, ImVec2> keyboardActionPositions;
+	std::map<std::string, ImVec2> mouseActionPositions;
 
 	std::map<std::string, std::string> actionKeyMap;
 	std::vector<std::string> mouseBinds;

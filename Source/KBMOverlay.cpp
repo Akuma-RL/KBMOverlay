@@ -117,6 +117,8 @@ void KBMOverlay::UpdateLayout() {
 	Init::ActionKeyMap(actionKeyMap, mouseBinds);
 	Init::KeyPositions(keyPositions);
 
+	PlaylistIds playlist;
+
 	// Handle mouse bindings
 	for (const auto& mouseKey : mouseBinds) {
 		auto keyPosIt = keyPositions.find(mouseKey);
@@ -146,14 +148,32 @@ void KBMOverlay::UpdateLayout() {
 			continue; // Skip actions with keys not in the current layout
 		}
 
-		// Skip aerial actions when the player is on the ground
-		if (!isAirborne &&
-			(action == Action::PitchUp || action == Action::PitchDown ||
-				action == Action::YawLeft || action == Action::YawRight)) {
-			continue;
+		// Skip certain actions based on player state
+		if (!isAirborne) {
+			// Skip aerial actions while on the ground
+			if (action == Action::PitchUp || action == Action::PitchDown ||
+				action == Action::YawLeft || action == Action::YawRight || action == Action::ToggleRoll) {
+				continue;
+			}
 		}
+		else {
+			// Skip ground-only actions while airborne
+			if (action == Action::ThrottleForward || action == Action::ThrottleReverse ||
+				action == Action::SteerLeft || action == Action::SteerRight) {
+				continue;
+			}
+		}
+	
+		// Determine the canvas and position
+        ImVec2 keyPos;
+        if (std::find(mouseBinds.begin(), mouseBinds.end(), key) != mouseBinds.end()) {
+            // If the key is a mouse key, use the mouse canvas position
+            keyPos = {(*mouseCanvasPosition).X + keyPosIt->second.x, (*mouseCanvasPosition).Y + keyPosIt->second.y};
+        } else {
+            // Use the keyboard canvas position
+            keyPos = {(*keyboardCanvasPosition).X + keyPosIt->second.x, (*keyboardCanvasPosition).Y + keyPosIt->second.y};
+        }
 
-		ImVec2 keyPos = keyPosIt->second;
 
 		// Get custom offset dynamically
 		ImVec2 offset = GetCustomOffset(key);

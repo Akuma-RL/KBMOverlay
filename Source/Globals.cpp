@@ -98,6 +98,34 @@ ImVec2 GetCustomOffset(const std::string& key) {
         ) {
         return ImVec2(32.5f, 45.0f);
     }
+    else if (key == Mouse::LeftMouseButton)
+    {
+        return ImVec2(15.0f, 15.0f);
+    }
+    else if (key == Mouse::RightMouseButton)
+    {
+        return ImVec2(-5.0f, 15.0f);
+    }
+    else if (key == Mouse::MiddleMouseButton)
+    {
+        return ImVec2(-20.0f, 20.0f);
+    }
+    else if (key == Mouse::ThumbMouseButton2)
+    {
+        return ImVec2(-65.0f, 10.0f);
+    }
+    else if (key == Mouse::ThumbMouseButton)
+    {
+        return ImVec2(-65.0f, 10.0f);
+    }
+    else if (key == Mouse::MouseScrollUp)
+    {
+        return ImVec2(-20.0f, 20.0f);
+    }
+    else if (key == Mouse::MouseScrollDown)
+    {
+        return ImVec2(-20.0f, 20.0f);
+    }
     else {
         return ImVec2(0.0f, 45.0f); // Default offset
     }
