@@ -22,7 +22,7 @@ std::shared_ptr<Vector2>keyboardCanvasPosition = std::make_shared<Vector2>(0, 0)
 std::shared_ptr<float>mouseScaleFactor = std::make_shared<float>(.56f);
 std::shared_ptr<Vector2>mouseCanvasPosition = std::make_shared<Vector2>(390, 0);
 
-std::shared_ptr<float> parentScaleFactor = std::make_shared<float>(0.5f);
+std::shared_ptr<float> parentScaleFactor = std::make_shared<float>(0.6);
 std::shared_ptr<Vector2> parentCanvasPosition = std::make_shared<Vector2>(40, 840);
 
 std::shared_ptr<std::string> ForwardKey = std::make_shared<std::string>();
@@ -82,6 +82,7 @@ std::shared_ptr<std::string> ChatPreset4Key = std::make_shared<std::string>();
 std::shared_ptr<std::string> PushToTalkKey = std::make_shared<std::string>();
 
 std::shared_ptr<std::string> ResetTrainingKey = std::make_shared<std::string>();
+
 
 ImVec2 GetCustomOffset(const std::string& key) {
 	if (key == Key::Spacebar) {

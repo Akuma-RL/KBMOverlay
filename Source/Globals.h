@@ -86,4 +86,5 @@ extern std::shared_ptr <std::string>PushToTalkKey;
 extern std::shared_ptr <std::string>ResetTrainingKey;
 
 extern std::map<std::string, ImVec2> keyPositions;
+
 extern ImVec2 GetCustomOffset(const std::string& key);
