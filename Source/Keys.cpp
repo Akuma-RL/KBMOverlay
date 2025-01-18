@@ -129,59 +129,101 @@ void Init::KeyPositions(std::map<std::string, ImVec2>& keyPositions) {
 			keyPositions[Mouse::RightMouseButton] = ImVec2(117, 0);
 		}
 
+		// Escape row
+		keyPositions[Key::Escape] = ImVec2(0, 0);
+		keyPositions[Key::F1] = ImVec2(65, 0);
+		keyPositions[Key::F2] = ImVec2(130, 0);
+		keyPositions[Key::F3] = ImVec2(195, 0);
+		keyPositions[Key::F4] = ImVec2(260, 0);
+		keyPositions[Key::F5] = ImVec2(325, 0);
+		keyPositions[Key::F6] = ImVec2(390, 0);
+		keyPositions[Key::F7] = ImVec2(455, 0);
+		keyPositions[Key::F8] = ImVec2(520, 0);
+		keyPositions[Key::F9] = ImVec2(585, 0);
+		keyPositions[Key::F10] = ImVec2(650, 0);
+		keyPositions[Key::F11] = ImVec2(715, 0);
+		keyPositions[Key::F12] = ImVec2(780, 0);
+		keyPositions[Key::PrintScreen] = ImVec2(845, 0);
+		keyPositions[Key::Pause] = ImVec2(910, 0);
+		keyPositions[Key::Delete] = ImVec2(975, 0);
 
-		keyPositions[Action::ThrottleForward] = ImVec2(910, 260);
-		keyPositions[Action::ThrottleReverse] = ImVec2(910, 325);
+		// ~ row
+		keyPositions[Key::Tilde] = ImVec2(0, 65);
+		keyPositions[Key::One] = ImVec2(65, 65);
+		keyPositions[Key::Two] = ImVec2(130, 65);
+		keyPositions[Key::Three] = ImVec2(195, 65);
+		keyPositions[Key::Four] = ImVec2(260, 65);
+		keyPositions[Key::Five] = ImVec2(325, 65);
+		keyPositions[Key::Six] = ImVec2(390, 65);
+		keyPositions[Key::Seven] = ImVec2(455, 65);
+		keyPositions[Key::Eight] = ImVec2(520, 65);
+		keyPositions[Key::Nine] = ImVec2(585, 65);
+		keyPositions[Key::Zero] = ImVec2(650, 65);
+		keyPositions[Key::Minus] = ImVec2(715, 65);
+		keyPositions[Key::Equals] = ImVec2(780, 65);
+		keyPositions[Key::Backspace] = ImVec2(845, 65);;
+		keyPositions[Key::Home] = ImVec2(975, 65);
 
-		keyPositions[Action::SteerRight] = ImVec2(275, 195);
-		keyPositions[Action::SteerLeft] = ImVec2(145, 195);
+		// Tab row
+		keyPositions[Key::Tab] = ImVec2(0, 130);
+		keyPositions[Key::Q] = ImVec2(130, 130);
+		keyPositions[Key::W] = ImVec2(195, 130);
+		keyPositions[Key::E] = ImVec2(260, 130);
+		keyPositions[Key::R] = ImVec2(325, 130);
+		keyPositions[Key::T] = ImVec2(390, 130);
+		keyPositions[Key::Y] = ImVec2(455, 130);
+		keyPositions[Key::U] = ImVec2(520, 130);
+		keyPositions[Key::I] = ImVec2(585, 130);
+		keyPositions[Key::O] = ImVec2(650, 130);
+		keyPositions[Key::P] = ImVec2(715, 130);
+		keyPositions[Key::LBracket] = ImVec2(780, 130);
+		keyPositions[Key::RBracket] = ImVec2(845, 130);
+		keyPositions[Key::Backslash] = ImVec2(910, 130);
+		keyPositions[Key::PageUp] = ImVec2(975, 130);
 
-		keyPositions[Action::LookUp] = ImVec2(535, 260);
-		keyPositions[Action::LookDown] = ImVec2(535, 325);
-		keyPositions[Action::LookRight] = ImVec2(600, 325);
-		keyPositions[Action::LookLeft] = ImVec2(470, 325);
+		//Caps Lock row
+		keyPositions[Key::CapsLock] = ImVec2(0, 195);
+		keyPositions[Key::A] = ImVec2(130, 195);
+		keyPositions[Key::S] = ImVec2(195, 195);
+		keyPositions[Key::D] = ImVec2(260, 195);
+		keyPositions[Key::F] = ImVec2(325, 195);
+		keyPositions[Key::G] = ImVec2(390, 195);
+		keyPositions[Key::H] = ImVec2(455, 195);
+		keyPositions[Key::J] = ImVec2(520, 195);
+		keyPositions[Key::K] = ImVec2(585, 195);
+		keyPositions[Key::L] = ImVec2(650, 195);
+		keyPositions[Key::Semicolon] = ImVec2(715, 195);
+		keyPositions[Key::Quote] = ImVec2(780, 195);
+		keyPositions[Key::Enter] = ImVec2(845, 195);
+		keyPositions[Key::PageDown] = ImVec2(975, 195);
 
-		keyPositions[Action::YawRight] = ImVec2(275, 195);
-		keyPositions[Action::YawLeft] = ImVec2(145, 195);
+		// Shift row
+		keyPositions[Key::LShift] = ImVec2(0, 260);
+		keyPositions[Key::Z] = ImVec2(130, 260);
+		keyPositions[Key::X] = ImVec2(195, 260);
+		keyPositions[Key::C] = ImVec2(260, 260);
+		keyPositions[Key::V] = ImVec2(325, 260);
+		keyPositions[Key::B] = ImVec2(390, 260);
+		keyPositions[Key::N] = ImVec2(455, 260);
+		keyPositions[Key::M] = ImVec2(520, 260);
+		keyPositions[Key::Comma] = ImVec2(585, 260);
+		keyPositions[Key::Period] = ImVec2(650, 260);
+		keyPositions[Key::Forwardslash] = ImVec2(715, 260);
+		keyPositions[Key::RShift] = ImVec2(780, 260);
+		keyPositions[Key::Up] = ImVec2(910, 260);
+		keyPositions[Key::End] = ImVec2(975, 260);
 
-		keyPositions[Action::PitchDown] = ImVec2(210, 130);
-		keyPositions[Action::PitchUp] = ImVec2(210, 195);
-
-		keyPositions[Action::RollRight] = ImVec2(275, 130);
-		keyPositions[Action::RollLeft] = ImVec2(145, 130);
-
-		keyPositions[Action::Boost] = ImVec2(990, 325);
-
-		keyPositions[Action::Jump] = ImVec2(860, 325);
-
-		keyPositions[Action::Handbreak] = ImVec2(795, 325);
-
-		keyPositions[Action::SecondaryCamera] = ImVec2(210, 325);
-
-		keyPositions[Action::ToggleRoll] = ImVec2(0, 260);
-
-		keyPositions[Action::RearCamera] = ImVec2(0, 325);
-
-		keyPositions[Action::UsePickup] = ImVec2(340, 130);
-		keyPositions[Action::NextPickup] = ImVec2(275, 260);
-		keyPositions[Action::Grab] = ImVec2(0, 260);
-
-		keyPositions[Action::ToggleMidGameMenu] = ImVec2(0, 0);
-		keyPositions[Action::ToggleScoreboard] = ImVec2(0, 130);
-
-		keyPositions[Action::Chat] = ImVec2(405, 130);
-		keyPositions[Action::TeamChat] = ImVec2(470, 130);
-		keyPositions[Action::PartyChat] = ImVec2(535, 130);
-
-
-		keyPositions[Action::ChatPreset1] = ImVec2(145, 65);
-		keyPositions[Action::ChatPreset2] = ImVec2(210, 65);
-		keyPositions[Action::ChatPreset3] = ImVec2(275, 65);
-		keyPositions[Action::ChatPreset4] = ImVec2(340, 65);
-
-		keyPositions[Action::PushToTalk] = ImVec2(340, 195);
-
-		keyPositions[Action::ResetTraining] = ImVec2(795, 65);
+		// Control row
+		keyPositions[Key::LControl] = ImVec2(0, 325);
+		keyPositions[Key::Windows] = ImVec2(65, 325);
+		keyPositions[Key::LAlt] = ImVec2(130, 325);
+		keyPositions[Key::Spacebar] = ImVec2(195, 325);
+		keyPositions[Key::RAlt] = ImVec2(650, 325);
+		keyPositions[Key::Function] = ImVec2(715, 325);
+		keyPositions[Key::RControl] = ImVec2(780, 325);
+		keyPositions[Key::Left] = ImVec2(845, 325);
+		keyPositions[Key::Down] = ImVec2(910, 325);
+		keyPositions[Key::Right] = ImVec2(975, 325);
 	}
 
 	else if (*gLayoutIndex == 2) { // Full Keyboard

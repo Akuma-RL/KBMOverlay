@@ -117,8 +117,6 @@ void KBMOverlay::UpdateLayout() {
 	Init::ActionKeyMap(actionKeyMap, mouseBinds);
 	Init::KeyPositions(keyPositions);
 
-	PlaylistIds playlist;
-
 	// Handle mouse bindings
 	for (const auto& mouseKey : mouseBinds) {
 		auto keyPosIt = keyPositions.find(mouseKey);
@@ -173,8 +171,6 @@ void KBMOverlay::UpdateLayout() {
             // Use the keyboard canvas position
             keyPos = {(*keyboardCanvasPosition).X + keyPosIt->second.x, (*keyboardCanvasPosition).Y + keyPosIt->second.y};
         }
-
-
 		// Get custom offset dynamically
 		ImVec2 offset = GetCustomOffset(key);
 
@@ -183,6 +179,7 @@ void KBMOverlay::UpdateLayout() {
 
 		// Assign to actionPositions for rendering
 		actionPositions[action] = titlePos;
+
 	}
 }
 

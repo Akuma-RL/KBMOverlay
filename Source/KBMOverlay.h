@@ -23,7 +23,7 @@ public:
 
 	float scaleFactor = 2.0f; // Scale down the image by half
 
-	std::set<std::string> pressedKeys;              // Keys currently pressed
+	std::set<std::string> pressedKeys;					// Keys currently pressed
 
 	std::map<std::string, KeyState> keyStates;
 	std::chrono::steady_clock::time_point lastLogTime;
@@ -37,7 +37,6 @@ public:
 	std::vector<std::string> mouseBinds;
 
 	std::map<std::string, Rect> actionTitles;
-
 
 	std::map<std::string, Rect> keyRegions;
 	std::map<std::string, ImVec2> keyPositions;

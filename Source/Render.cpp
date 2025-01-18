@@ -27,126 +27,130 @@ bool Render::IsPlaceholderRegion(const Rect& region, float scaleFactor) {
 }
 
 void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
-    if (!(*enableOverlay)) return;
+	if (!(*enableOverlay)) return;
 
-    // Parent offsets and scaling
-    Vector2F parentOffset(
-        (*parentCanvasPosition).X,
-        (*parentCanvasPosition).Y
-    );
+	// Parent offsets and scaling
+	Vector2F parentOffset(
+		(*parentCanvasPosition).X,
+		(*parentCanvasPosition).Y
+	);
 
-    float parentScale = *parentScaleFactor;
+	float parentScale = *parentScaleFactor;
 
-    // Draw the keyboard keys
-    for (const auto& [key, position] : plugin->keyPositions) {
+	// Draw the keyboard keys
+	for (const auto& [key, position] : plugin->keyPositions) {
 
-        // Skip mouse keys when rendering the keyboard canvas
-        if (key == Mouse::ThumbMouseButton || key == Mouse::ThumbMouseButton2 ||
-            key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
-            key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
-            key == Mouse::MiddleMouseButton || key == Mouse::MouseX ||
-            key == Mouse::MouseY || key == Mouse::Body) {
-            continue;
-        }
-        Rect region = plugin->keyRegions[key];
-        Vector2F scaledPos(
-            parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,
-            parentOffset.Y + ((*keyboardCanvasPosition).Y + position.y * (*keyboardScaleFactor)) * parentScale
-        );
-        canvas.SetPosition(scaledPos);
+		// Skip mouse keys when rendering the keyboard canvas
+		if (key == Mouse::ThumbMouseButton || key == Mouse::ThumbMouseButton2 ||
+			key == Mouse::LeftMouseButton || key == Mouse::RightMouseButton ||
+			key == Mouse::MouseScrollUp || key == Mouse::MouseScrollDown ||
+			key == Mouse::MiddleMouseButton || key == Mouse::MouseX ||
+			key == Mouse::MouseY || key == Mouse::Body) {
+			continue;
+		}
+		Rect region = plugin->keyRegions[key];
+		Vector2F scaledPos(
+			parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,
+			parentOffset.Y + ((*keyboardCanvasPosition).Y + position.y * (*keyboardScaleFactor)) * parentScale
+		);
+		canvas.SetPosition(scaledPos);
 
-        // Apply key-specific offsets based on the selected index
-        ImVec2 kbOffset = Assign::KeyboardKeyOffset(*gColorIndex);
+		// Apply key-specific offsets based on the selected index
+		ImVec2 kbOffset = Assign::KeyboardKeyOffset(*gColorIndex);
 
-        scaledPos.Y += kbOffset.y;
-        if (plugin->keyStates[key].pressed) {
-            region.y += kbOffset.y;
-        }
+		scaledPos.Y += kbOffset.y;
+		if (plugin->keyStates[key].pressed) {
+			region.y += kbOffset.y;
+		}
 
-        // Draw the key
-        canvas.DrawTile(
-            plugin->keyboardImage.get(),
-            region.width / plugin->scaleFactor * (*keyboardScaleFactor) * parentScale,
-            region.height / plugin->scaleFactor * (*keyboardScaleFactor) * parentScale,
-            region.x, region.y,
-            region.width, region.height,
-            { 1, 1, 1, 1 }, 0, 1
-        );
-    }
+		// Draw the key
+		canvas.DrawTile(
+			plugin->keyboardImage.get(),
+			region.width / plugin->scaleFactor * (*keyboardScaleFactor) * parentScale,
+			region.height / plugin->scaleFactor * (*keyboardScaleFactor) * parentScale,
+			region.x, region.y,
+			region.width, region.height,
+			{ 1, 1, 1, 1 }, 0, 1
+		);
+	}
 
-    // Draw the mouse overlay on its own canvas
-    if (*gUseMouseOverlay) {
-        for (const auto& [mouseKey, position] : plugin->keyPositions) {
-            // Process only mouse keys
-            if (mouseKey == Mouse::ThumbMouseButton || mouseKey == Mouse::ThumbMouseButton2 ||
-                mouseKey == Mouse::LeftMouseButton || mouseKey == Mouse::RightMouseButton ||
-                mouseKey == Mouse::MouseScrollUp || mouseKey == Mouse::MouseScrollDown ||
-                mouseKey == Mouse::MiddleMouseButton || mouseKey == Mouse::MouseX ||
-                mouseKey == Mouse::MouseY || mouseKey == Mouse::Body) {
+	// Draw the mouse overlay on its own canvas
+	if (*gUseMouseOverlay) {
+		for (const auto& [mouseKey, position] : plugin->keyPositions) {
+			// Process only mouse keys
+			if (mouseKey == Mouse::ThumbMouseButton || mouseKey == Mouse::ThumbMouseButton2 ||
+				mouseKey == Mouse::LeftMouseButton || mouseKey == Mouse::RightMouseButton ||
+				mouseKey == Mouse::MouseScrollUp || mouseKey == Mouse::MouseScrollDown ||
+				mouseKey == Mouse::MiddleMouseButton || mouseKey == Mouse::MouseX ||
+				mouseKey == Mouse::MouseY || mouseKey == Mouse::Body) {
 
-                Rect region = plugin->keyRegions[mouseKey];
-                Vector2F scaledMousePos(
-                    parentOffset.X + ((*mouseCanvasPosition).X + position.x * (*mouseScaleFactor)) * parentScale,
-                    parentOffset.Y + ((*mouseCanvasPosition).Y + position.y * (*mouseScaleFactor)) * parentScale
-                );
+				Rect region = plugin->keyRegions[mouseKey];
+				Vector2F scaledMousePos(
+					parentOffset.X + ((*mouseCanvasPosition).X + position.x * (*mouseScaleFactor)) * parentScale,
+					parentOffset.Y + ((*mouseCanvasPosition).Y + position.y * (*mouseScaleFactor)) * parentScale
+				);
 
-                canvas.SetPosition(scaledMousePos);
+				canvas.SetPosition(scaledMousePos);
 
-                // Apply key-specific offsets based on the selected index
-                ImVec2 offset = Assign::MouseKeyOffset(mouseKey, *gColorIndex);
-                scaledMousePos.X += offset.x;
-                scaledMousePos.Y += offset.y;
+				// Apply key-specific offsets based on the selected index
+				ImVec2 offset = Assign::MouseKeyOffset(mouseKey, *gColorIndex);
+				scaledMousePos.X += offset.x;
+				scaledMousePos.Y += offset.y;
 
-                if (plugin->keyStates[mouseKey].pressed) {
-                    region.x += offset.x;
-                    region.y += offset.y;
-                }
+				if (plugin->keyStates[mouseKey].pressed) {
+					region.x += offset.x;
+					region.y += offset.y;
+				}
 
-                canvas.DrawTile(
-                    plugin->keyboardImage.get(), // Same image as keyboard
-                    region.width / plugin->scaleFactor * (*mouseScaleFactor) * parentScale,
-                    region.height / plugin->scaleFactor * (*mouseScaleFactor) * parentScale,
-                    region.x, region.y,
-                    region.width, region.height,
-                    { 1, 1, 1, 1 }, 0, 1
-                );
-            }
-        }
-    }
+				canvas.DrawTile(
+					plugin->keyboardImage.get(), // Same image as keyboard
+					region.width / plugin->scaleFactor * (*mouseScaleFactor) * parentScale,
+					region.height / plugin->scaleFactor * (*mouseScaleFactor) * parentScale,
+					region.x, region.y,
+					region.width, region.height,
+					{ 1, 1, 1, 1 }, 0, 1
+				);
+			}
+		}
+	}
 
-    // Draw the action titles if enabled
-    if (*enableActionTitles) {
-        for (const auto& [action, position] : plugin->actionPositions) {
-            if (plugin->actionTitles.find(action) == plugin->actionTitles.end()) {
-                continue; // Skip actions without a valid title
-            }
+	// Draw the action titles if enabled
+	if (*enableActionTitles) {
+		for (const auto& [action, position] : plugin->actionPositions) {
+			if (plugin->actionTitles.find(action) == plugin->actionTitles.end()) {
+				continue; // Skip actions without a valid title
+			}
 
-            Rect titleRect = plugin->actionTitles[action];
-            const std::string& boundKey = plugin->actionKeyMap[action];
-            bool isMouseKey = std::find(plugin->mouseBinds.begin(), plugin->mouseBinds.end(), boundKey) != plugin->mouseBinds.end();
+			Rect titleRect = plugin->actionTitles[action];
+			const std::string& boundKey = plugin->actionKeyMap[action];
+			bool isMouseKey = std::find(plugin->mouseBinds.begin(), plugin->mouseBinds.end(), boundKey) != plugin->mouseBinds.end();
 
-            // Determine canvas position based on whether the key is a mouse key
-            Vector2F canvasPosition = isMouseKey
-                ? Vector2F(
-                    parentOffset.X + ((*mouseCanvasPosition).X + position.x * (*mouseScaleFactor)) * parentScale,
-                    parentOffset.Y + ((*mouseCanvasPosition).Y + position.y * (*mouseScaleFactor)) * parentScale
-                )
-                : Vector2F(
-                    parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,
-                    parentOffset.Y + ((*keyboardCanvasPosition).Y + position.y * (*keyboardScaleFactor)) * parentScale
-                );
+			// Define reference scales for mouse layouts
+			float mouseReferenceScale = (*gLayoutIndex == 0) ? 0.56f : 0.75f;
+			float normalizedScale = (*mouseScaleFactor) / mouseReferenceScale;
 
-            canvas.SetPosition(canvasPosition);
+			// Determine canvas position based on whether the key is a mouse key
+			Vector2F canvasPosition = isMouseKey
+				? Vector2F(
+					parentOffset.X + (*mouseCanvasPosition).X + (position.x * normalizedScale * parentScale),
+					parentOffset.Y + (*mouseCanvasPosition).Y + (position.y * normalizedScale * parentScale)
+				)
+				: Vector2F(
+					parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,
+					parentOffset.Y + ((*keyboardCanvasPosition).Y + position.y * (*keyboardScaleFactor)) * parentScale
+				);
 
-            // Draw the action title
-            canvas.DrawTile(
-                plugin->keyboardImage.get(),
-                titleRect.width / plugin->scaleFactor * parentScale,
-                titleRect.height / plugin->scaleFactor * parentScale,
-                titleRect.x, titleRect.y,
-                titleRect.width, titleRect.height,
-                { 1, 1, 1, 1 }, 0, 1
-            );
-        }
-    }
+			canvas.SetPosition(canvasPosition);
+
+			// Draw the action title
+			canvas.DrawTile(
+				plugin->keyboardImage.get(),
+				titleRect.width / plugin->scaleFactor * parentScale,
+				titleRect.height / plugin->scaleFactor * parentScale,
+				titleRect.x, titleRect.y,
+				titleRect.width, titleRect.height,
+				{ 1, 1, 1, 1 }, 0, 1
+			);
+		}
+	}
 }
