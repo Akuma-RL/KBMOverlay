@@ -125,7 +125,7 @@ namespace Key {
 	constexpr auto F10 = "f10";
 	constexpr auto F11 = "f11";
 	constexpr auto F12 = "f12";
-	constexpr auto PrintScreen = "printscreen";
+	constexpr auto PrintScreen = "pin";
 	constexpr auto Pause = "pause";
 	constexpr auto Delete = "delete";
 

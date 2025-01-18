@@ -3,8 +3,6 @@
 
 namespace fs = std::filesystem;
 
-
-
 extern std::shared_ptr<int> offsetBy;
 
 extern std::shared_ptr<int> gLayoutIndex;

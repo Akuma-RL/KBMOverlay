@@ -29,11 +29,11 @@ void KBMOverlay::onLoad() {
 	cfg.LoadSettingsFromFile();
 	cfg.ReloadBindsFromFile();
 
-
-	Init::KeyStates(keyStates, gameWrapper.get());
-
 	// Initialize default layout
 	UpdateLayout();
+
+	Init::KeyStates(keyStates, gameWrapper.get());
+	
 
 	gameWrapper->HookEvent("Function Engine.GameViewportClient.Tick",
 		std::bind(&KBMOverlay::onTick, this, std::placeholders::_1));
@@ -146,7 +146,7 @@ void KBMOverlay::UpdateLayout() {
 		else {
 			// Skip ground-only actions while airborne
 			if (action == Action::ThrottleForward && key != Key::Up || action == Action::ThrottleReverse && key != Key::Down ||
-				action == Action::SteerLeft || action == Action::SteerRight) {
+				action == Action::SteerLeft || action == Action::SteerRight || action == Action::Handbreak && key != Key::RControl) {
 				continue;
 			}
 		}

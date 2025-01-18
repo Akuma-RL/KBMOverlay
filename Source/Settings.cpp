@@ -41,9 +41,11 @@ void Settings::RenderSettings() {
 		ImGui::SetTooltip("Toggle to show or hide action titles on the overlay.");
 	}
 
+	ImGui::TextUnformatted("");
+
 	// Dropdown for selecting color
 	ImGui::PushItemWidth(110);
-	std::vector<std::string> layoutOptions = { "Recommended", "Actions", "Full Keyboard" };
+	std::vector<std::string> layoutOptions = { "Minimal", "Full Keyboard" };
 	static int layoutIndex = *gLayoutIndex; // Track the selected index
 
 	if (ImGui::BeginCombo("Select Layout", layoutOptions[layoutIndex].c_str())) {
@@ -79,15 +81,6 @@ void Settings::RenderSettings() {
 						*keyboardCanvasPosition = Vector2(0, 0);
 						*mouseCanvasPosition = Vector2(1170, 128);
 					}
-					else if (*gLayoutIndex == 2) {
-						*keyboardScaleFactor = 1.0f;
-						keyboardScale = 100;
-						*mouseScaleFactor = 0.75f;
-						mouseScale = 75;
-						*parentCanvasPosition = Vector2(20, 665);
-						*keyboardCanvasPosition = Vector2(0, 0);
-						*mouseCanvasPosition = Vector2(1170, 128);
-					}
 				}
 				else {
 					parentScale = 50;
@@ -103,15 +96,6 @@ void Settings::RenderSettings() {
 						*mouseCanvasPosition = Vector2(390, 0);
 					}
 					else if (*gLayoutIndex == 1) {
-						*keyboardScaleFactor = 1.0f;
-						keyboardScale = 100;
-						*mouseScaleFactor = 0.75f;
-						mouseScale = 75;
-						*parentCanvasPosition = Vector2(20, 720);
-						*keyboardCanvasPosition = Vector2(0, 0);
-						*mouseCanvasPosition = Vector2(1170, 128);
-					}
-					else if (*gLayoutIndex == 2) {
 						*keyboardScaleFactor = 1.0f;
 						keyboardScale = 100;
 						*mouseScaleFactor = 0.75f;
@@ -183,7 +167,7 @@ void Settings::RenderSettings() {
 	}
 	// Display tooltip for the slider
 	if (ImGui::IsItemHovered()) {
-		std::string hoverTextSize = "Overlay scale is " + std::to_string(parentScale) + "%";
+		std::string hoverTextSize = "Overlay scale is " + std::to_string(parentScale);
 		ImGui::SetTooltip(hoverTextSize.c_str());
 	}
 	ImGui::SameLine();
@@ -234,7 +218,7 @@ void Settings::RenderSettings() {
 		}
 		// Display tooltip for the slider
 		if (ImGui::IsItemHovered()) {
-			std::string hoverTextSize = "Keyboard scale is " + std::to_string(keyboardScale) + "%";
+			std::string hoverTextSize = "Keyboard scale is " + std::to_string(keyboardScale);
 			ImGui::SetTooltip(hoverTextSize.c_str());
 		}
 		ImGui::SameLine();
@@ -263,7 +247,7 @@ void Settings::RenderSettings() {
 
 		ImGui::TextUnformatted("");
 
-		int mouseMinSize = (*gLayoutIndex == 0) ? 50 : 75;
+		int mouseMinSize = (*gLayoutIndex == 0) ? 50 : 50;
 		//if (*gLayoutIndex == 0) {
 		//	mouseMinSize = 50;
 		//}
@@ -289,7 +273,7 @@ void Settings::RenderSettings() {
 			}
 			// Display tooltip for the slider
 			if (ImGui::IsItemHovered()) {
-				std::string hoverTextSize = "Mouse scale is " + std::to_string(mouseScale) + "%";
+				std::string hoverTextSize = "Mouse scale is " + std::to_string(mouseScale);
 				ImGui::SetTooltip(hoverTextSize.c_str());
 			}
 			ImGui::SameLine();
@@ -344,15 +328,6 @@ void Settings::RenderSettings() {
 				*keyboardCanvasPosition = Vector2(0, 0);
 				*mouseCanvasPosition = Vector2(1170, 128);
 			}
-			else if (*gLayoutIndex == 2) {
-				*keyboardScaleFactor = 1.0f;
-				keyboardScale = 100;
-				*mouseScaleFactor = 0.75f;
-				mouseScale = 75;
-				*parentCanvasPosition = Vector2(20, 665);
-				*keyboardCanvasPosition = Vector2(0, 0);
-				*mouseCanvasPosition = Vector2(1170, 128);
-			}
 		}
 		else {
 			parentScale = 50;
@@ -376,17 +351,7 @@ void Settings::RenderSettings() {
 				*keyboardCanvasPosition = Vector2(0, 0);
 				*mouseCanvasPosition = Vector2(1170, 128);
 			}
-			else if (*gLayoutIndex == 2) {
-				*keyboardScaleFactor = 1.0f;
-				keyboardScale = 100;
-				*mouseScaleFactor = 0.75f;
-				mouseScale = 75;
-				*parentCanvasPosition = Vector2(20, 720);
-				*keyboardCanvasPosition = Vector2(0, 0);
-				*mouseCanvasPosition = Vector2(1170, 128);
-			}
 		}
-
 		// Save the updated settings
 		cfgl.SaveSettingsToFile();
 	}
