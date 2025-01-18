@@ -85,48 +85,82 @@ std::shared_ptr<std::string> PushToTalkKey = std::make_shared<std::string>();
 std::shared_ptr<std::string> ResetTrainingKey = std::make_shared<std::string>();
 
 ImVec2 GetCustomOffset(const std::string& key) {
-    if (key == Key::Spacebar) {
-        return (*gLayoutIndex == 0) ? ImVec2(65.0f, 45.0f) : ImVec2(195.0f, 45.0f);
-    }
-    else if (
-        key == Key::Backspace ||
-        key == Key::Tab ||
-        key == Key::CapsLock ||
-        key == Key::Enter ||
-        key == Key::LShift ||
-        key == Key::RShift
-        ) {
-        return ImVec2(32.5f, 45.0f);
-    }
-    else if (key == Mouse::LeftMouseButton)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else if (key == Mouse::RightMouseButton)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else if (key == Mouse::ThumbMouseButton2)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else if (key == Mouse::ThumbMouseButton)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else if (key == Mouse::MiddleMouseButton)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else if (key == Mouse::MouseScrollUp)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else if (key == Mouse::MouseScrollDown)
-    {
-        return ImVec2(0.0f, 0.0f);
-    }
-    else {
-        return ImVec2(0.0f, 45.0f); // Default offset
-    }
+	if (key == Key::Spacebar) {
+		return (*gLayoutIndex == 0) ? ImVec2(65.0f, 45.0f) : ImVec2(195.0f, 45.0f);
+	}
+	else if (
+		key == Key::Backspace ||
+		key == Key::Tab ||
+		key == Key::CapsLock ||
+		key == Key::Enter ||
+		key == Key::LShift ||
+		key == Key::RShift
+		) {
+		return ImVec2(32.5f, 45.0f);
+	}
+	if (*gLayoutIndex == 0)
+	{
+		if (key == Mouse::LeftMouseButton)
+		{
+			return ImVec2(-690.0f, 30.0f);
+		}
+		else if (key == Mouse::RightMouseButton)
+		{
+			return ImVec2(-640.0f, 30.0f);
+		}
+		else if (key == Mouse::ThumbMouseButton2)
+		{
+			return ImVec2(-900.0f, 160.0f);
+		}
+		else if (key == Mouse::ThumbMouseButton)
+		{
+			return ImVec2(-900.0f, 200.0f);
+		}
+		else if (key == Mouse::MiddleMouseButton)
+		{
+			return ImVec2(-700.0f, 90.0f);
+		}
+		else if (key == Mouse::MouseScrollUp)
+		{
+			return ImVec2(10000, 10000);
+		}
+		else if (key == Mouse::MouseScrollDown)
+		{
+			return ImVec2(10000, 10000);
+		}
+
+		return ImVec2(0.0f, 45.0f); // Default offset
+	}
+	else {
+		if (key == Mouse::LeftMouseButton)
+		{
+			return ImVec2(-1535.0f, -140.0f);
+		}
+		else if (key == Mouse::RightMouseButton)
+		{
+			return ImVec2(-1525.0f, -140.0f);
+		}
+		else if (key == Mouse::ThumbMouseButton2)
+		{
+			return ImVec2(-1680.0f, -90.0f);
+		}
+		else if (key == Mouse::ThumbMouseButton)
+		{
+			return ImVec2(-1680.0f, -70.0f);
+		}
+		else if (key == Mouse::MiddleMouseButton)
+		{
+			return ImVec2(-1565.0f, -110.0f);
+		}
+		else if (key == Mouse::MouseScrollUp)
+		{
+			return ImVec2(10000, 10000);
+		}
+		else if (key == Mouse::MouseScrollDown)
+		{
+			return ImVec2(10000, 10000);
+		}
+		return ImVec2(0.0f, 45.0f); // Default offset
+	}
 }
+

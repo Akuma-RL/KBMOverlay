@@ -149,7 +149,7 @@ void Config::ReloadBindsFromFile() {
 
 				else if (action == Action::NextPickup) *NextPickupKey = normalizedKey;
 
-				else if (action == Action::Grab) *GrabKey = normalizedKey;
+				//else if (action == Action::Grab) *GrabKey = normalizedKey;
 
 				else if (action == Action::ToggleMidGameMenu) *MenuKey = normalizedKey;
 

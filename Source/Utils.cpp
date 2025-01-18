@@ -109,7 +109,7 @@ const std::unordered_set<std::string> relevantActions = {
 
     Action::NextPickup,
 
-    Action::Grab,
+    //Action::Grab,
 
     Action::ToggleMidGameMenu,
 

@@ -125,15 +125,11 @@ void Render::RenderCanvas(KBMOverlay* plugin, CanvasWrapper& canvas) {
 			const std::string& boundKey = plugin->actionKeyMap[action];
 			bool isMouseKey = std::find(plugin->mouseBinds.begin(), plugin->mouseBinds.end(), boundKey) != plugin->mouseBinds.end();
 
-			// Define reference scales for mouse layouts
-			float mouseReferenceScale = (*gLayoutIndex == 0) ? 0.56f : 0.75f;
-			float normalizedScale = (*mouseScaleFactor) / mouseReferenceScale;
-
 			// Determine canvas position based on whether the key is a mouse key
 			Vector2F canvasPosition = isMouseKey
 				? Vector2F(
-					parentOffset.X + (*mouseCanvasPosition).X + (position.x * normalizedScale * parentScale),
-					parentOffset.Y + (*mouseCanvasPosition).Y + (position.y * normalizedScale * parentScale)
+					parentOffset.X + ((*mouseCanvasPosition).X + position.x * (*mouseScaleFactor)) * parentScale,
+					parentOffset.Y + ((*mouseCanvasPosition).Y + position.y * (*mouseScaleFactor)) * parentScale
 				)
 				: Vector2F(
 					parentOffset.X + ((*keyboardCanvasPosition).X + position.x * (*keyboardScaleFactor)) * parentScale,

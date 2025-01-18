@@ -209,112 +209,114 @@ void Settings::RenderSettings() {
 	ImGui::PopItemWidth();
 	if (*enableActionTitles == true && parentScale < parentMinSize) { parentScale = parentMinSize; *parentScaleFactor = static_cast<float>(parentScale) / 100.0f; }
 
-	ImGui::TextUnformatted("");
+	if (!(*enableActionTitles)) {
+		ImGui::TextUnformatted("");
 
-	ImGui::TextUnformatted("Keyboard Settings");
-
-	ImGui::PushItemWidth(250);
-
-	int keyboardMinSize = (*enableActionTitles) ? 100 : 75;
-	// Size slider for keyboard scaling
-
-	ImGui::TextUnformatted("Size:"); ImGui::SameLine();
-	if (ImGui::SliderInt(" ##4", &keyboardScale, keyboardMinSize, 200)) { // Slider range: keyboardMinSize to 200%
-		// Clamp keyboardScale to the minimum size
-		if (keyboardScale < keyboardMinSize) {
-			keyboardScale = keyboardMinSize;
-			*keyboardScaleFactor = static_cast<float>(keyboardScale) / 100.0f;
-		}
-		// Update the overallScaleFactor
-		*keyboardScaleFactor = static_cast<float>(keyboardScale) / 100.0f;
-
-		// Save the new value to the config
-		cfgl.SaveSettingsToFile();
-	}
-	// Display tooltip for the slider
-	if (ImGui::IsItemHovered()) {
-		std::string hoverTextSize = "Keyboard scale is " + std::to_string(keyboardScale) + "%";
-		ImGui::SetTooltip(hoverTextSize.c_str());
-	}
-	ImGui::SameLine();
-	if (ImGui::SliderInt(" ##5", &(*keyboardCanvasPosition).X, 0, screen.X)) {
-		// No need to assign back to canvasPosition, changes are directly applied
-		cfgl.SaveSettingsToFile(); // Save on change
-	}
-	if (ImGui::IsItemHovered()) {
-		std::string hoverXText = "Keyboard X position is " + std::to_string((*keyboardCanvasPosition).X);
-		ImGui::SetTooltip(hoverXText.c_str());
-	}
-	ImGui::SameLine();
-	ImGui::TextUnformatted("Y:"); ImGui::SameLine();
-
-	if (ImGui::SliderInt(" ##6", &(*keyboardCanvasPosition).Y, 0, screen.Y)) {
-		// No need to assign back to canvasPosition, changes are directly applied
-		cfgl.SaveSettingsToFile(); // Save on change
-	}
-	if (ImGui::IsItemHovered()) {
-		std::string hoverYText = "Keyboard Y position is " + std::to_string((*keyboardCanvasPosition).Y);
-		ImGui::SetTooltip(hoverYText.c_str());
-	}
-	ImGui::PopItemWidth();
-
-	if (*enableActionTitles == true && keyboardScale < keyboardMinSize) { keyboardScale = keyboardMinSize; *keyboardScaleFactor = static_cast<float>(keyboardScale) / 100.0f; }
-
-	ImGui::TextUnformatted("");
-
-	int mouseMinSize = (*gLayoutIndex == 0) ? 50 : 75;
-	//if (*gLayoutIndex == 0) {
-	//	mouseMinSize = 50;
-	//}
-	if (*gUseMouseOverlay == true) {
-		ImGui::TextUnformatted("Mouse Settings");
+		ImGui::TextUnformatted("Keyboard Settings");
 
 		ImGui::PushItemWidth(250);
 
-		// Size slider for mouse scaling
+		int keyboardMinSize = (*enableActionTitles) ? 100 : 75;
+		// Size slider for keyboard scaling
 
 		ImGui::TextUnformatted("Size:"); ImGui::SameLine();
-		if (ImGui::SliderInt(" ##7", &mouseScale, mouseMinSize, 200)) { // Slider range: keyboardMinSize to 200%
+		if (ImGui::SliderInt(" ##4", &keyboardScale, keyboardMinSize, 200)) { // Slider range: keyboardMinSize to 200%
 			// Clamp keyboardScale to the minimum size
-			if (mouseScale < mouseMinSize) {
-				mouseScale = mouseMinSize;
-				*mouseScaleFactor = static_cast<float>(mouseScale) / 100.0f;
+			if (keyboardScale < keyboardMinSize) {
+				keyboardScale = keyboardMinSize;
+				*keyboardScaleFactor = static_cast<float>(keyboardScale) / 100.0f;
 			}
 			// Update the overallScaleFactor
-			*mouseScaleFactor = static_cast<float>(mouseScale) / 100.0f;
+			*keyboardScaleFactor = static_cast<float>(keyboardScale) / 100.0f;
 
 			// Save the new value to the config
 			cfgl.SaveSettingsToFile();
 		}
 		// Display tooltip for the slider
 		if (ImGui::IsItemHovered()) {
-			std::string hoverTextSize = "Mouse scale is " + std::to_string(mouseScale) + "%";
+			std::string hoverTextSize = "Keyboard scale is " + std::to_string(keyboardScale) + "%";
 			ImGui::SetTooltip(hoverTextSize.c_str());
 		}
 		ImGui::SameLine();
-		if (ImGui::SliderInt(" ##8", &(*mouseCanvasPosition).X, 0, screen.X)) {
+		if (ImGui::SliderInt(" ##5", &(*keyboardCanvasPosition).X, 0, screen.X)) {
 			// No need to assign back to canvasPosition, changes are directly applied
 			cfgl.SaveSettingsToFile(); // Save on change
 		}
 		if (ImGui::IsItemHovered()) {
-			std::string hoverXText = "Mouse X position is " + std::to_string((*mouseCanvasPosition).X);
+			std::string hoverXText = "Keyboard X position is " + std::to_string((*keyboardCanvasPosition).X);
 			ImGui::SetTooltip(hoverXText.c_str());
 		}
 		ImGui::SameLine();
 		ImGui::TextUnformatted("Y:"); ImGui::SameLine();
 
-		if (ImGui::SliderInt(" ##9", &(*mouseCanvasPosition).Y, 0, screen.Y)) {
+		if (ImGui::SliderInt(" ##6", &(*keyboardCanvasPosition).Y, 0, screen.Y)) {
 			// No need to assign back to canvasPosition, changes are directly applied
 			cfgl.SaveSettingsToFile(); // Save on change
 		}
 		if (ImGui::IsItemHovered()) {
-			std::string hoverYText = "Mouse Y position is " + std::to_string((*mouseCanvasPosition).Y);
+			std::string hoverYText = "Keyboard Y position is " + std::to_string((*keyboardCanvasPosition).Y);
 			ImGui::SetTooltip(hoverYText.c_str());
 		}
 		ImGui::PopItemWidth();
-	}
-	if (*enableActionTitles == true && mouseScale < mouseMinSize) { mouseScale = mouseMinSize; *mouseScaleFactor = static_cast<float>(mouseScale) / 100.0f; }
 
+		if (*enableActionTitles == true && keyboardScale < keyboardMinSize) { keyboardScale = keyboardMinSize; *keyboardScaleFactor = static_cast<float>(keyboardScale) / 100.0f; }
+
+		ImGui::TextUnformatted("");
+
+		int mouseMinSize = (*gLayoutIndex == 0) ? 50 : 75;
+		//if (*gLayoutIndex == 0) {
+		//	mouseMinSize = 50;
+		//}
+		if (*gUseMouseOverlay == true) {
+			ImGui::TextUnformatted("Mouse Settings");
+
+			ImGui::PushItemWidth(250);
+
+			// Size slider for mouse scaling
+
+			ImGui::TextUnformatted("Size:"); ImGui::SameLine();
+			if (ImGui::SliderInt(" ##7", &mouseScale, mouseMinSize, 200)) { // Slider range: keyboardMinSize to 200%
+				// Clamp keyboardScale to the minimum size
+				if (mouseScale < mouseMinSize) {
+					mouseScale = mouseMinSize;
+					*mouseScaleFactor = static_cast<float>(mouseScale) / 100.0f;
+				}
+				// Update the overallScaleFactor
+				*mouseScaleFactor = static_cast<float>(mouseScale) / 100.0f;
+
+				// Save the new value to the config
+				cfgl.SaveSettingsToFile();
+			}
+			// Display tooltip for the slider
+			if (ImGui::IsItemHovered()) {
+				std::string hoverTextSize = "Mouse scale is " + std::to_string(mouseScale) + "%";
+				ImGui::SetTooltip(hoverTextSize.c_str());
+			}
+			ImGui::SameLine();
+			if (ImGui::SliderInt(" ##8", &(*mouseCanvasPosition).X, 0, screen.X)) {
+				// No need to assign back to canvasPosition, changes are directly applied
+				cfgl.SaveSettingsToFile(); // Save on change
+			}
+			if (ImGui::IsItemHovered()) {
+				std::string hoverXText = "Mouse X position is " + std::to_string((*mouseCanvasPosition).X);
+				ImGui::SetTooltip(hoverXText.c_str());
+			}
+			ImGui::SameLine();
+			ImGui::TextUnformatted("Y:"); ImGui::SameLine();
+
+			if (ImGui::SliderInt(" ##9", &(*mouseCanvasPosition).Y, 0, screen.Y)) {
+				// No need to assign back to canvasPosition, changes are directly applied
+				cfgl.SaveSettingsToFile(); // Save on change
+			}
+			if (ImGui::IsItemHovered()) {
+				std::string hoverYText = "Mouse Y position is " + std::to_string((*mouseCanvasPosition).Y);
+				ImGui::SetTooltip(hoverYText.c_str());
+			}
+			ImGui::PopItemWidth();
+		}
+
+		if (*enableActionTitles == true && mouseScale < mouseMinSize) { mouseScale = mouseMinSize; *mouseScaleFactor = static_cast<float>(mouseScale) / 100.0f; }
+	}
 	ImGui::TextUnformatted("");
 
 	// Reset sliders to defaults

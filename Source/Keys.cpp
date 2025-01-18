@@ -381,7 +381,7 @@ void Init::ActionKeyMap(std::map<std::string, std::string>& actionKeyMap, std::v
 
 	actionKeyMap[Action::UsePickup] = *UsePickupKey;
 	actionKeyMap[Action::NextPickup] = *NextPickupKey;
-	actionKeyMap[Action::Grab] = *GrabKey;
+	//actionKeyMap[Action::Grab] = *GrabKey;
 
 	actionKeyMap[Action::ToggleMidGameMenu] = *MenuKey;
 	actionKeyMap[Action::ToggleScoreboard] = *ScoreboardKey;
@@ -580,7 +580,7 @@ void Init::ActionTitles(std::map<std::string, Rect>& actionTitles)
 
 	actionTitles[Action::UsePickup] = { 0,10330,159,27 };
 	actionTitles[Action::NextPickup] = { 160,10330,159,27 };
-	actionTitles[Action::Grab] = { 320,10330,159,27 };
+	//actionTitles[Action::Grab] = { 320,10330,159,27 };
 
 	actionTitles[Action::ToggleMidGameMenu] = { 480,10330,159,27 };
 	actionTitles[Action::ToggleScoreboard] = { 640,10330,159,27 };

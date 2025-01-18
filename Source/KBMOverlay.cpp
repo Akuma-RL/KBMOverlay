@@ -108,7 +108,7 @@ void KBMOverlay::UpdateLayout() {
 	keyRegions.clear();
 	actionTitles.clear();
 	actionKeyMap.clear();
-	mouseBinds.clear();;
+	mouseBinds.clear();
 	keyPositions.clear();
 
 	// Initialize positions and mappings
@@ -117,20 +117,7 @@ void KBMOverlay::UpdateLayout() {
 	Init::ActionKeyMap(actionKeyMap, mouseBinds);
 	Init::KeyPositions(keyPositions);
 
-	// Handle mouse bindings
-	for (const auto& mouseKey : mouseBinds) {
-		auto keyPosIt = keyPositions.find(mouseKey);
-		if (keyPosIt != keyPositions.end()) {
-			ImVec2 keyPos = keyPosIt->second;
-			ImVec2 offset = GetCustomOffset(mouseKey);
-
-			// Calculate title position for the mouse bind
-			ImVec2 titlePos = { keyPos.x + offset.x, keyPos.y + offset.y };
-
-			// Assign to actionPositions for rendering
-			actionPositions[mouseKey] = titlePos;
-		}
-	}
+	std::map<std::string, std::string> keyToActionMap; // Tracks which action is assigned to each key
 
 	// Determine if the player is airborne
 	bool isAirborne = Utils::IsPlayerAirborne(gameWrapper.get());
@@ -140,11 +127,13 @@ void KBMOverlay::UpdateLayout() {
 			continue; // Skip unbound actions
 		}
 
-		// Check if the key is part of the current layout
+		// Determine the key position
 		auto keyPosIt = keyPositions.find(key);
 		if (keyPosIt == keyPositions.end()) {
 			continue; // Skip actions with keys not in the current layout
 		}
+
+	
 
 		// Skip certain actions based on player state
 		if (!isAirborne) {
@@ -156,30 +145,37 @@ void KBMOverlay::UpdateLayout() {
 		}
 		else {
 			// Skip ground-only actions while airborne
-			if (action == Action::ThrottleForward || action == Action::ThrottleReverse ||
+			if (action == Action::ThrottleForward && key != Key::Up || action == Action::ThrottleReverse && key != Key::Down ||
 				action == Action::SteerLeft || action == Action::SteerRight) {
 				continue;
 			}
 		}
-	
-		// Determine the canvas and position
-        ImVec2 keyPos;
-        if (std::find(mouseBinds.begin(), mouseBinds.end(), key) != mouseBinds.end()) {
-            // If the key is a mouse key, use the mouse canvas position
-            keyPos = {(*mouseCanvasPosition).X + keyPosIt->second.x, (*mouseCanvasPosition).Y + keyPosIt->second.y};
-        } else {
-            // Use the keyboard canvas position
-            keyPos = {(*keyboardCanvasPosition).X + keyPosIt->second.x, (*keyboardCanvasPosition).Y + keyPosIt->second.y};
-        }
-		// Get custom offset dynamically
+
+		// Base key position
+		ImVec2 keyPos = keyPosIt->second;
+
+		// Apply custom offset
 		ImVec2 offset = GetCustomOffset(key);
 
-		// Calculate title position with the applied offset
-		ImVec2 titlePos = { keyPos.x + offset.x, keyPos.y + offset.y };
+		// Calculate final title position
+		ImVec2 titlePos;
+		if (std::find(mouseBinds.begin(), mouseBinds.end(), key) != mouseBinds.end()) {
+			// Use mouse canvas for mouse keys
+			titlePos = {
+				(*mouseCanvasPosition).X + keyPos.x * (*mouseScaleFactor) + offset.x * (*mouseScaleFactor),
+				(*mouseCanvasPosition).Y + keyPos.y * (*mouseScaleFactor) + offset.y * (*mouseScaleFactor)
+			};
+		}
+		else {
+			// Use keyboard canvas for keyboard keys
+			titlePos = {
+				(*keyboardCanvasPosition).X + keyPos.x * (*keyboardScaleFactor) + offset.x * (*keyboardScaleFactor),
+				(*keyboardCanvasPosition).Y + keyPos.y * (*keyboardScaleFactor) + offset.y * (*keyboardScaleFactor)
+			};
+		}
 
-		// Assign to actionPositions for rendering
+		// Assign to actionPositions
 		actionPositions[action] = titlePos;
-
 	}
 }
 

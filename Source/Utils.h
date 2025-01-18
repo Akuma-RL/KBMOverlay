@@ -65,7 +65,7 @@ namespace Action {
 
 	constexpr auto NextPickup = "NextPickup";
 
-	constexpr auto Grab = "Grab";
+	//constexpr auto Grab = "Grab";
 
 	constexpr auto ToggleMidGameMenu = "ToggleMidGameMenu";
 
